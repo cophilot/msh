@@ -1,0 +1,10 @@
+#!/bin/bash
+
+###START###
+
+# Print the version of the myshell
+function version {
+    echo "myshell version $version"
+}
+
+###END###

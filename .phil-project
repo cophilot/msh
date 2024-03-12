@@ -2,4 +2,8 @@
 logo=assets/logo.png
 logo_small=assets/logo.png
 description_translate=de
+
+# myshell environment variables
+###START###
 version=0.0.1
+###END###

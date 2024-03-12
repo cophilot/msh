@@ -2,6 +2,7 @@
 
 ###START###
 
+# Get help for the myshell
 function help {
     echo "Not implemented"
     exit 1

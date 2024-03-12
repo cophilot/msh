@@ -9,43 +9,107 @@ Copy the content from the .phil-project into msh to store environment variables
 import sys
 import os
 
-
 OUT_FILE = "out/msh"
+QUIET = False
+
+MAIN_FILE = "src/main"
+UTILS_DIR = "src/utils"
+COMMANDS_DIR = "src/commands"
+ENV_FILE = ".phil-project"
 
 def main():
     """
     main function
     """
-    set_args()
-    msh_content = read_msh_file()
-    write_out_file(msh_content)
-    make_file_executable()
 
-def make_file_executable():
+    set_args()
+
+    log("Running the myshell compiler...")
+
+    main_content = read_file(MAIN_FILE)
+
+    main_content = inject_file(main_content, ENV_FILE, "###ENV###")
+    main_content = inject_dir(main_content, COMMANDS_DIR, "###COMMANDS###")
+    main_content = inject_dir(main_content, UTILS_DIR, "###UTILS###")
+
+    write_out_file(main_content, OUT_FILE)
+    make_file_executable(OUT_FILE)
+
+    log("Compiled successfully: " + "\033[92m"+OUT_FILE+"\033[0m")
+    log()
+
+def inject_dir(main_content:str, dir_path: str, placeholder: str, with_bounds = True, start_bound="###START###", end_bound="###END###") -> str:
+    """
+    inject the content of the files in the directory into the main content
+    """
+
+    files = os.listdir(dir_path)
+    result = ""
+
+    for file in files:
+        if with_bounds:
+            result += read_file_with_bounds(dir_path + "/" + file, start_bound, end_bound)
+        else:
+            result += read_file(dir_path + "/" + file)
+
+    return main_content.replace(placeholder, result)
+
+def inject_file(main_content:str, file_path: str, placeholder: str, with_bounds = True, start_bound="###START###", end_bound="###END###") -> str:
+    """
+    inject the environment variables into the main content
+    """
+    result = ""
+    if with_bounds:
+        result = read_file_with_bounds(file_path, start_bound, end_bound)
+    else:
+        result = read_file(file_path)
+    return main_content.replace(placeholder, result)
+
+def make_file_executable(file: str):
     """
     make the file executable
     """
-    os.system("chmod +x "+OUT_FILE)
-    
-def write_out_file(msh_content: str):
+    os.system("chmod +x " + file)
+
+def write_out_file(content: str, path: str):
     """
     write the content of the msh file into the out file
     """
-    # override the out file with the new content
-    with open(OUT_FILE, "w", encoding="utf-8") as file:
-        file.write(msh_content)
+    with open(path, "w", encoding="utf-8") as file:
+        file.write(content)
 
-def read_msh_file():
+def read_file_with_bounds(file_path: str, start: str, end: str):
     """
-    read the msh file and get the content
+    read the file and get the content between the start and end bounds
+    """
+    content = read_file(file_path)
+
+    new_content = ""
+
+    in_bounds = False
+
+    for line in content.split("\n"):
+        if line.strip() == start:
+            in_bounds = True
+            continue
+        if line.strip() == end:
+            in_bounds = False
+            continue
+        if in_bounds:
+            new_content += line + "\n"
+
+    return new_content
+
+
+def read_file(file_path: str):
+    """
+    read the main file and get the content
     """
     try:
-        with open("msh", "r", encoding="utf-8") as file:
+        with open(file_path, "r", encoding="utf-8") as file:
             return file.read()
     except FileNotFoundError:
-        print("Error: msh file not found")
-    except Exception as e:
-        print("Error: ", e)
+        print("Error: file not found: ", file_path)
     sys.exit(1)
 
 
@@ -53,7 +117,6 @@ def set_args():
     """
     set the arguments for the command line
     """
-    # get the command line arguments
 
     args = sys.argv
 
@@ -65,6 +128,17 @@ def set_args():
 
             global OUT_FILE
             OUT_FILE = args[index+1]
+        if arg == "-q" or arg == "-quiet":
+            global QUIET
+            QUIET = True
+
+def log(message: str = ""):
+    """
+    log the message
+    """
+    global QUIET
+    if not QUIET:
+        print(message)
 
 if __name__ == "__main__":
     main()

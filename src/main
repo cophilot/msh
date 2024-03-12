@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# ******************************
+# *** Welcome to the myshell ***
+# ******************************
+
+###ENV###
+
+###UTILS###
+
+###COMMANDS###
+
+sub_command=$1
+args=${@:2}
+
+if [ -z $sub_command ]; then
+    echo "Usage: msh <command>"
+    echo "Run 'msh help' for more information"
+    exit 1
+fi
+
+# check if function with the name of the sub_command exists
+if declare -f $sub_command > /dev/null; then
+    # call the function with the name of the sub_command and pass the args
+    $sub_command $args
+else
+    echo "Command not found: $sub_command"
+    echo "Run 'msh help' for more information"
+    exit 1
+fi
