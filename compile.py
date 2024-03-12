@@ -11,6 +11,7 @@ import os
 
 OUT_FILE = "out/msh"
 QUIET = False
+TO_BINARY = False
 
 MAIN_FILE = "src/main"
 UTILS_DIR = "src/utils"
@@ -34,6 +35,9 @@ def main():
 
     write_out_file(main_content, OUT_FILE)
     make_file_executable(OUT_FILE)
+    
+    if TO_BINARY:
+        make_binary(OUT_FILE)
 
     log("Compiled successfully: " + "\033[92m"+OUT_FILE+"\033[0m")
     log()
@@ -112,6 +116,18 @@ def read_file(file_path: str):
         print("Error: file not found: ", file_path)
     sys.exit(1)
 
+def make_binary(file: str):
+    """
+    make the file a binary
+    """
+    # check if shc is installed
+    if os.system("command -v shc > /dev/null") != 0:
+        os.system("sudo apt-get install shc")
+    os.system("shc -f " + file + " -o " + file + ".bin")
+    os.system("rm " + file + ".x.c")
+    os.system("rm " + file)
+    os.system("mv " + file + ".bin " + file)
+    
 
 def set_args():
     """
@@ -131,6 +147,24 @@ def set_args():
         if arg == "-q" or arg == "-quiet":
             global QUIET
             QUIET = True
+        if arg == "-b" or arg == "-binary":
+            global TO_BINARY
+            TO_BINARY = True
+        if arg == "-h" or arg == "-help":
+            print_help()
+            sys.exit(0)
+
+def print_help():
+    """
+    print the help message
+    """
+    print("Usage: compile.py [options]")
+    print()
+    print("Options:")
+    print("  -h, -help          print this help message")
+    print("  -out, -o <file>    specify the output file")
+    print("  -q, -quiet         run in quiet mode")
+    print("  -b, -binary        compile to a binary")
 
 def log(message: str = ""):
     """
