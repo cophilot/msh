@@ -4,8 +4,18 @@
 
 # Get help for the myshell
 function help {
-    echo "Not implemented"
-    exit 1
+    echo "myshell help center"
+    echo ""
+    echo "Usage: msh <command>"
+    echo ""
+    echo "Commands:"
+    echo "  version, v   Print the version of the myshell"
+    echo "  help, h      Get help for the myshell"
+    echo "  setup        Setup the myshell"
+}
+
+function h {
+    help $*
 }
 
 ###END###

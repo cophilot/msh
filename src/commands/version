@@ -7,4 +7,9 @@ function version {
     echo "myshell version $version"
 }
 
+function v {
+    version $*
+}
+
+
 ###END###
