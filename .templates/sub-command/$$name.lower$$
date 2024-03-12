@@ -1,0 +1,10 @@
+#!/bin/bash
+
+###START###
+
+function $$name.lower$$ {
+    echo "Not implemented"
+    exit 1
+}
+
+###END###

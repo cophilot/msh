@@ -1,9 +1,9 @@
 #!/bin/bash
 
-###START
+###START###
 
 function setup {
     echo "setup $1"
 }
 
-###END
+###END###

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+###START###
+
+function help {
+    echo "Not implemented"
+    exit 1
+}
+
+###END###
