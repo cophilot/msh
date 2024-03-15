@@ -1,0 +1,12 @@
+#!/bin/bash
+
+###START###
+
+# Handle the development mode
+function handle_dev_mode() {
+    if [[ "$@" == *"-dev"* ]]; then
+        HOME_DIR="$(pwd)/.myshell"
+    fi
+}
+
+###END###

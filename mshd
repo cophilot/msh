@@ -5,7 +5,7 @@
 # ***************************************
 
 # Compile program
-python compile.py -o out/msh -b
+python compile.py -o out/msh
 
 # check if file exists
 if [ ! -f out/msh ]; then
@@ -14,4 +14,4 @@ if [ ! -f out/msh ]; then
 fi
 
 # Run program
-./out/msh $*
+./out/msh $* -dev
