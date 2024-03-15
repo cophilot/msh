@@ -1,0 +1,76 @@
+#!/bin/bash
+
+###START###
+
+LOG_FILE="$HOME_DIR/.log"
+
+# Log a message if verbose is enabled
+# $1: message
+# $2(optional): force the message to be logged
+function log() {
+    local message="$1"
+    local is_verbose=$(get_conf verbose 1)
+    
+    # return when is_verbose is not set to on and the second argument is not set to 1
+    if [ "$is_verbose" != "on" ] && [ -z "$2" ]
+    then
+        return
+    fi
+
+    echo -e "$message"
+
+    if [ "$(get_conf log-file 1)" != "on" ]
+    then
+        return
+    fi
+
+    if [ ! -f "$LOG_FILE" ]
+    then
+        touch "$LOG_FILE"
+    fi
+
+    # Handle max log size
+    local log_lines=$(wc -l < "$LOG_FILE")
+    local max_log_size=$(get_conf max-log-size 0 1000)
+    if [ "$log_lines" -gt "$max_log_size" ]
+    then
+        local diff=$(($log_lines - $max_log_size))
+        # Remove the difference between the current log size and the max log size
+        if [ "$(uname)" = "Darwin" ]
+        then
+            sed -i '' "1,${diff}d" "$LOG_FILE"
+        else
+            sed -i "1,${diff}d" "$LOG_FILE"
+        fi
+    fi
+    # remove any color codes from the message
+    local message=$(echo -e "$message" | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g")
+    timestamp=$(date +"%Y-%m-%d %H:%M:%S")
+    echo "[$timestamp] $message" >> "$LOG_FILE"
+}
+
+# Get the color code for a color
+# $1: color name (leave empty for reset)
+function get_color() {
+    if [ "$(get_conf color-mode 1)" != "on" ]
+    then
+        echo ""
+        return
+    fi
+    local color="$1"
+    local color_code=""
+    case "$color" in
+        "red") color_code="\033[0;31m" ;;
+        "green") color_code="\033[0;32m" ;;
+        "yellow") color_code="\033[0;33m" ;;
+        "blue") color_code="\033[0;34m" ;;
+        "purple") color_code="\033[0;35m" ;;
+        "cyan") color_code="\033[0;36m" ;;
+        "white") color_code="\033[0;37m" ;;
+        "reset") color_code="\033[0m" ;;
+        *) color_code="\033[0m" ;;
+    esac
+    echo "$color_code"
+}
+
+###END###

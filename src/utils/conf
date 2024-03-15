@@ -1,0 +1,92 @@
+#!/bin/bash
+
+###START###
+
+CONF_FILE="$HOME_DIR/.conf"
+
+# Update the conf file with the values from the .conf.template file
+function update_conf_file() {
+    local conf_file_template="$CONF_FILE.template"
+    if [ ! -f "$conf_file_template" ]
+    then
+        # Return if the template file doesn't exist
+        echo "Error: Could not find the .conf template file"
+        return
+    fi
+
+    if [ ! -f "$CONF_FILE" ]
+    then
+        # Use the template file as the conf file
+        cp "$conf_file_template" "$CONF_FILE"
+        return
+    fi
+
+    # iterate over lines in th template file
+    while IFS= read -r line
+    do
+        # ignore empty lines
+        if [ -z "$line" ] || [ "${line:0:1}" = "#" ]
+        then
+            continue
+        fi
+        # append line to the conf file if it doesn't exist
+        local name=$(echo "$line" | cut -d'=' -f1)
+        if ! grep -q "^$name=" "$CONF_FILE"
+        then
+            echo "" >> "$CONF_FILE"
+            echo "$line" >> "$CONF_FILE"
+        fi
+    done < "$conf_file_template"
+}
+
+# Read the conf file and create it if it doesn't exist
+function read_conf_file() {
+    update_conf_file
+    if [ -f "$CONF_FILE" ]
+    then
+        echo "$(cat $CONF_FILE)"
+    else 
+        echo ""
+    fi
+}
+
+# Get a configuration value from the conf file
+# $1: name of the configuration
+# $2(optional): If set to 1, the value will be converted to lowercase and normalized
+# $3(optional): default value
+function get_conf () {
+
+    local name="$1"
+    local conf_file_content=$(read_conf_file)
+
+    if [ -z "$conf_file_content" ]
+    then
+        echo "$3"
+        return
+    fi
+
+    local value=$(echo "$conf_file_content" | grep "^$name=" | sed "s,$name=,,")
+    if [ -z "$value" ]
+    then
+        echo "$3"
+        return
+    fi
+
+    if [ -n "$2" ] && [ "$2" = "1" ]
+    then
+        # make the value lowercase
+        value=$(echo "$value" | tr '[:upper:]' '[:lower:]')
+        # remove newlines to handle when multiple values are set
+        value=$(echo "$value" | tr '\n' ' ' | awk '{print $1}')
+        # remove leading and trailing whitespace
+        value=$(echo "$value" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+       
+        if [ "$value" = "true" ]
+        then
+            value="on"
+        fi
+    fi
+    echo "$value"
+}
+
+###END###

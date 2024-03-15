@@ -6,4 +6,5 @@ description_translate=de
 # myshell environment variables
 ###START###
 version=0.0.1
+HOME_DIR=~/.myshell
 ###END###
