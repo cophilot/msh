@@ -1,0 +1,20 @@
+#!/bin/bash
+
+###START###
+
+function new {
+    echo "Not implemented: new"
+    exit 1
+}
+
+# Print help for the new command
+function new_help {
+    echo "  [new|n] description"
+}
+
+# Short form of the new command
+function n {
+    new $*
+}
+
+###END###

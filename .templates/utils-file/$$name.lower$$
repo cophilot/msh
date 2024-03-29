@@ -1,0 +1,10 @@
+#!/bin/bash
+
+###START###
+
+function $$function.l$${
+    echo "Not implemented: $$function.l$$"
+    exit 1
+}
+
+###END###

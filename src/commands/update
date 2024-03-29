@@ -1,0 +1,20 @@
+#!/bin/bash
+
+###START###
+
+function update {
+    echo "Not implemented: update"
+    exit 1
+}
+
+# Print help for the update command
+function update_help {
+    echo "  [update|u] description"
+}
+
+# Short form of the update command
+function u {
+    update $*
+}
+
+###END###

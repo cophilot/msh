@@ -1,0 +1,15 @@
+#!/bin/bash
+
+###START###
+
+function upgrade {
+    echo "Not implemented: upgrade"
+    exit 1
+}
+
+# Print help for the upgrade command
+function upgrade_help {
+    echo "  upgrade description"
+}
+
+###END###

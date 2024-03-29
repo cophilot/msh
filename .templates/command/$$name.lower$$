@@ -3,8 +3,18 @@
 ###START###
 
 function $$name.lower$$ {
-    echo "Not implemented"
+    echo "Not implemented: $$name.lower$$"
     exit 1
+}
+
+# Print help for the $$name.lower$$ command
+function $$name.lower$$_help {
+    echo "  [$$name.lower$$|$$shortform.lower$$] description"
+}
+
+# Short form of the $$name.lower$$ command
+function $$shortform.lower$$ {
+    $$name.lower$$ $*
 }
 
 ###END###

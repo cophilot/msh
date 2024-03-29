@@ -8,3 +8,5 @@
 
 description:A new subcommand
 path:src/commands
+
+var:shortform(none)

@@ -2,7 +2,7 @@
 
 ###START###
 
-# Get help for the myshell
+# Get help for myshell
 function help {
     echo "myshell help center"
     echo ""

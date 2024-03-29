@@ -1,0 +1,20 @@
+#!/bin/bash
+
+###START###
+
+function list {
+    echo "Not implemented: list"
+    exit 1
+}
+
+# Print help for the list command
+function list_help {
+    echo "  [list|ls] description"
+}
+
+# Short form of the list command
+function ls {
+    list $*
+}
+
+###END###
