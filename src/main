@@ -19,7 +19,7 @@ echo "$HOME_DIR"
 
 if [ -z $sub_command ]; then
     echo "Usage: msh <command>"
-    echo "Run 'msh help' for more information"
+    echo "Run '$0 help' for more information"
     exit 1
 fi
 
@@ -29,6 +29,6 @@ if declare -f $sub_command > /dev/null; then
     $sub_command $args
 else
     echo "Command not found: $sub_command"
-    echo "Run 'msh help' for more information"
+    echo "Run '$0 help' for more information"
     exit 1
 fi
