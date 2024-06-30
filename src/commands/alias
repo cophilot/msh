@@ -4,12 +4,18 @@
 
 function alias {
     echo "Not implemented: alias"
+    args=$*
+    echo "args: $args"
     exit 1
 }
 
 # Print help for the alias command
 function alias_help {
-    echo "  [alias|a] description"
+    echo "  <alias|a> <new-command> <command> [description] - Create a new alias for a command"
+    echo "      new-command - The name of the new command to create"
+    echo "      command - The command to create an alias for"
+    echo "      description - The for the command"
+    echo ""
 }
 
 # Short form of the alias command

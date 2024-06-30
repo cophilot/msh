@@ -9,7 +9,9 @@ function $$name.lower$$ {
 
 # Print help for the $$name.lower$$ command
 function $$name.lower$$_help {
-    echo "  [$$name.lower$$|$$shortform.lower$$] description"
+    echo "  <$$name.lower$$|$$shortform.lower$$> <arg> - description"
+    echo "      arg - description"
+    echo ""
 }
 
 # Short form of the $$name.lower$$ command

@@ -8,10 +8,20 @@ function help {
     echo ""
     echo "Usage: msh <command>"
     echo ""
+    echo "<...> = required"
+    echo "[...] = optional"
+    echo ""
     echo "Commands:"
-    echo "  version, v   Print the version of the myshell"
-    echo "  help, h      Get help for the myshell"
-    echo "  setup        Setup the myshell"
+    alias_help 
+    help_help
+    list_help
+}
+
+# Print help for the help command
+function help_help {
+    echo "  <help|h> [command] - Get help for myshell"
+    echo "      command - The command to get help for"
+    echo ""
 }
 
 function h {

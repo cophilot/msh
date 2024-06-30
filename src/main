@@ -15,8 +15,6 @@ args=${@:2}
 
 handle_dev_mode $args
 
-echo "$HOME_DIR"
-
 if [ -z $sub_command ]; then
     echo "Usage: msh <command>"
     echo "Run '$0 help' for more information"

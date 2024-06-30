@@ -9,7 +9,8 @@ function list {
 
 # Print help for the list command
 function list_help {
-    echo "  [list|ls] description"
+    echo "  <list|ls> - List all available commands"
+    echo ""
 }
 
 # Short form of the list command
