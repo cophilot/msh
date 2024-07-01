@@ -24,7 +24,7 @@ fi
 # check if function with the name of the sub_command exists
 if declare -f $sub_command > /dev/null; then
     # call the function with the name of the sub_command and pass the args
-    $sub_command $args
+    $sub_command "$args"
 else
     echo "Command not found: $sub_command"
     echo "Run '$0 help' for more information"

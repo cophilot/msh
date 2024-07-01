@@ -1,0 +1,22 @@
+#!/bin/bash
+
+###START###
+
+function remove {
+    echo "Not implemented: remove"
+    exit 1
+}
+
+# Print help for the remove command
+function remove_help {
+    echo "  <remove|rm> <command> - Remove a command"
+    echo "      command - The name of the command to remove"
+    echo ""
+}
+
+# Short form of the remove command
+function rm {
+    remove $*
+}
+
+###END###

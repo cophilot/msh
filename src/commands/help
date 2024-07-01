@@ -19,8 +19,9 @@ function help {
 
 # Print help for the help command
 function help_help {
-    echo "  <help|h> [command] - Get help for myshell"
-    echo "      command - The command to get help for"
+    #echo "  <help|h> [command] - Get help for myshell"
+    #echo "      command - The command to get help for"
+    echo "  <help|h> - Get help for myshell"
     echo ""
 }
 

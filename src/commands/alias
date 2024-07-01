@@ -3,10 +3,40 @@
 ###START###
 
 function alias {
-    echo "Not implemented: alias"
-    args=$*
-    echo "args: $args"
-    exit 1
+    new_command=$1
+    command=$2
+    description=$3
+
+    if [ -z "$new_command" ]; then
+        alias_help
+        echo "Name of the new command specified!"
+        exit 1
+    fi
+    if [ -z "$command" ]; then
+        alias_help
+        echo "Command to create an alias for not specified!"
+        exit 1
+    fi
+
+    if [ -z "$description" ]; then
+        description="Alias for '$command'"
+    fi
+
+    check_if_command_exists $new_command
+
+    script_file=$HOME_DIR/$new_command
+
+    # check if home directory exists
+    if [ ! -d "$HOME_DIR" ]; then
+        mkdir $HOME_DIR
+    fi
+    touch $script_file
+
+    echo "#!/bin/bash" > $script_file
+    echo "#?$description" >> $script_file
+    echo "" >> $script_file
+    echo "$command" >> $script_file
+    chmod +x $script_file
 }
 
 # Print help for the alias command
