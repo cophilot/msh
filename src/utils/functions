@@ -10,16 +10,48 @@ function handle_dev_mode() {
 }
 
 function check_if_command_exists() {
-    if [ -z "$1" ]; then
-        echo "INTERNAL: Command not specified!"
-        exit 1
-    fi
-
     if command -v "$1" &> /dev/null; then
-        echo "Command '$1' does already exist!"
-        exit 1
+        echo "Error: The command '$1' already exists"
+        myexit 1
     fi
+}
 
+# Check if a directory exists if not exit
+# $1 - The directory to check
+function require_dir() {
+    if [ ! -d "$1" ]; then
+        echo "Error: Directory $1 does not exist"
+        myexit 1
+    fi
+}
+
+# Check if a file exists if not exit
+# $1 - The file to check
+function require_file() {
+    if [ ! -f "$1" ]; then
+        echo "Error: File $1 does not exist"
+        myexit 1
+    fi
+}
+
+# Get the specified value at the specified index
+# $1 - The index of the value
+function get_value() {
+    echo "${VALUES[$1]}"
+}
+
+function is_flag_specified() {
+    return $(echo "$@" | grep -q -- "-")
+}
+
+
+# Exit the application with the specified code
+# $1 - The exit code
+function myexit() {
+    if [ "$1" -ne 0 ]; then
+        echo "Run '$0 help' for more information"
+    fi
+    exit $1
 }
 
 ###END###

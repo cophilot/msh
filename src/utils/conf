@@ -2,8 +2,6 @@
 
 ###START###
 
-CONF_FILE="$HOME_DIR/.conf"
-
 # Update the conf file with the values from the .conf.template file
 function update_conf_file() {
     local conf_file_template="$CONF_FILE.template"
@@ -41,7 +39,6 @@ function update_conf_file() {
 
 # Read the conf file and create it if it doesn't exist
 function read_conf_file() {
-    update_conf_file
     if [ -f "$CONF_FILE" ]
     then
         echo "$(cat $CONF_FILE)"
@@ -50,10 +47,16 @@ function read_conf_file() {
     fi
 }
 
+# Get the editor command from the conf file
+function get_editor_command() {
+    local editor_command=$(get_conf "editor_command" "vim")
+    echo "$editor_command"
+}
+
 # Get a configuration value from the conf file
 # $1: name of the configuration
-# $2(optional): If set to 1, the value will be converted to lowercase and normalized
-# $3(optional): default value
+# $2(optional): default value
+# $3(optional): If set to 1, the value will be converted to lowercase and normalized
 function get_conf () {
 
     local name="$1"
@@ -61,18 +64,18 @@ function get_conf () {
 
     if [ -z "$conf_file_content" ]
     then
-        echo "$3"
+        echo "$2"
         return
     fi
 
     local value=$(echo "$conf_file_content" | grep "^$name=" | sed "s,$name=,,")
     if [ -z "$value" ]
     then
-        echo "$3"
+        echo "$2"
         return
     fi
 
-    if [ -n "$2" ] && [ "$2" = "1" ]
+    if [ -n "$3" ] && [ "$3" = "1" ]
     then
         # make the value lowercase
         value=$(echo "$value" | tr '[:upper:]' '[:lower:]')

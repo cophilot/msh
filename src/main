@@ -11,22 +11,37 @@
 ###COMMANDS###
 
 sub_command=$1
+
 args=${@:2}
 
-handle_dev_mode $args
+handle_dev_mode $args ###DEV-MODE###
+
+CONF_FILE="$HOME_DIR/.conf"
+SCRIPTS_DIR="$HOME_DIR/scripts"
 
 if [ -z $sub_command ]; then
     echo "Usage: msh <command>"
-    echo "Run '$0 help' for more information"
-    exit 1
+    myexit 1
 fi
+
+# seperate the args in flags and values
+FLAGS=()
+VALUES=()
+
+for arg in $args; do
+    if [[ $arg == -* ]]; then
+        FLAGS+=("$arg")
+    else
+        VALUES+=("$arg")
+    fi
+done
+
 
 # check if function with the name of the sub_command exists
 if declare -f $sub_command > /dev/null; then
     # call the function with the name of the sub_command and pass the args
-    $sub_command "$args"
+    $sub_command $args
 else
     echo "Command not found: $sub_command"
-    echo "Run '$0 help' for more information"
-    exit 1
+    myexit 1
 fi

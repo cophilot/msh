@@ -4,7 +4,12 @@
 
 # Get help for myshell
 function help {
-    echo "myshell help center"
+    echo "                          __         ____"
+    echo "    ____ ___  __  _______/ /_  ___  / / /"
+    echo "   / __  __ \/ / / / ___/ __ \/ _ \/ / / "
+    echo "  / / / / / / /_/ (__  ) / / /  __/ / /  "
+    echo " /_/ /_/ /_/\__, /____/_/ /_/\___/_/_/   "
+    echo "           /____/ Help center"
     echo ""
     echo "Usage: msh <command>"
     echo ""
@@ -13,8 +18,10 @@ function help {
     echo ""
     echo "Commands:"
     alias_help 
+    edit_help
     help_help
     list_help
+    version_help
 }
 
 # Print help for the help command

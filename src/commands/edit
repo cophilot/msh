@@ -1,0 +1,33 @@
+#!/bin/bash
+
+###START###
+
+function edit {
+    require_dir $SCRIPTS_DIR
+    edcom=$(get_editor_command)
+    script_name=${VALUES[0]}
+
+    if [ -z "$script_name" ]
+    then
+        $edcom $SCRIPTS_DIR
+        return
+    fi
+
+    require_file $SCRIPTS_DIR/$script_name
+
+    $edcom $SCRIPTS_DIR/$script_name
+}
+
+# Print help for the edit command
+function edit_help {
+    echo "  <edit|e> [script-name] - Open a specified or all scripts in the editor"
+    echo "      script-name - If provided, the script with the specified name will be opened in the editor"
+    echo ""
+}
+
+# Short form of the code command
+function e {
+    edit $*
+}
+
+###END###

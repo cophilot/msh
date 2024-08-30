@@ -3,48 +3,35 @@
 ###START###
 
 function alias {
-    new_command=$1
-    command=$2
-    description=$3
+    require_dir $SCRIPTS_DIR
+    script_name=${VALUES[0]}
+    cmd_name=${VALUES[1]}
 
-    if [ -z "$new_command" ]; then
-        alias_help
-        echo "Name of the new command specified!"
-        exit 1
+    if [ -z "$script_name" ]
+    then
+        echo "Error: Please provide the name for the new-script"
+        myexit 1
     fi
-    if [ -z "$command" ]; then
-        alias_help
-        echo "Command to create an alias for not specified!"
-        exit 1
-    fi
-
-    if [ -z "$description" ]; then
-        description="Alias for '$command'"
+    if [ -z "$cmd_name" ]; then
+        echo "Error: Please provide the command to create an alias for"
+        myexit 1
     fi
 
     check_if_command_exists $new_command
+    description="Alias for '$cmd_name'"
+    cmd2="$cmd_name \$*"
+    cmd1='echo "$cmd2"'
 
-    script_file=$HOME_DIR/$new_command
+    create_new_script $SCRIPTS_DIR $script_name "$description" "$cmd1" "$cmd2"
 
-    # check if home directory exists
-    if [ ! -d "$HOME_DIR" ]; then
-        mkdir $HOME_DIR
-    fi
-    touch $script_file
-
-    echo "#!/bin/bash" > $script_file
-    echo "#?$description" >> $script_file
-    echo "" >> $script_file
-    echo "$command" >> $script_file
-    chmod +x $script_file
+    echo "Alias script '$script_name' created"
 }
 
 # Print help for the alias command
 function alias_help {
-    echo "  <alias|a> <new-command> <command> [description] - Create a new alias for a command"
+    echo "  <alias|a> <new-script> <command> - Create a new alias for a command"
     echo "      new-command - The name of the new command to create"
     echo "      command - The command to create an alias for"
-    echo "      description - The for the command"
     echo ""
 }
 

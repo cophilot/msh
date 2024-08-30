@@ -3,13 +3,26 @@
 ###START###
 
 function new {
-    echo "Not implemented: new"
-    exit 1
+    require_dir $SCRIPTS_DIR
+    script_name=${VALUES[0]}
+    if [ -z "$script_name" ]
+    then
+        echo "Error: Please provide the name for the new-script"
+        myexit 1
+    fi
+
+    check_if_command_exists $script_name
+
+    create_new_script $SCRIPTS_DIR $script_name
+
+    echo "Script '$script_name' created"
 }
 
 # Print help for the new command
 function new_help {
-    echo "  [new|n] description"
+    echo "  <new|n> <new-script> - Create a new script"
+    echo "      script-name - The name of the script to create"
+    echo ""
 }
 
 # Short form of the new command

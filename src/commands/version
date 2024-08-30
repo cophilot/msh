@@ -4,11 +4,23 @@
 
 # Print the version of the myshell
 function version {
-    echo "myshell version $version"
+    echo "                          __         ____"
+    echo "    ____ ___  __  _______/ /_  ___  / / /"
+    echo "   / __  __ \/ / / / ___/ __ \/ _ \/ / / "
+    echo "  / / / / / / /_/ (__  ) / / /  __/ / /  "
+    echo " /_/ /_/ /_/\__, /____/_/ /_/\___/_/_/   "
+    echo "           /____/ v$version"
+    echo ""
 }
 
 function v {
     version $*
+}
+
+# Print help for the version command
+function version_help {
+    echo "  <version|v> - Print the version of the myshell"
+    echo ""
 }
 
 
