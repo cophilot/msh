@@ -2,9 +2,36 @@
 
 ###START###
 
-function list {
-    echo "Not implemented: list"
-    exit 1
+function list_command {
+    require_dir $SCRIPTS_DIR
+    all_scripts=$(ls $SCRIPTS_DIR)
+
+    if [ -z "$all_scripts" ]
+    then
+        echo "No scripts found in $SCRIPTS_DIR"
+        myexit 0
+    fi
+    
+    echo "Available scripts:"
+
+    for script in $all_scripts
+    do
+        description=$(cat "$SCRIPTS_DIR/$script" | grep -m 1 -o "#??.*")
+        tags=$(cat "$SCRIPTS_DIR/$script" | grep -m 1 -o "#&&.*")
+        tags="[${tags:3}]"
+
+        if [ -n "$description" ]
+        then
+            description="${description:3}"
+        fi
+
+        if [ "$tags" == "[]" ]
+        then
+            tags=""
+        fi
+        printf "  %-20s %s %s\n" "$script" "$description" "$tags"
+    done
+
 }
 
 # Print help for the list command
@@ -14,8 +41,8 @@ function list_help {
 }
 
 # Short form of the list command
-function ls {
-    list $*
+function ls_command {
+    list_command $*
 }
 
 ###END###

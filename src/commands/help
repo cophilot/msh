@@ -3,7 +3,7 @@
 ###START###
 
 # Get help for myshell
-function help {
+function help_command {
     echo "                          __         ____"
     echo "    ____ ___  __  _______/ /_  ___  / / /"
     echo "   / __  __ \/ / / / ___/ __ \/ _ \/ / / "
@@ -32,8 +32,8 @@ function help_help {
     echo ""
 }
 
-function h {
-    help $*
+function h_command {
+    help_command $*
 }
 
 ###END###

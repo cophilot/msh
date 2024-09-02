@@ -29,6 +29,7 @@ function create_new_script() {
     fi
     description="#??$description"
     echo "$description" >> $script_file
+    echo "#&&TAGS" >> $script_file
     echo "" >> $script_file
     if [ -n "$4" ]
     then

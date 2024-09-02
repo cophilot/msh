@@ -2,7 +2,7 @@
 
 ###START###
 
-function alias {
+function alias_command {
     require_dir $SCRIPTS_DIR
     script_name=${VALUES[0]}
     cmd_name=${VALUES[1]}
@@ -24,7 +24,7 @@ function alias {
 
     create_new_script $SCRIPTS_DIR $script_name "$description" "$cmd1" "$cmd2"
 
-    echo "Alias script '$script_name' created"
+    echo "Alias script '$script_name' created ($SCRIPTS_DIR/$script_name)"
 }
 
 # Print help for the alias command
@@ -36,8 +36,8 @@ function alias_help {
 }
 
 # Short form of the alias command
-function a {
-    alias $*
+function a_command {
+    alias_command $*
 }
 
 ###END###

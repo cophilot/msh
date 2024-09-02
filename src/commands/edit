@@ -2,7 +2,7 @@
 
 ###START###
 
-function edit {
+function edit_command {
     require_dir $SCRIPTS_DIR
     edcom=$(get_editor_command)
     script_name=${VALUES[0]}
@@ -26,8 +26,8 @@ function edit_help {
 }
 
 # Short form of the code command
-function e {
-    edit $*
+function e_command {
+    edit_command $*
 }
 
 ###END###

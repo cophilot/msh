@@ -2,7 +2,7 @@
 
 ###START###
 
-function new {
+function new_command {
     require_dir $SCRIPTS_DIR
     script_name=${VALUES[0]}
     if [ -z "$script_name" ]
@@ -15,7 +15,7 @@ function new {
 
     create_new_script $SCRIPTS_DIR $script_name
 
-    echo "Script '$script_name' created"
+    echo "Script '$script_name' created ($SCRIPTS_DIR/$script_name)"
 }
 
 # Print help for the new command
@@ -26,8 +26,8 @@ function new_help {
 }
 
 # Short form of the new command
-function n {
-    new $*
+function n_command {
+    new_command $*
 }
 
 ###END###

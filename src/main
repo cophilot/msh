@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# ******************************
-# *** Welcome to the myshell ***
-# ******************************
+# **************************
+# *** Welcome to myshell ***
+# **************************
 
 ###ENV###
 
@@ -41,7 +41,15 @@ done
 if declare -f $sub_command > /dev/null; then
     # call the function with the name of the sub_command and pass the args
     $sub_command $args
-else
-    echo "Command not found: $sub_command"
-    myexit 1
+    myexit 0
 fi
+# check if function with the name of the sub_command_alias exists
+sub_command_alias="${sub_command}_command"
+if declare -f $sub_command_alias > /dev/null; then
+    $sub_command_alias $args
+    myexit 0
+fi
+
+echo "Command not found: $sub_command"
+myexit 1
+    
