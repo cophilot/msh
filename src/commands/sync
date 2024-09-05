@@ -1,0 +1,22 @@
+#!/bin/bash
+
+###START###
+
+function sync_command {
+    logE "Not implemented: sync"
+    myexit 1
+}
+
+# Print help for the sync command
+function sync_help {
+    log "  sync|s [collection-name] [flag] - Synchronize the collections"
+    log "      arg - description"
+    log ""
+}
+
+# Short form of the sync command
+function s_command {
+    sync_command $*
+}
+
+###END###

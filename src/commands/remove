@@ -2,21 +2,21 @@
 
 ###START###
 
-function remove {
-    echo "Not implemented: remove"
-    exit 1
+function remove_command {
+    logE "Not implemented: remove"
+    myexit 1
 }
 
 # Print help for the remove command
 function remove_help {
-    echo "  <remove|rm> <command> - Remove a command"
-    echo "      command - The name of the command to remove"
-    echo ""
+    log "  remove|rm <command> - Remove a command"
+    log "      command - The name of the command to remove"
+    log ""
 }
 
 # Short form of the remove command
-function rm {
-    remove $*
+function rm_command {
+    remove_command $*
 }
 
 ###END###

@@ -15,7 +15,7 @@ function create_new_script() {
     script_file="$sc_dir/$sc_name"
     if [ -f "$script_file" ]
     then
-        echo "Error: The script '$sc_name' already exists"
+        logE "The script '$sc_name' already exists"
         myexit 1
     fi
 

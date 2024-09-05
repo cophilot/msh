@@ -2,16 +2,26 @@
 
 ###START###
 
-# Handle the development mode
-function handle_dev_mode() {
-    if [[ "$@" == *"-dev"* ]]; then
-        HOME_DIR="$(pwd)/.myshell"
+# Check if the function exists and run it. If it does exist, exit the application
+# $1 - The function to run
+# $2 - The arguments to pass to the function
+function dynamic_run_and_exit() {
+    if declare -f $1 > /dev/null; then
+        $1 $2
+        myexit 0
     fi
 }
 
+# Handle the development mode ###DEV-MODE###
+function handle_dev_mode() { ###DEV-MODE###
+    if [[ "$@" == *"-dev"* ]]; then ###DEV-MODE###
+        HOME_DIR="$(pwd)/.myshell" ###DEV-MODE###
+    fi ###DEV-MODE###
+} ###DEV-MODE###
+
 function check_if_command_exists() {
     if command -v "$1" &> /dev/null; then
-        echo "Error: The command '$1' already exists"
+        logE "The command '$1' already exists"
         myexit 1
     fi
 }
@@ -20,7 +30,7 @@ function check_if_command_exists() {
 # $1 - The directory to check
 function require_dir() {
     if [ ! -d "$1" ]; then
-        echo "Error: Directory $1 does not exist"
+        logE "Directory $1 does not exist"
         myexit 1
     fi
 }
@@ -29,21 +39,17 @@ function require_dir() {
 # $1 - The file to check
 function require_file() {
     if [ ! -f "$1" ]; then
-        echo "Error: File $1 does not exist"
+        logE "File $1 does not exist"
         myexit 1
     fi
 }
 
-# Get the specified value at the specified index
-# $1 - The index of the value
-function get_value() {
-    echo "${VALUES[$1]}"
+function require_git() {
+    if ! command -v git &> /dev/null; then
+        logE "Git is not installed"
+        myexit 1
+    fi
 }
-
-function is_flag_specified() {
-    return $(echo "$@" | grep -q -- "-")
-}
-
 
 # Exit the application with the specified code
 # $1 - The exit code

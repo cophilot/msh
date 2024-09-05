@@ -2,12 +2,23 @@
 
 ###START###
 
-LOG_FILE="$HOME_DIR/.log"
+function log() {
+    if [ "$(is_flag_specified '--quiet' '--q')" == "true" ]
+    then
+        return
+    fi
+    echo "$1"
+}
+
+function logE {
+    # print error message in red
+    echo -e "\033[0;31mError:\033[0m $1"
+}
 
 # Log a message if verbose is enabled
 # $1: message
 # $2(optional): force the message to be logged
-function log() {
+function log2() {
     local message="$1"
     local is_verbose=$(get_conf verbose 1)
     

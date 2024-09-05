@@ -3,26 +3,46 @@
 ###START###
 
 function new_command {
-    require_dir $SCRIPTS_DIR
+    require_dir $HOME_DIR
     script_name=${VALUES[0]}
     if [ -z "$script_name" ]
     then
-        echo "Error: Please provide the name for the new-script"
+        logE "Please provide the name for the new script"
+        myexit 1
+    fi
+
+    collection_name=${VALUES[1]}
+    if [ -z "$collection_name" ]
+    then
+        collection_name="scripts"
+    elif [ ! -d "$HOME_DIR/$collection_name" ]
+    then
+        logE "Collection '$collection_name' does not exist"
         myexit 1
     fi
 
     check_if_command_exists $script_name
 
-    create_new_script $SCRIPTS_DIR $script_name
+    sc_dir="$HOME_DIR/$collection_name"
 
-    echo "Script '$script_name' created ($SCRIPTS_DIR/$script_name)"
+    create_new_script $sc_dir $script_name
+
+    log "Script '$script_name' created ($sc_dir/$script_name)"
+    if [ "$(is_flag_specified '-edit' '-e')" == "true" ]
+    then
+        edcom=$(get_editor_command)
+        $edcom $sc_dir/$script_name
+    fi
 }
 
 # Print help for the new command
 function new_help {
-    echo "  <new|n> <new-script> - Create a new script"
-    echo "      script-name - The name of the script to create"
-    echo ""
+    log "  new|n <new-script> [collection-name] [flags]- Create a new script"
+    log "      script-name - The name of the script to create"
+    log "      collection-name - The name of the collection to add the script to. Default is 'scripts'"
+    log "      Flags:"
+    log "          -edit|-e - Open the script in the editor after creation"
+    log ""
 }
 
 # Short form of the new command

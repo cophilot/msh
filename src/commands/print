@@ -1,0 +1,42 @@
+#!/bin/bash
+
+###START###
+
+function print_command {
+    require_dir $HOME_DIR
+    p_comm=$(get_print_command)
+    script_name=${VALUES[0]}
+
+    if [ -z "$script_name" ]
+    then
+        logE "Please provide the name of the script to print"
+        myexit 1
+    fi
+
+    if command -v "$script_name" &> /dev/null; then
+        file_location=$(which $script_name)
+        $p_comm $file_location
+        myexit 0
+    fi
+
+    if [ -f "$HOME_DIR/scripts/$script_name" ]; then
+        $p_comm $HOME_DIR/scripts/$script_name
+        myexit 0
+    fi
+    logE "Script '$script_name' not found"
+    myexit 1
+}
+
+# Print help for the print command
+function print_help {
+    log "  print|p <script-name> - Print the contents of a script"
+    log "      script-name - The name of the script to print"
+    log ""
+}
+
+# Short form of the print command
+function p_command {
+    print_command $*
+}
+
+###END###

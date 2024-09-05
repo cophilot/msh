@@ -3,24 +3,24 @@
 ###START###
 
 # Print the version of the myshell
-function version {
-    echo "                          __         ____"
-    echo "    ____ ___  __  _______/ /_  ___  / / /"
-    echo "   / __  __ \/ / / / ___/ __ \/ _ \/ / / "
-    echo "  / / / / / / /_/ (__  ) / / /  __/ / /  "
-    echo " /_/ /_/ /_/\__, /____/_/ /_/\___/_/_/   "
-    echo "           /____/ v$version"
-    echo ""
+function version_command {
+    log "                          __         ____"
+    log "    ____ ___  __  _______/ /_  ___  / / /"
+    log "   / __  __ \/ / / / ___/ __ \/ _ \/ / / "
+    log "  / / / / / / /_/ (__  ) / / /  __/ / /  "
+    log " /_/ /_/ /_/\__, /____/_/ /_/\___/_/_/   "
+    log "           /____/ v$version"
+    log ""
 }
 
-function v {
-    version $*
+function v_command {
+    version_command $*
 }
 
 # Print help for the version command
 function version_help {
-    echo "  <version|v> - Print the version of the myshell"
-    echo ""
+    log "  version|v - Print the version of myshell"
+    log ""
 }
 
 

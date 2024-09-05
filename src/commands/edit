@@ -3,26 +3,34 @@
 ###START###
 
 function edit_command {
-    require_dir $SCRIPTS_DIR
+    require_dir $HOME_DIR
     edcom=$(get_editor_command)
     script_name=${VALUES[0]}
 
     if [ -z "$script_name" ]
     then
-        $edcom $SCRIPTS_DIR
-        return
+        $edcom $HOME_DIR
+        myexit 0
     fi
 
-    require_file $SCRIPTS_DIR/$script_name
+    if command -v "$script_name" &> /dev/null; then
+        file_location=$(which $script_name)
+        $edcom $file_location
+        myexit 0
+    fi
 
-    $edcom $SCRIPTS_DIR/$script_name
+    if [ -f "$HOME_DIR/scripts/$script_name" ]; then
+        $edcom $HOME_DIR/scripts/$script_name
+        myexit 0
+    fi
+    log "Error: Script '$script_name' not found"
 }
 
 # Print help for the edit command
 function edit_help {
-    echo "  <edit|e> [script-name] - Open a specified or all scripts in the editor"
-    echo "      script-name - If provided, the script with the specified name will be opened in the editor"
-    echo ""
+    log "  edit|e [script-name] - Open a specified or all scripts in the editor"
+    log "      script-name - If provided, the script with the specified name will be opened in the editor"
+    log ""
 }
 
 # Short form of the code command

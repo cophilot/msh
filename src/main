@@ -17,7 +17,13 @@ args=${@:2}
 handle_dev_mode $args ###DEV-MODE###
 
 CONF_FILE="$HOME_DIR/.conf"
+MSHRC_FILE="$HOME_DIR/.mshrc"
 SCRIPTS_DIR="$HOME_DIR/scripts"
+
+BASHRC_FILE="~/.bashrc"
+if [ -f ~/.zshrc ]; then
+    BASHRC_FILE="~/.zshrc"
+fi
 
 if [ -z $sub_command ]; then
     echo "Usage: msh <command>"
@@ -36,20 +42,9 @@ for arg in $args; do
     fi
 done
 
+dynamic_run_and_exit $sub_command $args
+dynamic_run_and_exit "${sub_command}_command" $args
 
-# check if function with the name of the sub_command exists
-if declare -f $sub_command > /dev/null; then
-    # call the function with the name of the sub_command and pass the args
-    $sub_command $args
-    myexit 0
-fi
-# check if function with the name of the sub_command_alias exists
-sub_command_alias="${sub_command}_command"
-if declare -f $sub_command_alias > /dev/null; then
-    $sub_command_alias $args
-    myexit 0
-fi
-
-echo "Command not found: $sub_command"
+logE "Command not found: $sub_command"
 myexit 1
     

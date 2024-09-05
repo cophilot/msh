@@ -1,0 +1,42 @@
+#!/bin/bash
+
+###START###
+
+function collection_clone_command {
+    require_git
+
+    col_url=${VALUES[1]}
+    col_name=${VALUES[2]}
+
+    if [ -z "$col_url" ]; then
+        logE "Error No URL provided"
+        myexit 1
+    fi
+
+    if [ -z "$col_name" ]; then
+        col_name=$(basename $col_url)
+        col_name=${col_name%.*}
+    fi
+
+    cd $HOME_DIR
+    git clone $col_url $col_name 2> /dev/null
+    add_collection_to_mshrc $col_name
+    log ""
+    log "Collection '$col_name' cloned ($HOME_DIR/$col_name)"
+    log "Run 'source $BASHRC_FILE' to activate the new collection"
+}
+
+# Print help for the collectionclone command
+function collection_clone_help {
+    log "  collection|c clone|c <url> [collection-name] - Clone a collection from a git repository"
+    log "      url - The URL of the git repository to clone"
+    log "      collection-name - The name of the collection to create. Default is the name of the repository"
+    log ""
+}
+
+# Short form of the collectionclone command
+function collection_c_command {
+    collection_clone_command $*
+}
+
+###END###

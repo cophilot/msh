@@ -3,17 +3,17 @@
 ###START###
 
 function alias_command {
-    require_dir $SCRIPTS_DIR
+    require_dir $HOME_DIR
     script_name=${VALUES[0]}
     cmd_name=${VALUES[1]}
 
     if [ -z "$script_name" ]
     then
-        echo "Error: Please provide the name for the new-script"
+        log "Please provide the name for the new-script"
         myexit 1
     fi
     if [ -z "$cmd_name" ]; then
-        echo "Error: Please provide the command to create an alias for"
+        log "Please provide the command to create an alias for"
         myexit 1
     fi
 
@@ -24,15 +24,15 @@ function alias_command {
 
     create_new_script $SCRIPTS_DIR $script_name "$description" "$cmd1" "$cmd2"
 
-    echo "Alias script '$script_name' created ($SCRIPTS_DIR/$script_name)"
+    log "Alias script '$script_name' created ($SCRIPTS_DIR/$script_name)"
 }
 
 # Print help for the alias command
 function alias_help {
-    echo "  <alias|a> <new-script> <command> - Create a new alias for a command"
-    echo "      new-command - The name of the new command to create"
-    echo "      command - The command to create an alias for"
-    echo ""
+    log "  alias|a <new-script> <command> - Create a new alias for a command"
+    log "      new-command - The name of the new command to create"
+    log "      command - The command to create an alias for"
+    log ""
 }
 
 # Short form of the alias command

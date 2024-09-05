@@ -3,13 +3,13 @@
 ###START###
 
 function upgrade {
-    echo "Not implemented: upgrade"
-    exit 1
+    logE "Not implemented: upgrade"
+    myexit 1
 }
 
 # Print help for the upgrade command
 function upgrade_help {
-    echo "  upgrade description"
+    log "  upgrade description"
 }
 
 ###END###

@@ -1,0 +1,30 @@
+#!/bin/bash
+
+###START###
+
+function collection_command {
+    comm=${VALUES[0]}
+    if [ -z "$comm" ]; then
+        logE "Please provide a sub-command"
+        myexit 1
+    fi
+    comm_fn="collection_${comm}_command"
+    dynamic_run_and_exit $comm_fn $args
+
+    logE "Command not found: collection $comm"
+    myexit 1
+}
+
+# Print help for the collection command
+function collection_help {
+    collection_clone_help
+    collection_list_help
+    collection_new_help
+}
+
+# Short form of the collection command
+function c_command {
+    collection_command $*
+}
+
+###END###

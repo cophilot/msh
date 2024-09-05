@@ -5,14 +5,20 @@
 function list_command {
     require_dir $SCRIPTS_DIR
     all_scripts=$(ls $SCRIPTS_DIR)
+    filter_tag=${VALUES[0]}
 
     if [ -z "$all_scripts" ]
     then
-        echo "No scripts found in $SCRIPTS_DIR"
+        log "No scripts found in $SCRIPTS_DIR"
         myexit 0
     fi
     
-    echo "Available scripts:"
+    if [ -n "$filter_tag" ]
+    then
+        log "Filtering by tag: $filter_tag"
+    fi
+
+    log "Available scripts:"
 
     for script in $all_scripts
     do
@@ -36,8 +42,9 @@ function list_command {
 
 # Print help for the list command
 function list_help {
-    echo "  <list|ls> - List all available commands"
-    echo ""
+    log "  list|ls [tag] - List all available commands"
+    log "      tag - If provided, only scripts with the specified tag will be listed"
+    log ""
 }
 
 # Short form of the list command
