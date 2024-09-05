@@ -7,6 +7,7 @@
 # path: The path where the file should be generated based on the project root (you can also use placeholders like $$name$$)
 
 description:A new subcommand
-path:src/commands
+path:src/commands$$subfolder$$
 
+var:subfolder(/)
 var:shortform(none)

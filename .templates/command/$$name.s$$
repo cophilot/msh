@@ -1,0 +1,22 @@
+#!/bin/bash
+
+###START###
+
+function $$name.lower$$_command {
+    logE "Not implemented: $$name.lower$$"
+    myexit 1
+}
+
+# Print help for the $$name.lower$$ command
+function $$name.lower$$_help {
+    log "  $$name.lower$$|$$shortform.lower$$ <arg> - description"
+    log "      arg - description"
+    log ""
+}
+
+# Short form of the $$name.lower$$ command
+function $$shortform.lower$$_command {
+    $$name.lower$$_command $*
+}
+
+###END###
