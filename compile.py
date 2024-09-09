@@ -17,6 +17,8 @@ MAIN_FILE = "src/main"
 UTILS_DIR = "src/utils"
 COMMANDS_DIR = "src/commands"
 ENV_FILE = ".phil-project"
+COMPILE_DEV_MODE = False
+
 
 def main():
     """
@@ -32,17 +34,34 @@ def main():
     main_content = inject_file(main_content, ENV_FILE, "###ENV###")
     main_content = inject_dir(main_content, COMMANDS_DIR, "###COMMANDS###")
     main_content = inject_dir(main_content, UTILS_DIR, "###UTILS###")
+    if not COMPILE_DEV_MODE:
+        main_content = remove_dev_mode_code(main_content)
+    else:
+        log("*Compiling in development mode*")
+    # create the out directory if it does not exist
+    base_dir = os.path.dirname(OUT_FILE)
+    if not os.path.exists(base_dir):
+        os.makedirs(base_dir)
 
     write_out_file(main_content, OUT_FILE)
     make_file_executable(OUT_FILE)
-    
+
     if TO_BINARY:
         make_binary(OUT_FILE)
 
-    log("Compiled successfully: " + "\033[92m"+OUT_FILE+"\033[0m")
+    log("Compiled successfully: " + "\033[92m" + OUT_FILE + "\033[0m")
     log()
 
-def inject_dir(main_content:str, dir_path: str, placeholder: str, with_bounds = True, start_bound="###START###", end_bound="###END###") -> str:
+
+def inject_dir(
+    main_content: str,
+    dir_path: str,
+    placeholder: str,
+    with_bounds=True,
+    start_bound="###START###",
+    end_bound="###END###",
+    only_return_content=False,
+) -> str:
     """
     inject the content of the files in the directory into the main content
     """
@@ -51,14 +70,52 @@ def inject_dir(main_content:str, dir_path: str, placeholder: str, with_bounds = 
     result = ""
 
     for file in files:
+        # if file is a directory recursively inject the content
+        if os.path.isdir(dir_path + "/" + file):
+            result += inject_dir(
+                main_content,
+                dir_path + "/" + file,
+                placeholder,
+                with_bounds,
+                start_bound,
+                end_bound,
+                only_return_content=True,
+            )
+            continue
         if with_bounds:
-            result += read_file_with_bounds(dir_path + "/" + file, start_bound, end_bound)
+            result += read_file_with_bounds(
+                dir_path + "/" + file, start_bound, end_bound
+            )
         else:
             result += read_file(dir_path + "/" + file)
-
+    if only_return_content:
+        return result
     return main_content.replace(placeholder, result)
 
-def inject_file(main_content:str, file_path: str, placeholder: str, with_bounds = True, start_bound="###START###", end_bound="###END###") -> str:
+
+def remove_dev_mode_code(content: str) -> str:
+    """
+    remove the dev mode code from the content
+    """
+    new_content = ""
+
+    for line in content.split("\n"):
+        if "###DEV-MODE###" in line:
+            continue
+
+        new_content += line + "\n"
+
+    return new_content
+
+
+def inject_file(
+    main_content: str,
+    file_path: str,
+    placeholder: str,
+    with_bounds=True,
+    start_bound="###START###",
+    end_bound="###END###",
+) -> str:
     """
     inject the environment variables into the main content
     """
@@ -69,11 +126,13 @@ def inject_file(main_content:str, file_path: str, placeholder: str, with_bounds 
         result = read_file(file_path)
     return main_content.replace(placeholder, result)
 
+
 def make_file_executable(file: str):
     """
     make the file executable
     """
     os.system("chmod +x " + file)
+
 
 def write_out_file(content: str, path: str):
     """
@@ -81,6 +140,7 @@ def write_out_file(content: str, path: str):
     """
     with open(path, "w", encoding="utf-8") as file:
         file.write(content)
+
 
 def read_file_with_bounds(file_path: str, start: str, end: str):
     """
@@ -116,6 +176,7 @@ def read_file(file_path: str):
         print("Error: file not found: ", file_path)
     sys.exit(1)
 
+
 def make_binary(file: str):
     """
     make the file a binary
@@ -127,7 +188,7 @@ def make_binary(file: str):
     os.system("rm " + file + ".x.c")
     os.system("rm " + file)
     os.system("mv " + file + ".bin " + file)
-    
+
 
 def set_args():
     """
@@ -136,14 +197,14 @@ def set_args():
 
     args = sys.argv
 
-    for  index, arg in enumerate(args):
+    for index, arg in enumerate(args):
         if arg == "-out" or arg == "-o":
-            if index+1 >= len(args):
+            if index + 1 >= len(args):
                 print("Error: no output file specified")
                 sys.exit(1)
 
             global OUT_FILE
-            OUT_FILE = args[index+1]
+            OUT_FILE = args[index + 1]
         if arg == "-q" or arg == "-quiet":
             global QUIET
             QUIET = True
@@ -153,6 +214,10 @@ def set_args():
         if arg == "-h" or arg == "-help":
             print_help()
             sys.exit(0)
+        if arg == "-dev-mode":
+            global COMPILE_DEV_MODE
+            COMPILE_DEV_MODE = True
+
 
 def print_help():
     """
@@ -164,7 +229,9 @@ def print_help():
     print("  -h, -help          print this help message")
     print("  -out, -o <file>    specify the output file")
     print("  -q, -quiet         run in quiet mode")
-    print("  -b, -binary        compile to a binary")
+    print("  -b, -binary        compile to binary")
+    print("  -dev-mode          compile in development mode")
+
 
 def log(message: str = ""):
     """
@@ -174,6 +241,6 @@ def log(message: str = ""):
     if not QUIET:
         print(message)
 
+
 if __name__ == "__main__":
     main()
-    

@@ -1,1 +1,2 @@
-editor_command:vim
+editor_command=vim
+print_command=cat

@@ -1,0 +1,51 @@
+#!/bin/bash
+
+echo "                          __         ____"
+echo "    ____ ___  __  _______/ /_  ___  / / /"
+echo "   / __  __ \/ / / / ___/ __ \/ _ \/ / / "
+echo "  / / / / / / /_/ (__  ) / / /  __/ / /  "
+echo " /_/ /_/ /_/\__, /____/_/ /_/\___/_/_/   "
+echo "           /____/ Installer"
+echo ""
+
+cd ~
+mkdir .myshell -p
+cd .myshell
+mkdir bin -p
+
+# Add scripts
+curl -s https://raw.githubusercontent.com/cophilot/msh/main/uninstall > bin/uninstall
+chmod +x bin/uninstall
+curl -s https://raw.githubusercontent.com/cophilot/msh/main/update > bin/update
+chmod +x bin/update
+
+# Add myshell script
+url=https://github.com/cophilot/msh/releases/download/latest/msh
+curl -sL $url > bin/msh
+chmod +x bin/msh
+
+# Add scripts directory
+mkdir scripts -p
+
+# Add configuration files
+curl -s https://raw.githubusercontent.com/cophilot/msh/main/.conf.template > .conf
+
+curl -s https://raw.githubusercontent.com/cophilot/msh/main/.mshrc.template > .mshrc
+chmod +x .mshrc
+
+curl -s https://raw.githubusercontent.com/cophilot/msh/main/LICENSE > LICENSE
+
+# Edit .bashrc/.zshrc
+rc_file="~/.bashrc"
+if [ -f ~/.zshrc ]; then
+    rc_file="~/.zshrc"
+fi
+
+if ! grep -q "export MSH_HOME*" $rc_file; then
+    echo "" >> $rc_file
+    echo 'export MSH_HOME="~/myshell"' >> $rc_file
+fi
+
+if ! grep -q "source \$MSH_HOME/.mshrc" $rc_file; then
+    echo 'source $MSH_HOME/.mshrc' >> $rc_file
+fi

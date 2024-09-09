@@ -5,17 +5,5 @@ echo "    ____ ___  __  _______/ /_  ___  / / /"
 echo "   / __  __ \/ / / / ___/ __ \/ _ \/ / / "
 echo "  / / / / / / /_/ (__  ) / / /  __/ / /  "
 echo " /_/ /_/ /_/\__, /____/_/ /_/\___/_/_/   "
-echo "           /____/ DEV MODE"
+echo "           /____/ Update"
 echo ""
-
-# Compile program
-python compile.py -o out/msh -dev-mode
-
-# check if file exists
-if [ ! -f out/msh ]; then
-    echo "🚨🚨🚨 Error: Compilation failed"
-    exit 1
-fi
-
-# Run program
-./out/msh $* -dev-mode

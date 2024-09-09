@@ -1,0 +1,38 @@
+name: New Release
+
+on:
+    push:
+        tags:
+            - '*'
+
+jobs:
+    upload-release:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  ref: main
+
+            - name: Install Python
+              uses: actions/setup-python@v2
+              with:
+                  python-version: '3.x'
+
+            - name: Compile
+              run: python compile.py -o out/msh
+
+            - name: Get Changelog Entry
+              id: changelog_reader
+              uses: mindsers/changelog-reader-action@v2
+              with:
+                  validation_depth: 10
+                  version: ${{ steps.tag_name.outputs.current_version }}
+                  path: ./CHANGELOG.md
+
+            - name: Create release
+              uses: ncipollo/release-action@v1
+              with:
+                  artifacts: |
+                      out/msh
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  body: ${{ steps.changelog_reader.outputs.changes }}

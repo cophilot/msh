@@ -1,9 +1,9 @@
 <div align="center">
   <br />
-  <img src="assets/logo.png" alt="mshLogo" width="40%"/>
-  <h1>myshell</h1>
+  <img src="assets/logo.png" alt="mshLogo" width="30%"/>
+  <h1>my$hell</h1>
   <p>
-     A tool to manage your custom shell scripts.
+     A tool to manage your custom shell scripts on linux.
   </p>
 </div>
 
@@ -25,14 +25,13 @@
 
 ---
 
--   [Bugs](#bugs)
--   [Release Notes](#release-notes)
+## Installation
 
----
+Run the following command to install `msh`:
 
-## Bugs
-
--   _no known bugs_
+```bash
+curl -s https://raw.githubusercontent.com/cophilot/msh/main/install | bash -s
+```
 
 ---
 

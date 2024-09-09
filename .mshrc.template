@@ -1,0 +1,4 @@
+./$MSH_HOME/bin/msh sync --q
+
+export $PATH="$PATH:$MSH_HOME/bin"
+export $PATH="$PATH:$MSH_HOME/scripts"

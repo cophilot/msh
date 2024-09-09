@@ -1,0 +1,32 @@
+#!/bin/bash
+
+echo "Are you sure you want to uninstall myshell? [y/n]"
+
+read answer
+
+if [ "$answer" != "${answer#[Nn]}" ] ;then
+    eciho "Uninstall cancelled"
+    exit 0
+elif [ "$answer" != "${answer#[Yy]}" ] ;then
+    echo "Uninstalling..."
+else
+    echo "Invalid input"
+    exit 1
+fi
+
+sudo rm -rf $MSH_HOME
+
+rc_file="./.bashrc"
+if [ -f ~/.zshrc ]; then
+    rc_file=".zshrc"
+fi
+
+if grep -q "export MSH_HOME*" $rc_file; then
+    sed -i '/export MSH_HOME*/d' $rc_file
+fi
+
+if grep -q "source \$MSH_HOME/.mshrc" $rc_file; then
+    sed -i '/source \$MSH_HOME\/.mshrc/d' $rc_file
+fi
+
+echo "Uninstalled"
