@@ -17,13 +17,14 @@ function help_command {
     log "[...] = optional"
     log ""
     log "Commands:"
-    alias_help 
+    #alias_help 
     collection_help
     edit_help
     help_help
     list_help
     new_help
     print_help
+    sync_help
     version_help
     log " Global flags (apply to all commands):"
     log "  --quiet|--q - Do not print any output"

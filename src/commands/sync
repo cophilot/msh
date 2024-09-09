@@ -3,14 +3,55 @@
 ###START###
 
 function sync_command {
-    logE "Not implemented: sync"
-    myexit 1
+    require_git
+    require_dir $HOME_DIR
+
+    collection_name=${VALUES[0]}
+    if [ -z "$collection_name" ]; then
+        all_collection=$(get_all_collections)
+        if [ ${#all_collection} -eq 0 ]; then
+            log "No collections found"
+            myexit 0
+        fi
+        for collection in ${all_collection[@]}; do
+            sync_collection $collection
+        done
+        myexit 0
+    fi
+    if [ ! -d "$HOME_DIR/$collection_name" ]; then
+        logE "Collection '$collection_name' does not exist"
+        myexit 1
+    fi
+    sync_collection $collection_name
+}
+
+function sync_collection {
+    collection_name=$1
+    # check if the collection is a git repository
+    if [ ! -d "$HOME_DIR/$collection_name/.git" ]; then
+        return
+    fi
+    if [ "$(is_flag_specified '-up' '-u')" == "true" ]
+    then
+        log "Pushing changes to the remote repository..."
+
+        git -C $HOME_DIR/$collection_name add . > /dev/null 2>&1
+        git -C $HOME_DIR/$collection_name commit -m "Synchronize collection" > /dev/null 2>&1
+        git -C $HOME_DIR/$collection_name push > /dev/null 2>&1
+    fi
+
+    # check if
+    log "Synchronizing collection '$collection_name'..."
+    git -C $HOME_DIR/$collection_name pull > /dev/null 2>&1
+    log "Collection '$collection_name' synchronized"
 }
 
 # Print help for the sync command
 function sync_help {
-    log "  sync|s [collection-name] [flag] - Synchronize the collections"
-    log "      arg - description"
+    log "  sync|s [collection-name] [flags] - Synchronize all or one collections"
+    log "      collection-name - The name of the collection to synchronize"
+    log "      Flags:"
+    log "          -u|-up - Push changes to the remote repository"
     log ""
 }
 

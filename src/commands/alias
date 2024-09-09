@@ -3,6 +3,9 @@
 ###START###
 
 function alias_command {
+    logE "Not implemented yet"
+    myexit 1
+    
     require_dir $HOME_DIR
     script_name=${VALUES[0]}
     cmd_name=${VALUES[1]}
@@ -17,14 +20,27 @@ function alias_command {
         myexit 1
     fi
 
-    check_if_command_exists $new_command
+    collection_name=${VALUES[2]}
+    if [ -z "$collection_name" ]
+    then
+        collection_name="scripts"
+    elif [ ! -d "$HOME_DIR/$collection_name" ]
+    then
+        logE "Collection '$collection_name' does not exist"
+        myexit 1
+    fi
+
+    check_if_command_exists $script_name
+
+    sc_dir="$HOME_DIR/$collection_name"
+
     description="Alias for '$cmd_name'"
     cmd2="$cmd_name \$*"
-    cmd1='echo "$cmd2"'
+    cmd1="echo \"$cmd2\""
 
-    create_new_script $SCRIPTS_DIR $script_name "$description" "$cmd1" "$cmd2"
+    create_new_script $sc_dir $script_name "$description" "$cmd1" "$cmd2"
 
-    log "Alias script '$script_name' created ($SCRIPTS_DIR/$script_name)"
+    log "Alias script '$script_name' created ($sc_dir/$script_name)"
 }
 
 # Print help for the alias command

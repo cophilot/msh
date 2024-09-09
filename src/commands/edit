@@ -23,7 +23,8 @@ function edit_command {
         $edcom $HOME_DIR/scripts/$script_name
         myexit 0
     fi
-    log "Error: Script '$script_name' not found"
+    logE "Script '$script_name' not found"
+    myexit 1
 }
 
 # Print help for the edit command

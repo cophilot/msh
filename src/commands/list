@@ -3,16 +3,41 @@
 ###START###
 
 function list_command {
-    require_dir $SCRIPTS_DIR
-    all_scripts=$(ls $SCRIPTS_DIR)
+    require_dir $HOME_DIR
+
     filter_tag=${VALUES[0]}
+
+    colls=$(get_all_collections "true")
+
+    all_scripts=()
+    for co in $colls
+    do
+        coll_scripts=$(ls $HOME_DIR/$co)
+        for script in $coll_scripts
+        do
+            if [ -d "$HOME_DIR/$co/$script" ];
+            then
+                continue
+            fi
+            if [[ $script == .* ]]; then
+                continue
+            fi
+            all_scripts+=("$script/$co")
+        done
+    done
 
     if [ -z "$all_scripts" ]
     then
-        log "No scripts found in $SCRIPTS_DIR"
+        log "No scripts found"
         myexit 0
     fi
     
+    all_scripts=$(echo ${all_scripts[@]} | tr ' ' '\n')
+    if [ "$(is_flag_specified '-group' '-g')" == "false" ]
+    then
+        all_scripts=$(echo "$all_scripts" | sort)
+    fi
+
     if [ -n "$filter_tag" ]
     then
         log "Filtering by tag: $filter_tag"
@@ -20,10 +45,24 @@ function list_command {
 
     log "Available scripts:"
 
+    printf "  %-20s %-15s %s\n" "SCRIPT" "COLLECTION" "DESCRIPTION"
     for script in $all_scripts
     do
-        description=$(cat "$SCRIPTS_DIR/$script" | grep -m 1 -o "#??.*")
-        tags=$(cat "$SCRIPTS_DIR/$script" | grep -m 1 -o "#&&.*")
+        script=(${script//\// })
+        co=${script[1]}
+        script=${script[0]}
+        sc_path="$HOME_DIR/$co/$script"
+        
+        description=$(cat "$sc_path" | grep -m 1 -o "#??.*")
+        tags=$(cat "$sc_path" | grep -m 1 -o "#&&.*")
+
+        lower_filter_tag=$(echo $filter_tag | tr '[:upper:]' '[:lower:]')
+        lower_tags=$(echo $tags | tr '[:upper:]' '[:lower:]')
+        if [ -n "$filter_tag" ] && [[ ! $lower_tags =~ $lower_filter_tag ]]
+        then
+            continue
+        fi
+
         tags="[${tags:3}]"
 
         if [ -n "$description" ]
@@ -34,16 +73,20 @@ function list_command {
         if [ "$tags" == "[]" ]
         then
             tags=""
+
         fi
-        printf "  %-20s %s %s\n" "$script" "$description" "$tags"
+
+        printf "  %-20s %-15s %s\n" "$script" "$co" "$description $tags"
     done
 
 }
 
 # Print help for the list command
 function list_help {
-    log "  list|ls [tag] - List all available commands"
+    log "  list|ls [tag] [flags] - List all available commands"
     log "      tag - If provided, only scripts with the specified tag will be listed"
+    log "      Flags:"
+    log "          -group|-g - Group the scripts by collection"
     log ""
 }
 

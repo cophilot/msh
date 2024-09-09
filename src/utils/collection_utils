@@ -2,13 +2,16 @@
 
 ###START###
 
+# Get all collection
+# $1 - If set to true, will include the scripts directory in the collection
 function get_all_collections {
     # return an array with all folders in the collections directory
+    include_scripts=$1
     collections=()
     for d in $HOME_DIR/*; do
         if [ -d "$d" ]; then
             base_d=$(basename $d)
-            if [ "$base_d" == "scripts" ] || [ "$base_d" == "bin" ]; then
+            if [ "$base_d" == "scripts" ] || [ "$base_d" == "bin" ] && [ "$include_scripts" != "true" ]; then
                 continue
             fi
             collections+=($base_d)
