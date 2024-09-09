@@ -8,26 +8,47 @@ echo " /_/ /_/ /_/\__, /____/_/ /_/\___/_/_/   "
 echo "           /____/ Installer"
 echo ""
 
+read -p "Are you sure you want to install myshell? [Y/n] " answer
+
+if [ "$answer" != "${answer#[Nn]}" ] ;then
+    echo "Installation cancelled"
+    exit 0
+fi
+
+echo "Installing..."
+
+echo "Creating directories..."
 cd $HOME
 mkdir .myshell -p
 cd .myshell
 mkdir bin -p
 
+# Get meta data from the latest release
+echo "Looking for the latest release..."
+json=$(curl -s https://api.github.com/repos/cophilot/msh/releases/latest)
+# get the tag name of the latest release
+version=$(echo $json | grep -Po '"tag_name": "\K.*?(?=")')
+echo "Found version: $version"
+
+# Add myshell script
+echo "Adding msh..."
+url=https://github.com/cophilot/msh/releases/download/$version/msh
+curl -sL $url > bin/msh
+chmod +x bin/msh
+
 # Add scripts
+echo "Adding scripts..."
 curl -s https://raw.githubusercontent.com/cophilot/msh/main/uninstall > bin/uninstall
 chmod +x bin/uninstall
 curl -s https://raw.githubusercontent.com/cophilot/msh/main/update > bin/update
 chmod +x bin/update
 
-# Add myshell script
-url=https://github.com/cophilot/msh/releases/download/latest/msh
-curl -sL $url > bin/msh
-chmod +x bin/msh
 
 # Add scripts directory
 mkdir scripts -p
 
 # Add configuration files
+echo "Adding configuration files..."
 curl -s https://raw.githubusercontent.com/cophilot/msh/main/.conf.template > .conf
 
 curl -s https://raw.githubusercontent.com/cophilot/msh/main/.mshrc.template > .mshrc
@@ -41,6 +62,8 @@ if [ -f $HOME/.zshrc ]; then
     rc_file="$HOME/.zshrc"
 fi
 
+echo "Editing $rc_file..."
+
 if ! grep -q "export MSH_HOME*" $rc_file; then
     echo "" >> $rc_file
     echo "# msh" >> $rc_file
@@ -50,3 +73,6 @@ fi
 if ! grep -q "source \$MSH_HOME/.mshrc" $rc_file; then
     echo 'source $MSH_HOME/.mshrc' >> $rc_file
 fi
+
+echo "Installation complete"
+echo "Please restart your terminal or run 'source $rc_file' to start using myshell"
