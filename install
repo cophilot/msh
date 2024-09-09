@@ -8,7 +8,7 @@ echo " /_/ /_/ /_/\__, /____/_/ /_/\___/_/_/   "
 echo "           /____/ Installer"
 echo ""
 
-cd ~
+cd $HOME
 mkdir .myshell -p
 cd .myshell
 mkdir bin -p
@@ -36,14 +36,15 @@ chmod +x .mshrc
 curl -s https://raw.githubusercontent.com/cophilot/msh/main/LICENSE > LICENSE
 
 # Edit .bashrc/.zshrc
-rc_file="~/.bashrc"
-if [ -f ~/.zshrc ]; then
-    rc_file="~/.zshrc"
+rc_file="$HOME/.bashrc"
+if [ -f $HOME/.zshrc ]; then
+    rc_file="$HOME/.zshrc"
 fi
 
 if ! grep -q "export MSH_HOME*" $rc_file; then
     echo "" >> $rc_file
-    echo 'export MSH_HOME="~/myshell"' >> $rc_file
+    echo "# msh" >> $rc_file
+    echo 'export MSH_HOME="$HOME/.myshell"' >> $rc_file
 fi
 
 if ! grep -q "source \$MSH_HOME/.mshrc" $rc_file; then
