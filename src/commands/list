@@ -12,6 +12,14 @@ function list_command {
     all_scripts=()
     for co in $colls
     do
+        if [ ! -d "$HOME_DIR/$co" ];
+        then
+            continue
+        fi
+        if [ "$co" == "bin" ];
+        then
+            continue
+        fi
         coll_scripts=$(ls $HOME_DIR/$co)
         for script in $coll_scripts
         do
