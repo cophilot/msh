@@ -1,4 +1,4 @@
-$MSH_HOME/bin/msh sync --q
+$MSH_HOME/bin/msh sync --q -detached
 
 export PATH="$PATH:$MSH_HOME/bin"
 export PATH="$PATH:$MSH_HOME/scripts"
