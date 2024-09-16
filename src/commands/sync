@@ -22,6 +22,7 @@ function sync_command {
         logE "Collection '$collection_name' does not exist"
         myexit 1
     fi
+
     sync_collection $collection_name
 }
 
@@ -31,20 +32,40 @@ function sync_collection {
     if [ ! -d "$HOME_DIR/$collection_name/.git" ]; then
         return
     fi
+
     if [ "$(is_flag_specified '-up' '-u')" == "true" ]
     then
         log "Pushing changes to the remote repository..."
-
-        git -C $HOME_DIR/$collection_name add . > /dev/null 2>&1
-        git -C $HOME_DIR/$collection_name commit -m "Synchronize collection" > /dev/null 2>&1
-        git -C $HOME_DIR/$collection_name push > /dev/null 2>&1
+        if [ "$(is_flag_specified '--quiet' '--q')" == "true" ]
+        then
+            git -C $HOME_DIR/$collection_name add . > /dev/null 2>&1
+            git -C $HOME_DIR/$collection_name commit -m "Synchronize collection" > /dev/null 2>&1
+            git -C $HOME_DIR/$collection_name push > /dev/null 2>&1
+        else
+            git -C $HOME_DIR/$collection_name add .
+            git -C $HOME_DIR/$collection_name commit -m "Synchronize collection"
+            git -C $HOME_DIR/$collection_name push
+        fi
     fi
 
-    # check if
     log "Synchronizing collection '$collection_name'..."
-    git -C $HOME_DIR/$collection_name pull > /dev/null 2>&1
+    if [ "$(is_flag_specified '--quiet' '--q')" == "true" ] && [ "$(is_flag_specified '-d' '-detached')" == "true" ]
+    then
+        git -C $HOME_DIR/$collection_name pull > /dev/null 2>&1 &
+    elif [ "$(is_flag_specified '--quiet' '--q')" == "true" ]
+    then
+        git -C $HOME_DIR/$collection_name pull > /dev/null 2>&1
+    elif [ "$(is_flag_specified '-d' '-detached')" == "true" ]
+    then
+        git -C $HOME_DIR/$collection_name pull &
+    else
+        git -C $HOME_DIR/$collection_name pull
+    fi
+
     log "Collection '$collection_name' synchronized"
+    log ""
 }
+
 
 # Print help for the sync command
 function sync_help {
@@ -52,6 +73,7 @@ function sync_help {
     log "      collection-name - The name of the collection to synchronize"
     log "      Flags:"
     log "          -u|-up - Push changes to the remote repository"
+    log "          -d|-detached - Synchronize the collection in detached mode"
     log ""
 }
 
