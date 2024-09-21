@@ -1,0 +1,27 @@
+name: Generate help file
+
+on:
+    push:
+        tags:
+            - '*'
+    workflow_dispatch:
+
+jobs:
+    upload-release:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  ref: main
+
+            - name: Compile
+              run: python compile.py -o out/msh
+
+            - name: Generate help file
+              run: ./out/msh help > help.md
+
+            - name: Push help file
+              uses: stefanzweifel/git-auto-commit-action@v4
+              with:
+                  commit_message: 'Update help file'
+                  commit_user_name: 'GitHub Actions'
