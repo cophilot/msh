@@ -1,3 +1,4 @@
+```
                           __         ____
     ____ ___  __  _______/ /_  ___  / / /
    / __  __ \/ / / / ___/ __ \/ _ \/ / / 
@@ -51,3 +52,4 @@ Commands:
 
  Global flags (apply to all commands):
   --quiet|--q - Do not print any output
+```
