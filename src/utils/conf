@@ -59,6 +59,12 @@ function get_print_command() {
     echo "$print_command"
 }
 
+# Get the default collection from the conf file
+function get_default_collection() {
+    local default_col=$(get_conf "default_collection" "scripts")
+    echo "$default_col"
+}
+
 # Get a configuration value from the conf file
 # $1: name of the configuration
 # $2(optional): default value

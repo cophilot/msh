@@ -42,4 +42,36 @@ function create_new_script() {
     chmod +x $script_file
 }
 
+function get_all_scripts() {
+        colls=$(get_all_collections "true")
+
+    all_scripts=()
+    for co in $colls
+    do
+        if [ ! -d "$HOME_DIR/$co" ];
+        then
+            continue
+        fi
+        if [ "$co" == "bin" ];
+        then
+            continue
+        fi
+        coll_scripts=$(ls $HOME_DIR/$co)
+        for script in $coll_scripts
+        do
+            if [ -d "$HOME_DIR/$co/$script" ];
+            then
+                continue
+            fi
+            if [[ $script == .* ]] || [[ $script == README* ]]
+            then
+                continue
+            fi
+            all_scripts+=("$script/$co")
+        done
+    done
+
+    echo ${all_scripts[@]}
+}
+
 ###END###

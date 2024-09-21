@@ -49,10 +49,15 @@ mkdir scripts -p
 
 # Add configuration files
 echo "Adding configuration files..."
-curl -s https://raw.githubusercontent.com/cophilot/msh/main/.conf.template > .conf
+# only if the file does not exist
+if [ ! -f .conf ]; then
+    curl -s https://raw.githubusercontent.com/cophilot/msh/main/.conf.template > .conf
+fi
 
-curl -s https://raw.githubusercontent.com/cophilot/msh/main/.mshrc.template > .mshrc
-chmod +x .mshrc
+if [ ! -f .mshrc ]; then
+    curl -s https://raw.githubusercontent.com/cophilot/msh/main/.mshrc.template > .mshrc
+    chmod +x .mshrc
+fi
 
 curl -s https://raw.githubusercontent.com/cophilot/msh/main/LICENSE > LICENSE
 

@@ -42,6 +42,7 @@ for arg in $args; do
     fi
 done
 
+sub_command=$(echo $sub_command | sed 's/-/_/g')
 dynamic_run_and_exit $sub_command $args
 dynamic_run_and_exit "${sub_command}_command" $args
 

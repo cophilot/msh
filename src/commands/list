@@ -7,32 +7,7 @@ function list_command {
 
     filter_tag=${VALUES[0]}
 
-    colls=$(get_all_collections "true")
-
-    all_scripts=()
-    for co in $colls
-    do
-        if [ ! -d "$HOME_DIR/$co" ];
-        then
-            continue
-        fi
-        if [ "$co" == "bin" ];
-        then
-            continue
-        fi
-        coll_scripts=$(ls $HOME_DIR/$co)
-        for script in $coll_scripts
-        do
-            if [ -d "$HOME_DIR/$co/$script" ];
-            then
-                continue
-            fi
-            if [[ $script == .* ]]; then
-                continue
-            fi
-            all_scripts+=("$script/$co")
-        done
-    done
+    all_scripts=$(get_all_scripts)
 
     if [ -z "$all_scripts" ]
     then

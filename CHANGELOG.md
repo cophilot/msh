@@ -2,6 +2,14 @@
 
 ---
 
+## [v0.0.4](https://github.com/cophilot/msh/tree/0.0.4) (2024-09-21) [*BETA*]
+
+-   `list`command now ignores `README.md` and `.gitingore` files
+-   Added `default_collection` configuration option
+-   Added `migrate-scripts` command
+
+---
+
 ## [v0.0.3](https://github.com/cophilot/msh/tree/0.0.3) (2024-09-16) [*BETA*]
 
 -   Added `-detached` flag for the `sync` command

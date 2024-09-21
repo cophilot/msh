@@ -14,7 +14,7 @@ function new_command {
     collection_name=${VALUES[1]}
     if [ -z "$collection_name" ]
     then
-        collection_name="scripts"
+        collection_name=$(get_default_collection)
     elif [ ! -d "$HOME_DIR/$collection_name" ]
     then
         logE "Collection '$collection_name' does not exist"
@@ -39,7 +39,7 @@ function new_command {
 function new_help {
     log "  new|n <new-script> [collection-name] [flags]- Create a new script"
     log "      script-name - The name of the script to create"
-    log "      collection-name - The name of the collection to add the script to. Default is 'scripts'"
+    log "      collection-name - The name of the collection to add the script to. The default collection can be set in the config"
     log "      Flags:"
     log "          -edit|-e - Open the script in the editor after creation"
     log ""

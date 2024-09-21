@@ -23,7 +23,7 @@ function alias_command {
     collection_name=${VALUES[2]}
     if [ -z "$collection_name" ]
     then
-        collection_name="scripts"
+        collection_name=$(get_default_collection)
     elif [ ! -d "$HOME_DIR/$collection_name" ]
     then
         logE "Collection '$collection_name' does not exist"

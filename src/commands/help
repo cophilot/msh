@@ -22,6 +22,7 @@ function help_command {
     edit_help
     help_help
     list_help
+    migrate_scripts_help
     new_help
     print_help
     sync_help
