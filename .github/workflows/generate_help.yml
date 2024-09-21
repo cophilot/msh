@@ -20,6 +20,13 @@ jobs:
             - name: Generate help file
               run: ./out/msh help > help.md
 
+            - name: Add code block
+              run: |
+                  echo '```' > help.tmp
+                  cat help.md >> help.tmp
+                  echo '```' >> help.tmp
+                  mv help.tmp help.md
+
             - name: Push help file
               uses: stefanzweifel/git-auto-commit-action@v4
               with:
