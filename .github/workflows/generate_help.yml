@@ -23,6 +23,8 @@ jobs:
             - name: Add code block
               run: |
                   echo '```' > help.tmp
+                  ./out/msh version -simple >> help.tmp
+                  echo '' >> help.tmp
                   cat help.md >> help.tmp
                   echo '```' >> help.tmp
                   mv help.tmp help.md

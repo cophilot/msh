@@ -2,6 +2,13 @@
 
 ---
 
+## [v0.0.5](https://github.com/cophilot/msh/tree/0.0.5) (2024-09-22) [*BETA*]
+
+-   Added `simple` flag for the `version` command
+-   Added `simple` flag for the `list` command
+
+---
+
 ## [v0.0.4](https://github.com/cophilot/msh/tree/0.0.4) (2024-09-21) [*BETA*]
 
 -   `list`command now ignores `README.md` and `.gitingore` files

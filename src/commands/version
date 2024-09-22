@@ -4,6 +4,12 @@
 
 # Print the version of the myshell
 function version_command {
+    if [ "$(is_flag_specified '-simple' '-s')" == "true" ]
+    then
+        log "myshell v$version"
+        myexit 0
+    fi
+
     log "                          __         ____"
     log "    ____ ___  __  _______/ /_  ___  / / /"
     log "   / __  __ \/ / / / ___/ __ \/ _ \/ / / "
@@ -19,7 +25,9 @@ function v_command {
 
 # Print help for the version command
 function version_help {
-    log "  version|v - Print the version of myshell"
+    log "  version|v [flags] - Print the version of myshell"
+    log "       Flags:"
+    log "           -s|-simple - Print the version in a simple format"
     log ""
 }
 
