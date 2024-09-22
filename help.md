@@ -1,4 +1,6 @@
 ```
+myshell v0.0.5
+
                           __         ____
     ____ ___  __  _______/ /_  ___  / / /
    / __  __ \/ / / / ___/ __ \/ _ \/ / / 
@@ -30,6 +32,7 @@ Commands:
       tag - If provided, only scripts with the specified tag will be listed
       Flags:
           -group|-g - Group the scripts by collection
+          -simple|-s - Print the list in a simple format
 
   migrate-scripts - Migrate all existing scripts to msh
 
@@ -48,7 +51,9 @@ Commands:
           -u|-up - Push changes to the remote repository
           -d|-detached - Synchronize the collection in detached mode
 
-  version|v - Print the version of myshell
+  version|v [flags] - Print the version of myshell
+       Flags:
+           -s|-simple - Print the version in a simple format
 
  Global flags (apply to all commands):
   --quiet|--q - Do not print any output
