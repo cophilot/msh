@@ -38,10 +38,10 @@ chmod +x bin/msh
 
 # Add scripts
 echo "Adding scripts..."
-curl -s https://raw.githubusercontent.com/cophilot/msh/main/uninstall > bin/uninstall
-chmod +x bin/uninstall
-curl -s https://raw.githubusercontent.com/cophilot/msh/main/update > bin/update
-chmod +x bin/update
+curl -s https://raw.githubusercontent.com/cophilot/msh/main/uninstall > bin/msh-uninstall
+chmod +x bin/msh-uninstall
+curl -s https://raw.githubusercontent.com/cophilot/msh/main/update > bin/msh-update
+chmod +x bin/msh-update
 
 
 # Add scripts directory

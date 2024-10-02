@@ -7,3 +7,5 @@ echo "  / / / / / / /_/ (__  ) / / /  __/ / /  "
 echo " /_/ /_/ /_/\__, /____/_/ /_/\___/_/_/   "
 echo "           /____/ Update"
 echo ""
+
+curl -s https://raw.githubusercontent.com/cophilot/msh/main/install | bash -s

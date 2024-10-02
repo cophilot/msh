@@ -3,7 +3,7 @@
   <img src="assets/logo.png" alt="mshLogo" width="30%"/>
   <h1>my$hell</h1>
   <p>
-     A tool to manage your custom shell scripts on linux.
+    A CLI tool to manage custom scripts. 
   </p>
 </div>
 
@@ -35,11 +35,25 @@ curl -s https://raw.githubusercontent.com/cophilot/msh/main/install | bash -s
 
 ---
 
+## Uninstall
+
+Run the following command to uninstall `msh`:
+
+```bash
+msh-uninstall
+```
+
+If the script is not found, you can manually run the script from `$MSH_HOME/bin/msh-uninstall`.
+
+---
+
 ## [Release Notes](https://github.com/cophilot/msh/blob/master/CHANGELOG.md)
 
-### [v0.0.1](https://github.com/cophilot/msh/tree/0.0.1)
+### [v0.1.0](https://github.com/cophilot/msh/tree/0.1.0)
 
--   _Initial release_
+- Change `list` command display format
+- Added `collection` flag for the `list` command
+- Added `run` flag for the `print` command
 
 ---
 
