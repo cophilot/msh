@@ -1,5 +1,5 @@
 ```
-myshell v0.0.5
+myshell v0.1.0
 
                           __         ____
     ____ ___  __  _______/ /_  ___  / / /
@@ -31,6 +31,7 @@ Commands:
   list|ls [tag] [flags] - List all available commands
       tag - If provided, only scripts with the specified tag will be listed
       Flags:
+          -collection|-c - Show the collection of the scripts
           -group|-g - Group the scripts by collection
           -simple|-s - Print the list in a simple format
 
@@ -42,8 +43,10 @@ Commands:
       Flags:
           -edit|-e - Open the script in the editor after creation
 
-  print|p <script-name> - Print the contents of a script
+  print|p <script-name> [flags] - Print the contents of a script
       script-name - The name of the script to print
+      Flags:
+          -run|-r - Run the script after printing
 
   sync|s [collection-name] [flags] - Synchronize all or one collections
       collection-name - The name of the collection to synchronize
