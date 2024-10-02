@@ -30,7 +30,12 @@ function list_command {
 
     if [ "$(is_flag_specified '-simple' '-s')" == "false" ]
     then
-        printf "  %-20s %-15s %s\n" "SCRIPT" "COLLECTION" "DESCRIPTION"
+        if [ "$(is_flag_specified '-collection' '-c')" == "true" ]
+        then
+            printf "  %-25s %-15s %s\n" "SCRIPT" "COLLECTION" "DESCRIPTION"
+        else
+            printf "  %-25s %s\n" "SCRIPT" "DESCRIPTION"
+        fi
     fi
 
     for script in $all_scripts
@@ -68,8 +73,12 @@ function list_command {
             log "  $script - $description $tags"
             continue
         fi
-
-        printf "  %-20s %-15s %s\n" "$script" "$co" "$description $tags"
+        if [ "$(is_flag_specified '-collection' '-c')" == "true" ]
+        then
+            printf "  %-25s %-15s %s\n" "$script" "$co" "$description $tags"
+        else
+            printf "  %-25s %s\n" "$script" "$description $tags"
+        fi
     done
 
 }
@@ -79,6 +88,7 @@ function list_help {
     log "  list|ls [tag] [flags] - List all available commands"
     log "      tag - If provided, only scripts with the specified tag will be listed"
     log "      Flags:"
+    log "          -collection|-c - Show the collection of the scripts"
     log "          -group|-g - Group the scripts by collection"
     log "          -simple|-s - Print the list in a simple format"
     log ""

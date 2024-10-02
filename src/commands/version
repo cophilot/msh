@@ -19,10 +19,6 @@ function version_command {
     log ""
 }
 
-function v_command {
-    version_command $*
-}
-
 # Print help for the version command
 function version_help {
     log "  version|v [flags] - Print the version of myshell"
@@ -31,5 +27,16 @@ function version_help {
     log ""
 }
 
+function v_command {
+    version_command $*
+}
+
+function _version_command {
+    version_command $*
+}
+
+function _v_command {
+    version_command $*
+}
 
 ###END###

@@ -43,4 +43,12 @@ function h_command {
     help_command $*
 }
 
+function _help_command {
+    help_command $*
+}
+
+function _h_command {
+    help_command $*
+}
+
 ###END###

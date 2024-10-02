@@ -74,4 +74,21 @@ function get_all_scripts() {
     echo ${all_scripts[@]}
 }
 
+# Run a script
+# $1 - The script to run
+function running_script {
+    script_name=$1
+
+    read -p "Do you want to run the script? (Y/n): " answer
+
+    if [ "$answer" == "n" ] || [ "$answer" == "N" ]
+    then
+        return
+    fi
+
+    read -p "Arguments: " args
+
+    $script_name $args
+}
+
 ###END###

@@ -2,6 +2,14 @@
 
 ---
 
+## [v0.1.0](https://github.com/cophilot/msh/tree/0.1.0) (2024-10-??) [*BETA*]
+
+- Change `list` command display format
+- Added `collection` flag for the `list` command
+- Added `run` flag for the `print` command
+
+---
+
 ## [v0.0.5](https://github.com/cophilot/msh/tree/0.0.5) (2024-09-22) [*BETA*]
 
 -   Added `simple` flag for the `version` command

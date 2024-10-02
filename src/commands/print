@@ -16,21 +16,34 @@ function print_command {
     if command -v "$script_name" &> /dev/null; then
         file_location=$(which $script_name)
         $p_comm $file_location
+        run_after_print $file_location
         myexit 0
     fi
 
     if [ -f "$HOME_DIR/scripts/$script_name" ]; then
-        $p_comm $HOME_DIR/scripts/$script_name
+        script_path=$HOME_DIR/scripts/$script_name
+        $p_comm $script_path
+        run_after_print $script_path
         myexit 0
     fi
     logE "Script '$script_name' not found"
     myexit 1
 }
 
+function run_after_print {
+    if [ "$(is_flag_specified '-run' '-r')" == "false" ]
+    then
+        return
+    fi
+    running_script $1
+}
+
 # Print help for the print command
 function print_help {
-    log "  print|p <script-name> - Print the contents of a script"
+    log "  print|p <script-name> [flags] - Print the contents of a script"
     log "      script-name - The name of the script to print"
+    log "      Flags:"
+    log "          -run|-r - Run the script after printing"
     log ""
 }
 
