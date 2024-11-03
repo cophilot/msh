@@ -2,11 +2,20 @@
 
 ---
 
+## [v0.2.0](https://github.com/cophilot/msh/tree/0.2.0) (2024-11-03) [*BETA*]
+
+-   Bug fixes
+-   Added `remove` command
+-   Added `restore` command
+-   Added `move` command
+
+---
+
 ## [v0.1.0](https://github.com/cophilot/msh/tree/0.1.0) (2024-10-02) [*BETA*]
 
-- Change `list` command display format
-- Added `collection` flag for the `list` command
-- Added `run` flag for the `print` command
+-   Change `list` command display format
+-   Added `collection` flag for the `list` command
+-   Added `run` flag for the `print` command
 
 ---
 

@@ -23,6 +23,12 @@ function collection_new_command {
         myexit 1
     fi
 
+    if [[ $coll_name == .* ]]
+    then
+        logE "Collection name cannot start with a dot"
+        myexit 1
+    fi
+
     all_collection=$(get_all_collections)
     for collection in ${all_collection[@]}; do
         if [ "$collection" == "$coll_name" ]

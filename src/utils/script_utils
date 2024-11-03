@@ -43,7 +43,7 @@ function create_new_script() {
 }
 
 function get_all_scripts() {
-        colls=$(get_all_collections "true")
+    colls=$(get_all_collections "true")
 
     all_scripts=()
     for co in $colls
@@ -89,6 +89,44 @@ function running_script {
     read -p "Arguments: " args
 
     $script_name $args
+}
+
+# Resolve the absolute path of a script by its name
+# $1 - The name of the script
+function resolve_script_name {
+    require_dir $HOME_DIR
+    script_name=$1
+
+    if [ -z "$script_name" ]
+    then
+        logE "INTERNAL: script-name is not defined in 'resolve_script_name'"
+        myexit 1
+    fi
+
+    all_scripts=$(get_all_scripts)
+
+    for script in $all_scripts
+    do
+        script=(${script//\// })
+        co=${script[1]}
+        script=${script[0]}
+
+        if [ "$script" == "$script_name" ]
+        then
+            echo "$HOME_DIR/$co/$script"
+            return
+        fi
+    done
+
+    if command -v "$script_name" &> /dev/null; then
+        file_location=$(which $script_name)
+        if [[ $file_location == $HOME_DIR* ]]; then
+            echo $file_location
+            return
+        fi
+    fi
+
+    echo ""
 }
 
 ###END###

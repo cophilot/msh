@@ -210,6 +210,7 @@ def set_args():
             QUIET = True
         if arg == "-b" or arg == "-binary":
             global TO_BINARY
+            print("*Compiling to binary*")
             TO_BINARY = True
         if arg == "-h" or arg == "-help":
             print_help()

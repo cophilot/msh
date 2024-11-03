@@ -49,11 +49,12 @@ If the script is not found, you can manually run the script from `$MSH_HOME/bin/
 
 ## [Release Notes](https://github.com/cophilot/msh/blob/master/CHANGELOG.md)
 
-### [v0.1.0](https://github.com/cophilot/msh/tree/0.1.0)
+### [v0.2.0](https://github.com/cophilot/msh/tree/0.2.0)
 
-- Change `list` command display format
-- Added `collection` flag for the `list` command
-- Added `run` flag for the `print` command
+-   Bug fixes
+-   Added `remove` command
+-   Added `restore` command
+-   Added `move` command
 
 ---
 

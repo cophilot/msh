@@ -23,8 +23,11 @@ function help_command {
     help_help
     list_help
     migrate_scripts_help
+    move_help
     new_help
     print_help
+    remove_help
+    restore_help
     sync_help
     version_help
     log " Global flags (apply to all commands):"

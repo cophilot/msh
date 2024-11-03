@@ -11,14 +11,14 @@ function get_all_collections {
     for d in $HOME_DIR/*; do
         if [ -d "$d" ]; then
             base_d=$(basename $d)
-            if [ "$base_d" == "scripts" ] || [ "$base_d" == "bin" ] && [ "$include_scripts" != "true" ]; then
+            if ( [ "$base_d" == "scripts" ] || [ "$base_d" == "bin" ] ) && [ "$include_scripts" != "true" ]; then
                 continue
             fi
             collections+=($base_d)
         fi
     done
 
-    echo ${collections[@]}
+        echo ${collections[@]}
 }
 
 function add_collection_to_mshrc {

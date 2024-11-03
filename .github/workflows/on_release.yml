@@ -18,8 +18,11 @@ jobs:
               with:
                   python-version: '3.x'
 
+            - name: Install shc with apt-get
+              run: sudo apt-get install shc
+
             - name: Compile
-              run: python compile.py -o out/msh
+              run: python compile.py -o out/msh -binary
 
             - name: Get Changelog Entry
               id: changelog_reader

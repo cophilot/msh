@@ -15,6 +15,7 @@ function dynamic_run_and_exit() {
 # Handle the development mode ###DEV-MODE###
 function handle_dev_mode() { ###DEV-MODE###
     HOME_DIR="$(pwd)/.myshell" ###DEV-MODE###
+    mkdir -p .myshell ###DEV-MODE###
 } ###DEV-MODE###
 
 function check_if_command_exists() {
