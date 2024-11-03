@@ -3,50 +3,48 @@
 ###START###
 
 function print_command {
-    require_dir $HOME_DIR
-    p_comm=$(get_print_command)
-    script_name=${VALUES[0]}
+	require_dir $HOME_DIR
+	p_comm=$(get_print_command)
+	script_name=${VALUES[0]}
 
-    if [ -z "$script_name" ]
-    then
-        logE "Please provide the name of the script to print"
-        myexit 1
-    fi
+	if [ -z "$script_name" ]; then
+		logE "Please provide the name of the script to print"
+		myexit 1
+	fi
 
-    file_location=$(resolve_script_name "$script_name")
+	file_location=$(resolve_script_name "$script_name")
 
-    if [ -z "$file_location" ]; then
-        logE "Script '$script_name' not found"
-        myexit 1
-    fi
+	if [ -z "$file_location" ]; then
+		logE "Script '$script_name' not found"
+		myexit 1
+	fi
 
-    log "File: $file_location"
-    log "---"
+	log "File: $file_location"
+	log "---"
 
-    $p_comm $file_location
-    run_after_print $file_location
+	$p_comm $file_location
+	run_after_print $file_location
 }
 
 function run_after_print {
-    if [ "$(is_flag_specified '-run' '-r')" == "false" ]
-    then
-        return
-    fi
-    running_script $1
+	if [ "$(is_flag_specified '-run' '-r')" == "false" ]; then
+		return
+	fi
+	running_script $1
 }
 
 # Print help for the print command
 function print_help {
-    log "  print|p <script-name> [flags] - Print the contents of a script"
-    log "      script-name - The name of the script to print"
-    log "      Flags:"
-    log "          -run|-r - Run the script after printing"
-    log ""
+	log "  print|p <script-name> [flags] - Print the contents of a script"
+	log "      script-name - The name of the script to print"
+	log "      Flags:"
+	log "          -run|-r - Run the script after printing"
+	log ""
 }
 
 # Short form of the print command
 function p_command {
-    print_command $*
+	print_command $*
 }
 
 ###END###

@@ -4,33 +4,33 @@
 
 function collection_list_command {
 
-    all_collection=$(get_all_collections)
-    if [ ${#all_collection} -eq 0 ]; then
-        log "No collections found"
-        myexit 0
-    fi
+	all_collection=$(get_all_collections)
+	if [ ${#all_collection} -eq 0 ]; then
+		log "No collections found"
+		myexit 0
+	fi
 
-    log "Collections:"
-    for collection in ${all_collection[@]}; do
-        # check if collection is a git repository
-        url=""
-        if [ -d "$HOME_DIR/$collection/.git" ]; then
-            url=$(git -C $HOME_DIR/$collection remote get-url origin)
-            url="[$url]"
-        fi
-        log "  $collection $url"
-    done
+	log "Collections:"
+	for collection in ${all_collection[@]}; do
+		# check if collection is a git repository
+		url=""
+		if [ -d "$HOME_DIR/$collection/.git" ]; then
+			url=$(git -C $HOME_DIR/$collection remote get-url origin)
+			url="[$url]"
+		fi
+		log "  $collection $url"
+	done
 }
 
 # Print help for the collectionlist command
 function collection_list_help {
-    log "  collection|c list|ls - List all collections"
-    log ""
+	log "  collection|c list|ls - List all collections"
+	log ""
 }
 
 # Short form of the collectionlist command
 function collection_ls_command {
-    collection_list_command $*
+	collection_list_command $*
 }
 
 ###END###

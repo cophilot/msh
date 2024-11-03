@@ -3,18 +3,18 @@
 ###START###
 
 function update {
-    logE "Not implemented: update"
-    myexit 1
+	logE "Not implemented: update"
+	myexit 1
 }
 
 # Print help for the update command
 function update_help {
-    log "  [update|u] description"
+	log "  [update|u] description"
 }
 
 # Short form of the update command
 function u {
-    update $*
+	update $*
 }
 
 ###END###

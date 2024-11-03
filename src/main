@@ -22,12 +22,12 @@ SCRIPTS_DIR="$HOME_DIR/scripts"
 
 BASHRC_FILE="~/.bashrc"
 if [ -f ~/.zshrc ]; then
-    BASHRC_FILE="~/.zshrc"
+	BASHRC_FILE="~/.zshrc"
 fi
 
 if [ -z $sub_command ]; then
-    echo "Usage: msh <command>"
-    myexit 1
+	echo "Usage: msh <command>"
+	myexit 1
 fi
 
 # seperate the args in flags and values
@@ -35,11 +35,11 @@ FLAGS=()
 VALUES=()
 
 for arg in $args; do
-    if [[ $arg == -* ]]; then
-        FLAGS+=("$arg")
-    else
-        VALUES+=("$arg")
-    fi
+	if [[ $arg == -* ]]; then
+		FLAGS+=("$arg")
+	else
+		VALUES+=("$arg")
+	fi
 done
 
 raw_sub_command=$sub_command
@@ -49,4 +49,3 @@ dynamic_run_and_exit "${sub_command}_command" $args
 
 logE "Command not found: $raw_sub_command"
 myexit 1
-    

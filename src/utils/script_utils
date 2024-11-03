@@ -9,124 +9,110 @@
 # $4 (optional) - The content of the script
 # $5 (optional) - The content of the script
 function create_new_script() {
-    sc_dir=$1
-    sc_name=$2
+	sc_dir=$1
+	sc_name=$2
 
-    script_file="$sc_dir/$sc_name"
-    if [ -f "$script_file" ]
-    then
-        logE "The script '$sc_name' already exists"
-        myexit 1
-    fi
+	script_file="$sc_dir/$sc_name"
+	if [ -f "$script_file" ]; then
+		logE "The script '$sc_name' already exists"
+		myexit 1
+	fi
 
-    touch $script_file
-    echo "#!/bin/bash" > $script_file
+	touch $script_file
+	echo "#!/bin/bash" >$script_file
 
-    description="This is the $sc_name script"
-    if [ -n "$3" ]
-    then
-        description=$3
-    fi
-    description="#??$description"
-    echo "$description" >> $script_file
-    echo "#&&TAGS" >> $script_file
-    echo "" >> $script_file
-    if [ -n "$4" ]
-    then
-        echo "$4" >> $script_file
-    fi
-    if [ -n "$5" ]
-    then
-        echo "$5" >> $script_file
-    fi
-    chmod +x $script_file
+	description="This is the $sc_name script"
+	if [ -n "$3" ]; then
+		description=$3
+	fi
+	description="#??$description"
+	echo "$description" >>$script_file
+	echo "#&&TAGS" >>$script_file
+	echo "" >>$script_file
+	if [ -n "$4" ]; then
+		echo "$4" >>$script_file
+	fi
+	if [ -n "$5" ]; then
+		echo "$5" >>$script_file
+	fi
+	chmod +x $script_file
 }
 
 function get_all_scripts() {
-    colls=$(get_all_collections "true")
+	colls=$(get_all_collections "true")
 
-    all_scripts=()
-    for co in $colls
-    do
-        if [ ! -d "$HOME_DIR/$co" ];
-        then
-            continue
-        fi
-        if [ "$co" == "bin" ];
-        then
-            continue
-        fi
-        coll_scripts=$(ls $HOME_DIR/$co)
-        for script in $coll_scripts
-        do
-            if [ -d "$HOME_DIR/$co/$script" ];
-            then
-                continue
-            fi
-            if [[ $script == .* ]] || [[ $script == README* ]]
-            then
-                continue
-            fi
-            all_scripts+=("$script/$co")
-        done
-    done
+	all_scripts=()
+	for co in $colls; do
+		if [ ! -d "$HOME_DIR/$co" ]; then
+			continue
+		fi
+		if [ "$co" == "bin" ]; then
+			continue
+		fi
+		coll_scripts=$(ls $HOME_DIR/$co)
+		for script in $coll_scripts; do
+			if [ -d "$HOME_DIR/$co/$script" ]; then
+				continue
+			fi
+			if [[ $script == .* ]] || [[ $script == README* ]]; then
+				continue
+			fi
+			all_scripts+=("$script/$co")
+		done
+	done
 
-    echo ${all_scripts[@]}
+	echo ${all_scripts[@]}
 }
 
 # Run a script
 # $1 - The script to run
 function running_script {
-    script_name=$1
+	script_name=$1
 
-    read -p "Do you want to run the script? (Y/n): " answer
+	read -p "Do you want to run the script? (Y/n): " answer
 
-    if [ "$answer" == "n" ] || [ "$answer" == "N" ]
-    then
-        return
-    fi
+	if [ "$answer" == "n" ] || [ "$answer" == "N" ]; then
+		return
+	fi
 
-    read -p "Arguments: " args
+	read -p "Arguments: " args
 
-    $script_name $args
+	$script_name $args
 }
 
 # Resolve the absolute path of a script by its name
 # $1 - The name of the script
 function resolve_script_name {
-    require_dir $HOME_DIR
-    script_name=$1
+	require_dir $HOME_DIR
+	script_name=$1
 
-    if [ -z "$script_name" ]
-    then
-        logE "INTERNAL: script-name is not defined in 'resolve_script_name'"
-        myexit 1
-    fi
+	if [ -z "$script_name" ]; then
+		logE "INTERNAL: script-name is not defined in 'resolve_script_name'"
+		myexit 1
+	fi
 
-    all_scripts=$(get_all_scripts)
+	all_scripts=$(get_all_scripts)
 
-    for script in $all_scripts
-    do
-        script=(${script//\// })
-        co=${script[1]}
-        script=${script[0]}
+	for script in $all_scripts; do
+		script=(${script//\// })
+		co=${script[1]}
+		script=${script[0]}
 
-        if [ "$script" == "$script_name" ]
-        then
-            echo "$HOME_DIR/$co/$script"
-            return
-        fi
-    done
+		if [ "$script" == "$script_name" ]; then
+			echo "$HOME_DIR/$co/$script"
+			return
+		fi
+	done
 
-    if command -v "$script_name" &> /dev/null; then
-        file_location=$(which $script_name)
-        if [[ $file_location == $HOME_DIR* ]]; then
-            echo $file_location
-            return
-        fi
-    fi
+	if command -v "$script_name" &>/dev/null; then
+		file_location=$(which $script_name)
+		if [[ $file_location == $HOME_DIR* ]]; then
+			echo $file_location
+			return
+		fi
+	fi
 
-    echo ""
+	echo ""
 }
 
 ###END###

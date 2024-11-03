@@ -5,31 +5,31 @@
 # Get all collection
 # $1 - If set to true, will include the scripts directory in the collection
 function get_all_collections {
-    # return an array with all folders in the collections directory
-    include_scripts=$1
-    collections=()
-    for d in $HOME_DIR/*; do
-        if [ -d "$d" ]; then
-            base_d=$(basename $d)
-            if ( [ "$base_d" == "scripts" ] || [ "$base_d" == "bin" ] ) && [ "$include_scripts" != "true" ]; then
-                continue
-            fi
-            collections+=($base_d)
-        fi
-    done
+	# return an array with all folders in the collections directory
+	include_scripts=$1
+	collections=()
+	for d in $HOME_DIR/*; do
+		if [ -d "$d" ]; then
+			base_d=$(basename $d)
+			if ([ "$base_d" == "scripts" ] || [ "$base_d" == "bin" ]) && [ "$include_scripts" != "true" ]; then
+				continue
+			fi
+			collections+=($base_d)
+		fi
+	done
 
-        echo ${collections[@]}
+	echo ${collections[@]}
 }
 
 function add_collection_to_mshrc {
-    collection_name=$1
-    mshrc_file="$MSHRC_FILE"
+	collection_name=$1
+	mshrc_file="$MSHRC_FILE"
 
-    command='export \$PATH="\$PATH:\$MSH_HOME/$collection_name"'
+	command='export \$PATH="\$PATH:\$MSH_HOME/$collection_name"'
 
-    echo "" >> $mshrc_file
-    echo "# Add $collection_name to the PATH" >> $mshrc_file
-    echo "export PATH=\"\$PATH:\$MSH_HOME/$collection_name\"" >> $mshrc_file
+	echo "" >>$mshrc_file
+	echo "# Add $collection_name to the PATH" >>$mshrc_file
+	echo "export PATH=\"\$PATH:\$MSH_HOME/$collection_name\"" >>$mshrc_file
 }
 
 ###END###

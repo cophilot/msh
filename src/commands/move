@@ -3,58 +3,55 @@
 ###START###
 
 function move_command {
-    require_dir $HOME_DIR
-    script_name=${VALUES[0]}
-    
-    if [ -z "$script_name" ]
-    then
-        logE "Please provide the name of the script to move"
-        myexit 1
-    fi
+	require_dir $HOME_DIR
+	script_name=${VALUES[0]}
 
-    collection_name=${VALUES[1]}
+	if [ -z "$script_name" ]; then
+		logE "Please provide the name of the script to move"
+		myexit 1
+	fi
 
-    if [ -z "$collection_name" ]
-    then
-        logE "Please provide the name of the collection to move the script to"
-        myexit 1
-    fi
+	collection_name=${VALUES[1]}
 
-    if [ ! -d "$HOME_DIR/$collection_name" ]
-    then
-        logE "Collection '$collection_name' not found"
-        myexit 1
-    fi
+	if [ -z "$collection_name" ]; then
+		logE "Please provide the name of the collection to move the script to"
+		myexit 1
+	fi
 
-    file_location=$(resolve_script_name "$script_name")
+	if [ ! -d "$HOME_DIR/$collection_name" ]; then
+		logE "Collection '$collection_name' not found"
+		myexit 1
+	fi
 
-    if [ -z "$file_location" ]; then
-        logE "Script '$script_name' not found"
-        myexit 1
-    fi
+	file_location=$(resolve_script_name "$script_name")
 
-    dest_file_location="$HOME_DIR/$collection_name/$script_name"
+	if [ -z "$file_location" ]; then
+		logE "Script '$script_name' not found"
+		myexit 1
+	fi
 
-    if [ -f "$dest_file_location" ]; then
-        logE "Script '$script_name' already exists in collection '$collection_name'"
-        myexit 1
-    fi
+	dest_file_location="$HOME_DIR/$collection_name/$script_name"
 
-    mv $file_location $HOME_DIR/$collection_name/$script_name
-    log "Script '$script_name' moved to collection '$collection_name'"
+	if [ -f "$dest_file_location" ]; then
+		logE "Script '$script_name' already exists in collection '$collection_name'"
+		myexit 1
+	fi
+
+	mv $file_location $HOME_DIR/$collection_name/$script_name
+	log "Script '$script_name' moved to collection '$collection_name'"
 }
 
 # Print help for the move command
 function move_help {
-    log "  move|mv <script> <dest-collection> - Move a script to a different collection"
-    log "      script - The name of the script to move"
-    log "      dest-collection - The name of the collection to move the script to"
-    log ""
+	log "  move|mv <script> <dest-collection> - Move a script to a different collection"
+	log "      script - The name of the script to move"
+	log "      dest-collection - The name of the collection to move the script to"
+	log ""
 }
 
 # Short form of the move command
 function mv_command {
-    move_command $*
+	move_command $*
 }
 
 ###END###

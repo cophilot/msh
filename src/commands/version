@@ -4,39 +4,38 @@
 
 # Print the version of the myshell
 function version_command {
-    if [ "$(is_flag_specified '-simple' '-s')" == "true" ]
-    then
-        log "myshell v$version"
-        myexit 0
-    fi
+	if [ "$(is_flag_specified '-simple' '-s')" == "true" ]; then
+		log "myshell v$version"
+		myexit 0
+	fi
 
-    log "                          __         ____"
-    log "    ____ ___  __  _______/ /_  ___  / / /"
-    log "   / __  __ \/ / / / ___/ __ \/ _ \/ / / "
-    log "  / / / / / / /_/ (__  ) / / /  __/ / /  "
-    log " /_/ /_/ /_/\__, /____/_/ /_/\___/_/_/   "
-    log "           /____/ v$version"
-    log ""
+	log "                          __         ____"
+	log "    ____ ___  __  _______/ /_  ___  / / /"
+	log "   / __  __ \/ / / / ___/ __ \/ _ \/ / / "
+	log "  / / / / / / /_/ (__  ) / / /  __/ / /  "
+	log " /_/ /_/ /_/\__, /____/_/ /_/\___/_/_/   "
+	log "           /____/ v$version"
+	log ""
 }
 
 # Print help for the version command
 function version_help {
-    log "  version|v [flags] - Print the version of myshell"
-    log "       Flags:"
-    log "           -s|-simple - Print the version in a simple format"
-    log ""
+	log "  version|v [flags] - Print the version of myshell"
+	log "       Flags:"
+	log "           -s|-simple - Print the version in a simple format"
+	log ""
 }
 
 function v_command {
-    version_command $*
+	version_command $*
 }
 
 function _version_command {
-    version_command $*
+	version_command $*
 }
 
 function _v_command {
-    version_command $*
+	version_command $*
 }
 
 ###END###

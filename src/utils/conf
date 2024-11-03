@@ -4,104 +4,94 @@
 
 # Update the conf file with the values from the .conf.template file
 function update_conf_file() {
-    local conf_file_template="$CONF_FILE.template"
-    if [ ! -f "$conf_file_template" ]
-    then
-        # Return if the template file doesn't exist
-        echo "Error: Could not find the .conf template file"
-        return
-    fi
+	local conf_file_template="$CONF_FILE.template"
+	if [ ! -f "$conf_file_template" ]; then
+		# Return if the template file doesn't exist
+		echo "Error: Could not find the .conf template file"
+		return
+	fi
 
-    if [ ! -f "$CONF_FILE" ]
-    then
-        # Use the template file as the conf file
-        cp "$conf_file_template" "$CONF_FILE"
-        return
-    fi
+	if [ ! -f "$CONF_FILE" ]; then
+		# Use the template file as the conf file
+		cp "$conf_file_template" "$CONF_FILE"
+		return
+	fi
 
-    # iterate over lines in th template file
-    while IFS= read -r line
-    do
-        # ignore empty lines
-        if [ -z "$line" ] || [ "${line:0:1}" = "#" ]
-        then
-            continue
-        fi
-        # append line to the conf file if it doesn't exist
-        local name=$(echo "$line" | cut -d'=' -f1)
-        if ! grep -q "^$name=" "$CONF_FILE"
-        then
-            echo "" >> "$CONF_FILE"
-            echo "$line" >> "$CONF_FILE"
-        fi
-    done < "$conf_file_template"
+	# iterate over lines in th template file
+	while IFS= read -r line; do
+		# ignore empty lines
+		if [ -z "$line" ] || [ "${line:0:1}" = "#" ]; then
+			continue
+		fi
+		# append line to the conf file if it doesn't exist
+		local name=$(echo "$line" | cut -d'=' -f1)
+		if ! grep -q "^$name=" "$CONF_FILE"; then
+			echo "" >>"$CONF_FILE"
+			echo "$line" >>"$CONF_FILE"
+		fi
+	done <"$conf_file_template"
 }
 
 # Read the conf file and create it if it doesn't exist
 function read_conf_file() {
-    if [ -f "$CONF_FILE" ]
-    then
-        echo "$(cat $CONF_FILE)"
-    else 
-        echo ""
-    fi
+	if [ -f "$CONF_FILE" ]; then
+		echo "$(cat $CONF_FILE)"
+	else
+		echo ""
+	fi
 }
 
 # Get the editor command from the conf file
 function get_editor_command() {
-    local editor_command=$(get_conf "editor_command" "vim")
-    echo "$editor_command"
+	local editor_command=$(get_conf "editor_command" "vim")
+	echo "$editor_command"
 }
 
 # Get the print command from the conf file
 function get_print_command() {
-    local print_command=$(get_conf "print_command" "cat")
-    echo "$print_command"
+	local print_command=$(get_conf "print_command" "cat")
+	echo "$print_command"
 }
 
 # Get the default collection from the conf file
 function get_default_collection() {
-    local default_col=$(get_conf "default_collection" "scripts")
-    echo "$default_col"
+	local default_col=$(get_conf "default_collection" "scripts")
+	echo "$default_col"
 }
 
 # Get a configuration value from the conf file
 # $1: name of the configuration
 # $2(optional): default value
 # $3(optional): If set to 1, the value will be converted to lowercase and normalized
-function get_conf () {
+function get_conf() {
 
-    local name="$1"
-    local conf_file_content=$(read_conf_file)
+	local name="$1"
+	local conf_file_content=$(read_conf_file)
 
-    if [ -z "$conf_file_content" ]
-    then
-        echo "$2"
-        return
-    fi
+	if [ -z "$conf_file_content" ]; then
+		echo "$2"
+		return
+	fi
 
-    local value=$(echo "$conf_file_content" | grep "^$name=" | sed "s,$name=,,")
-    if [ -z "$value" ]
-    then
-        echo "$2"
-        return
-    fi
+	local value=$(echo "$conf_file_content" | grep "^$name=" | sed "s,$name=,,")
+	if [ -z "$value" ]; then
+		echo "$2"
+		return
+	fi
 
-    if [ -n "$3" ] && [ "$3" = "1" ]
-    then
-        # make the value lowercase
-        value=$(echo "$value" | tr '[:upper:]' '[:lower:]')
-        # remove newlines to handle when multiple values are set
-        value=$(echo "$value" | tr '\n' ' ' | awk '{print $1}')
-        # remove leading and trailing whitespace
-        value=$(echo "$value" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
-       
-        if [ "$value" = "true" ]
-        then
-            value="on"
-        fi
-    fi
-    echo "$value"
+	if [ -n "$3" ] && [ "$3" = "1" ]; then
+		# make the value lowercase
+		value=$(echo "$value" | tr '[:upper:]' '[:lower:]')
+		# remove newlines to handle when multiple values are set
+		value=$(echo "$value" | tr '\n' ' ' | awk '{print $1}')
+		# remove leading and trailing whitespace
+		value=$(echo "$value" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+
+		if [ "$value" = "true" ]; then
+			value="on"
+		fi
+	fi
+	echo "$value"
 }
 
 ###END###

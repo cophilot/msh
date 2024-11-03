@@ -3,57 +3,52 @@
 ###START###
 
 function migrate_scripts_command {
-    require_dir $HOME_DIR
+	require_dir $HOME_DIR
 
-    all_scripts=$(get_all_scripts)
+	all_scripts=$(get_all_scripts)
 
-    for script in $all_scripts
-    do
-        script=(${script//\// })
-        co=${script[1]}
-        script=${script[0]}
-        sc_path="$HOME_DIR/$co/$script"
+	for script in $all_scripts; do
+		script=(${script//\// })
+		co=${script[1]}
+		script=${script[0]}
+		sc_path="$HOME_DIR/$co/$script"
 
-        # check if the script has a line starting with #??, if it does, it is already a msh script otherwise, migrate it
-        description=$(cat "$sc_path" | grep -m 1 -o "#??.*")
+		# check if the script has a line starting with #??, if it does, it is already a msh script otherwise, migrate it
+		description=$(cat "$sc_path" | grep -m 1 -o "#??.*")
 
-        if [ -n "$description" ]
-        then
-            continue
-        fi
+		if [ -n "$description" ]; then
+			continue
+		fi
 
-        log "Migrating $script script"
+		log "Migrating $script script"
 
-        new_description="#??This is the $script script"
+		new_description="#??This is the $script script"
 
-        if [ $(wc -l < $sc_path) -lt 2 ]
-        then
-            echo $new_description >> $sc_path
-        else
-            sed -i "2i\\$new_description\\" $sc_path
-        fi
+		if [ $(wc -l <$sc_path) -lt 2 ]; then
+			echo $new_description >>$sc_path
+		else
+			sed -i "2i\\$new_description\\" $sc_path
+		fi
 
-        tags=$(cat "$sc_path" | grep -m 1 -o "#&&.*")
-        if [ -n "$tags" ]
-        then
-            continue
-        fi
+		tags=$(cat "$sc_path" | grep -m 1 -o "#&&.*")
+		if [ -n "$tags" ]; then
+			continue
+		fi
 
-        if [ $(wc -l < $sc_path) -lt 3 ]
-        then
-            echo "#&&TAGS" >> $sc_path
-        else
-            sed -i "3i\\#&&TAGS\\" $sc_path
-        fi
-    done
+		if [ $(wc -l <$sc_path) -lt 3 ]; then
+			echo "#&&TAGS" >>$sc_path
+		else
+			sed -i "3i\\#&&TAGS\\" $sc_path
+		fi
+	done
 
-    log "All scripts have been migrated to msh"
+	log "All scripts have been migrated to msh"
 }
 
 # Print help for the migratescripts command
 function migrate_scripts_help {
-    log "  migrate-scripts - Migrate all existing scripts to msh"
-    log ""
+	log "  migrate-scripts - Migrate all existing scripts to msh"
+	log ""
 }
 
 ###END###

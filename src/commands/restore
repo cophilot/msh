@@ -3,41 +3,37 @@
 ###START###
 
 function restore_command {
-    script_name=${VALUES[0]}
-    if [ -z "$script_name" ]
-    then
-        logE "Please provide the name for the script to restore"
-        myexit 1
-    fi
+	script_name=${VALUES[0]}
+	if [ -z "$script_name" ]; then
+		logE "Please provide the name for the script to restore"
+		myexit 1
+	fi
 
-    collection_name=${VALUES[1]}
-    if [ -z "$collection_name" ]
-    then
-        collection_name=$(get_default_collection)
-    elif [ ! -d "$HOME_DIR/$collection_name" ]
-    then
-        logE "Collection '$collection_name' does not exist"
-        myexit 1
-    fi
+	collection_name=${VALUES[1]}
+	if [ -z "$collection_name" ]; then
+		collection_name=$(get_default_collection)
+	elif [ ! -d "$HOME_DIR/$collection_name" ]; then
+		logE "Collection '$collection_name' does not exist"
+		myexit 1
+	fi
 
-    mkdir -p "$HOME_DIR/.trash"
+	mkdir -p "$HOME_DIR/.trash"
 
-    if [ ! -f "$HOME_DIR/.trash/$script_name" ]
-    then
-        logE "Script '$script_name' does not exist in the trash"
-        myexit 1
-    fi
+	if [ ! -f "$HOME_DIR/.trash/$script_name" ]; then
+		logE "Script '$script_name' does not exist in the trash"
+		myexit 1
+	fi
 
-    mv "$HOME_DIR/.trash/$script_name" "$HOME_DIR/$collection_name/$script_name"
-    log "Restored script '$script_name' to collection '$collection_name'"
+	mv "$HOME_DIR/.trash/$script_name" "$HOME_DIR/$collection_name/$script_name"
+	log "Restored script '$script_name' to collection '$collection_name'"
 }
 
 # Print help for the restore command
 function restore_help {
-    log "  restore <script> [collection-name] - Restore a script from the trash"
-    log "      script - The name of the script to restore"
-    log "      collection-name - The name of the collection to restore the script to"
-    log ""
+	log "  restore <script> [collection-name] - Restore a script from the trash"
+	log "      script - The name of the script to restore"
+	log "      collection-name - The name of the collection to restore the script to"
+	log ""
 }
 
 ###END###

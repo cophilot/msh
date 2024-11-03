@@ -3,100 +3,89 @@
 ###START###
 
 function list_command {
-    require_dir $HOME_DIR
+	require_dir $HOME_DIR
 
-    filter_tag=${VALUES[0]}
+	filter_tag=${VALUES[0]}
 
-    all_scripts=$(get_all_scripts)
+	all_scripts=$(get_all_scripts)
 
-    if [ -z "$all_scripts" ]
-    then
-        log "No scripts found"
-        myexit 0
-    fi
-    
-    all_scripts=$(echo ${all_scripts[@]} | tr ' ' '\n')
-    if [ "$(is_flag_specified '-group' '-g')" == "false" ]
-    then
-        all_scripts=$(echo "$all_scripts" | sort)
-    fi
+	if [ -z "$all_scripts" ]; then
+		log "No scripts found"
+		myexit 0
+	fi
 
-    if [ -n "$filter_tag" ]
-    then
-        log "Filtering by tag: $filter_tag"
-    fi
+	all_scripts=$(echo ${all_scripts[@]} | tr ' ' '\n')
+	if [ "$(is_flag_specified '-group' '-g')" == "false" ]; then
+		all_scripts=$(echo "$all_scripts" | sort)
+	fi
 
-    log "Available scripts:"
+	if [ -n "$filter_tag" ]; then
+		log "Filtering by tag: $filter_tag"
+	fi
 
-    if [ "$(is_flag_specified '-simple' '-s')" == "false" ]
-    then
-        if [ "$(is_flag_specified '-collection' '-c')" == "true" ]
-        then
-            printf "  %-25s %-15s %s\n" "SCRIPT" "COLLECTION" "DESCRIPTION"
-        else
-            printf "  %-25s %s\n" "SCRIPT" "DESCRIPTION"
-        fi
-    fi
+	log "Available scripts:"
 
-    for script in $all_scripts
-    do
-        script=(${script//\// })
-        co=${script[1]}
-        script=${script[0]}
-        sc_path="$HOME_DIR/$co/$script"
-        
-        description=$(cat "$sc_path" | grep -m 1 -o "#??.*")
-        tags=$(cat "$sc_path" | grep -m 1 -o "#&&.*")
+	if [ "$(is_flag_specified '-simple' '-s')" == "false" ]; then
+		if [ "$(is_flag_specified '-collection' '-c')" == "true" ]; then
+			printf "  %-25s %-15s %s\n" "SCRIPT" "COLLECTION" "DESCRIPTION"
+		else
+			printf "  %-25s %s\n" "SCRIPT" "DESCRIPTION"
+		fi
+	fi
 
-        lower_filter_tag=$(echo $filter_tag | tr '[:upper:]' '[:lower:]')
-        lower_tags=$(echo $tags | tr '[:upper:]' '[:lower:]')
-        if [ -n "$filter_tag" ] && [[ ! $lower_tags =~ $lower_filter_tag ]]
-        then
-            continue
-        fi
+	for script in $all_scripts; do
+		script=(${script//\// })
+		co=${script[1]}
+		script=${script[0]}
+		sc_path="$HOME_DIR/$co/$script"
 
-        tags="[${tags:3}]"
+		description=$(cat "$sc_path" | grep -m 1 -o "#??.*")
+		tags=$(cat "$sc_path" | grep -m 1 -o "#&&.*")
 
-        if [ -n "$description" ]
-        then
-            description="${description:3}"
-        fi
+		lower_filter_tag=$(echo $filter_tag | tr '[:upper:]' '[:lower:]')
+		lower_tags=$(echo $tags | tr '[:upper:]' '[:lower:]')
+		if [ -n "$filter_tag" ] && [[ ! $lower_tags =~ $lower_filter_tag ]]; then
+			continue
+		fi
 
-        if [ "$tags" == "[]" ]
-        then
-            tags=""
+		tags="[${tags:3}]"
 
-        fi
+		if [ -n "$description" ]; then
+			description="${description:3}"
+		fi
 
-        if [ "$(is_flag_specified '-simple' '-s')" == "true" ]
-        then 
-            log "  $script - $description $tags"
-            continue
-        fi
-        if [ "$(is_flag_specified '-collection' '-c')" == "true" ]
-        then
-            printf "  %-25s %-15s %s\n" "$script" "$co" "$description $tags"
-        else
-            printf "  %-25s %s\n" "$script" "$description $tags"
-        fi
-    done
+		if [ "$tags" == "[]" ]; then
+			tags=""
+
+		fi
+
+		if [ "$(is_flag_specified '-simple' '-s')" == "true" ]; then
+			log "  $script - $description $tags"
+			continue
+		fi
+		if [ "$(is_flag_specified '-collection' '-c')" == "true" ]; then
+			printf "  %-25s %-15s %s\n" "$script" "$co" "$description $tags"
+		else
+			printf "  %-25s %s\n" "$script" "$description $tags"
+		fi
+	done
 
 }
 
 # Print help for the list command
 function list_help {
-    log "  list|ls [tag] [flags] - List all available commands"
-    log "      tag - If provided, only scripts with the specified tag will be listed"
-    log "      Flags:"
-    log "          -collection|-c - Show the collection of the scripts"
-    log "          -group|-g - Group the scripts by collection"
-    log "          -simple|-s - Print the list in a simple format"
-    log ""
+	log "  list|ls [tag] [flags] - List all available commands"
+	log "      tag - If provided, only scripts with the specified tag will be listed"
+	log "      Flags:"
+	log "          -collection|-c - Show the collection of the scripts"
+	log "          -group|-g - Group the scripts by collection"
+	log "          -simple|-s - Print the list in a simple format"
+	log ""
 }
 
 # Short form of the list command
 function ls_command {
-    list_command $*
+	list_command $*
 }
 
 ###END###

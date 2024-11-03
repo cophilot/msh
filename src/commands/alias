@@ -3,57 +3,54 @@
 ###START###
 
 function alias_command {
-    logE "Not implemented yet"
-    myexit 1
-    
-    require_dir $HOME_DIR
-    script_name=${VALUES[0]}
-    cmd_name=${VALUES[1]}
+	logE "Not implemented yet"
+	myexit 1
 
-    if [ -z "$script_name" ]
-    then
-        log "Please provide the name for the new-script"
-        myexit 1
-    fi
-    if [ -z "$cmd_name" ]; then
-        log "Please provide the command to create an alias for"
-        myexit 1
-    fi
+	require_dir $HOME_DIR
+	script_name=${VALUES[0]}
+	cmd_name=${VALUES[1]}
 
-    collection_name=${VALUES[2]}
-    if [ -z "$collection_name" ]
-    then
-        collection_name=$(get_default_collection)
-    elif [ ! -d "$HOME_DIR/$collection_name" ]
-    then
-        logE "Collection '$collection_name' does not exist"
-        myexit 1
-    fi
+	if [ -z "$script_name" ]; then
+		log "Please provide the name for the new-script"
+		myexit 1
+	fi
+	if [ -z "$cmd_name" ]; then
+		log "Please provide the command to create an alias for"
+		myexit 1
+	fi
 
-    check_if_command_exists $script_name
+	collection_name=${VALUES[2]}
+	if [ -z "$collection_name" ]; then
+		collection_name=$(get_default_collection)
+	elif [ ! -d "$HOME_DIR/$collection_name" ]; then
+		logE "Collection '$collection_name' does not exist"
+		myexit 1
+	fi
 
-    sc_dir="$HOME_DIR/$collection_name"
+	check_if_command_exists $script_name
 
-    description="Alias for '$cmd_name'"
-    cmd2="$cmd_name \$*"
-    cmd1="echo \"$cmd2\""
+	sc_dir="$HOME_DIR/$collection_name"
 
-    create_new_script $sc_dir $script_name "$description" "$cmd1" "$cmd2"
+	description="Alias for '$cmd_name'"
+	cmd2="$cmd_name \$*"
+	cmd1="echo \"$cmd2\""
 
-    log "Alias script '$script_name' created ($sc_dir/$script_name)"
+	create_new_script $sc_dir $script_name "$description" "$cmd1" "$cmd2"
+
+	log "Alias script '$script_name' created ($sc_dir/$script_name)"
 }
 
 # Print help for the alias command
 function alias_help {
-    log "  alias|a <new-script> <command> - Create a new alias for a command"
-    log "      new-command - The name of the new command to create"
-    log "      command - The command to create an alias for"
-    log ""
+	log "  alias|a <new-script> <command> - Create a new alias for a command"
+	log "      new-command - The name of the new command to create"
+	log "      command - The command to create an alias for"
+	log ""
 }
 
 # Short form of the alias command
 function a_command {
-    alias_command $*
+	alias_command $*
 }
 
 ###END###

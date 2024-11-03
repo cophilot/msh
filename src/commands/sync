@@ -3,83 +3,77 @@
 ###START###
 
 function sync_command {
-    require_git
-    require_dir $HOME_DIR
+	require_git
+	require_dir $HOME_DIR
 
-    collection_name=${VALUES[0]}
-    if [ -z "$collection_name" ]; then
-        all_collection=$(get_all_collections)
-        if [ ${#all_collection} -eq 0 ]; then
-            log "No collections found"
-            myexit 0
-        fi
-        for collection in ${all_collection[@]}; do
-            sync_collection $collection
-        done
-        myexit 0
-    fi
-    if [ ! -d "$HOME_DIR/$collection_name" ]; then
-        logE "Collection '$collection_name' does not exist"
-        myexit 1
-    fi
+	collection_name=${VALUES[0]}
+	if [ -z "$collection_name" ]; then
+		all_collection=$(get_all_collections)
+		if [ ${#all_collection} -eq 0 ]; then
+			log "No collections found"
+			myexit 0
+		fi
+		for collection in ${all_collection[@]}; do
+			sync_collection $collection
+		done
+		myexit 0
+	fi
+	if [ ! -d "$HOME_DIR/$collection_name" ]; then
+		logE "Collection '$collection_name' does not exist"
+		myexit 1
+	fi
 
-    sync_collection $collection_name
+	sync_collection $collection_name
 }
 
 function sync_collection {
-    collection_name=$1
-    # check if the collection is a git repository
-    if [ ! -d "$HOME_DIR/$collection_name/.git" ]; then
-        return
-    fi
+	collection_name=$1
+	# check if the collection is a git repository
+	if [ ! -d "$HOME_DIR/$collection_name/.git" ]; then
+		return
+	fi
 
-    if [ "$(is_flag_specified '-up' '-u')" == "true" ]
-    then
-        log "Pushing changes to the remote repository..."
-        if [ "$(is_flag_specified '--quiet' '--q')" == "true" ]
-        then
-            git -C $HOME_DIR/$collection_name add . > /dev/null 2>&1
-            git -C $HOME_DIR/$collection_name commit -m "Synchronize collection" > /dev/null 2>&1
-            git -C $HOME_DIR/$collection_name push > /dev/null 2>&1
-        else
-            git -C $HOME_DIR/$collection_name add .
-            git -C $HOME_DIR/$collection_name commit -m "Synchronize collection"
-            git -C $HOME_DIR/$collection_name push
-        fi
-    fi
+	if [ "$(is_flag_specified '-up' '-u')" == "true" ]; then
+		log "Pushing changes to the remote repository..."
+		if [ "$(is_flag_specified '--quiet' '--q')" == "true" ]; then
+			git -C $HOME_DIR/$collection_name add . >/dev/null 2>&1
+			git -C $HOME_DIR/$collection_name commit -m "Synchronize collection" >/dev/null 2>&1
+			git -C $HOME_DIR/$collection_name push >/dev/null 2>&1
+		else
+			git -C $HOME_DIR/$collection_name add .
+			git -C $HOME_DIR/$collection_name commit -m "Synchronize collection"
+			git -C $HOME_DIR/$collection_name push
+		fi
+	fi
 
-    log "Synchronizing collection '$collection_name'..."
-    if [ "$(is_flag_specified '--quiet' '--q')" == "true" ] && [ "$(is_flag_specified '-d' '-detached')" == "true" ]
-    then
-        git -C $HOME_DIR/$collection_name pull > /dev/null 2>&1 &
-    elif [ "$(is_flag_specified '--quiet' '--q')" == "true" ]
-    then
-        git -C $HOME_DIR/$collection_name pull > /dev/null 2>&1
-    elif [ "$(is_flag_specified '-d' '-detached')" == "true" ]
-    then
-        git -C $HOME_DIR/$collection_name pull &
-    else
-        git -C $HOME_DIR/$collection_name pull
-    fi
+	log "Synchronizing collection '$collection_name'..."
+	if [ "$(is_flag_specified '--quiet' '--q')" == "true" ] && [ "$(is_flag_specified '-d' '-detached')" == "true" ]; then
+		git -C $HOME_DIR/$collection_name pull >/dev/null 2>&1 &
+	elif [ "$(is_flag_specified '--quiet' '--q')" == "true" ]; then
+		git -C $HOME_DIR/$collection_name pull >/dev/null 2>&1
+	elif [ "$(is_flag_specified '-d' '-detached')" == "true" ]; then
+		git -C $HOME_DIR/$collection_name pull &
+	else
+		git -C $HOME_DIR/$collection_name pull
+	fi
 
-    log "Collection '$collection_name' synchronized"
-    log ""
+	log "Collection '$collection_name' synchronized"
+	log ""
 }
-
 
 # Print help for the sync command
 function sync_help {
-    log "  sync|s [collection-name] [flags] - Synchronize all or one collections"
-    log "      collection-name - The name of the collection to synchronize"
-    log "      Flags:"
-    log "          -u|-up - Push changes to the remote repository"
-    log "          -d|-detached - Synchronize the collection in detached mode"
-    log ""
+	log "  sync|s [collection-name] [flags] - Synchronize all or one collections"
+	log "      collection-name - The name of the collection to synchronize"
+	log "      Flags:"
+	log "          -u|-up - Push changes to the remote repository"
+	log "          -d|-detached - Synchronize the collection in detached mode"
+	log ""
 }
 
 # Short form of the sync command
 function s_command {
-    sync_command $*
+	sync_command $*
 }
 
 ###END###

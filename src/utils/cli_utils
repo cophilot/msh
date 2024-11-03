@@ -5,24 +5,23 @@
 # Get the specified value at the specified index
 # $1 - The index of the value
 function get_value() {
-    echo "${VALUES[$1]}"
+	echo "${VALUES[$1]}"
 }
 
 # Return is a flag is specified in the arguments
 # $1 - The flag to check
 # $2 - The short flag to check
 function is_flag_specified() {
-    flag=$1
-    short_flag=$2
+	flag=$1
+	short_flag=$2
 
-    for f in "${FLAGS[@]}"; do
-        if [[ "$f" == "$flag" || "$f" == "$short_flag" ]]; then
-            echo "true"
-            return
-        fi
-    done
-    echo "false"
+	for f in "${FLAGS[@]}"; do
+		if [[ "$f" == "$flag" || "$f" == "$short_flag" ]]; then
+			echo "true"
+			return
+		fi
+	done
+	echo "false"
 }
-
 
 ###END###

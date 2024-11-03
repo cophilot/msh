@@ -6,57 +6,57 @@
 # $1 - The function to run
 # $2 - The arguments to pass to the function
 function dynamic_run_and_exit() {
-    if declare -f $1 > /dev/null; then
-        $1 $2
-        myexit 0
-    fi
+	if declare -f $1 >/dev/null; then
+		$1 $2
+		myexit 0
+	fi
 }
 
 # Handle the development mode ###DEV-MODE###
 function handle_dev_mode() { ###DEV-MODE###
-    HOME_DIR="$(pwd)/.myshell" ###DEV-MODE###
-    mkdir -p .myshell ###DEV-MODE###
-} ###DEV-MODE###
+	HOME_DIR="$(pwd)/.myshell"  ###DEV-MODE###
+	mkdir -p .myshell           ###DEV-MODE###
+}                            ###DEV-MODE###
 
 function check_if_command_exists() {
-    if command -v "$1" &> /dev/null; then
-        logE "The command '$1' already exists"
-        myexit 1
-    fi
+	if command -v "$1" &>/dev/null; then
+		logE "The command '$1' already exists"
+		myexit 1
+	fi
 }
 
 # Check if a directory exists if not exit
 # $1 - The directory to check
 function require_dir() {
-    if [ ! -d "$1" ]; then
-        logE "Directory $1 does not exist"
-        myexit 1
-    fi
+	if [ ! -d "$1" ]; then
+		logE "Directory $1 does not exist"
+		myexit 1
+	fi
 }
 
 # Check if a file exists if not exit
 # $1 - The file to check
 function require_file() {
-    if [ ! -f "$1" ]; then
-        logE "File $1 does not exist"
-        myexit 1
-    fi
+	if [ ! -f "$1" ]; then
+		logE "File $1 does not exist"
+		myexit 1
+	fi
 }
 
 function require_git() {
-    if ! command -v git &> /dev/null; then
-        logE "Git is not installed"
-        myexit 1
-    fi
+	if ! command -v git &>/dev/null; then
+		logE "Git is not installed"
+		myexit 1
+	fi
 }
 
 # Exit the application with the specified code
 # $1 - The exit code
 function myexit() {
-    if [ "$1" -ne 0 ]; then
-        echo "Run '$0 help' for more information"
-    fi
-    exit $1
+	if [ "$1" -ne 0 ]; then
+		echo "Run '$0 help' for more information"
+	fi
+	exit $1
 }
 
 ###END###
