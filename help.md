@@ -1,5 +1,5 @@
 ```
-myshell v0.1.0
+myshell v0.2.0
 
                           __         ____
     ____ ___  __  _______/ /_  ___  / / /
@@ -37,6 +37,10 @@ Commands:
 
   migrate-scripts - Migrate all existing scripts to msh
 
+  move|mv <script> <dest-collection> - Move a script to a different collection
+      script - The name of the script to move
+      dest-collection - The name of the collection to move the script to
+
   new|n <new-script> [collection-name] [flags]- Create a new script
       script-name - The name of the script to create
       collection-name - The name of the collection to add the script to. The default collection can be set in the config
@@ -47,6 +51,15 @@ Commands:
       script-name - The name of the script to print
       Flags:
           -run|-r - Run the script after printing
+
+  remove|rm <script> [flags] - Remove a script
+      script - The name of the script to remove
+      Flags:
+          -force|-f - Remove script without storing it in the trash
+
+  restore <script> [collection-name] - Restore a script from the trash
+      script - The name of the script to restore
+      collection-name - The name of the collection to restore the script to
 
   sync|s [collection-name] [flags] - Synchronize all or one collections
       collection-name - The name of the collection to synchronize
