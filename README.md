@@ -1,7 +1,7 @@
 <div align="center">
   <br />
   <img src="assets/logo.png" alt="mshLogo" width="30%"/>
-  <h1>my$hell</h1>
+  <h1>m$h</h1>
   <p>
     A CLI tool to manage custom scripts. 
   </p>
