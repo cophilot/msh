@@ -35,6 +35,16 @@ curl -s https://raw.githubusercontent.com/cophilot/msh/main/install | bash -s
 
 ---
 
+## Update
+
+Run the following command to update `msh`:
+
+```bash
+msh-update
+```
+
+---
+
 ## Uninstall
 
 Run the following command to uninstall `msh`:
@@ -44,6 +54,16 @@ msh-uninstall
 ```
 
 If the script is not found, you can manually run the script from `$MSH_HOME/bin/msh-uninstall`.
+
+---
+
+## Extensions
+
+You can load predefined collections of scripts into your msh installation. This extension provide useful scripts for your daily work.
+
+The following extensions are available:
+
+-   [msh-inception](https://github.com/cophilot/mshx-inception): This is a msh extension that adds additional scripts for using msh.
 
 ---
 
