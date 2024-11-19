@@ -1,0 +1,99 @@
+#!/bin/bash
+
+function help_command(){
+    echo "                          __         ____"
+    echo "    ____ ___  __  _______/ /_  ___  / / /"
+    echo "   / __  __ \/ / / / ___/ __ \/ _ \/ / / "
+    echo "  / / / / / / /_/ (__  ) / / /  __/ / /  "
+    echo " /_/ /_/ /_/\__, /____/_/ /_/\___/_/_/   "
+    echo "           /____/ msh eXtension" 
+    echo ""
+    echo "Usage: mshx <command>"
+    echo ""
+    echo "<...> = required"
+    echo "[...] = optional"
+    echo ""
+    echo "Commands:"
+    echo "  help|h - Get help for mshx"
+    echo ""
+    echo "  install|i <extension-name> [collection-name] - Clone a collection from a git repository"
+    echo "      extension-name - The name of the extension to install in the format 'username/repo'"
+    echo ""
+    echo "  list|ls - List all available extensions"
+}
+
+function install_command(){
+
+    extension="$2"
+
+    if [ -z "$extension" ]; then
+        echo "No extension specified. Type 'mshx help' for help."
+        exit 1
+    fi
+
+    # exit when extension does not contain a slash
+    if [[ ! "$extension" == *"/"* ]]; then
+        echo "Invalid extension name. Type 'mshx help' for help."
+        exit 1
+    fi
+    echo "Installing extension $extension..."
+
+    if [[ ! "$extension" == *"https://"* ]] && [[ ! "$extension" == *"http://"* ]]; then
+        extension="https://github.com/$extension-mshx.git"
+    fi
+
+    # check if the repository exists
+    if ! git ls-remote "$extension" &> /dev/null; then
+        echo "Could not find the repository: $extension"
+        exit 1
+    fi
+
+    msh collection clone "$extension" --q
+    echo "Extension $extension installed successfully."
+}
+
+function list_command(){
+    echo "Extensions:"
+
+    extension_list_url="https://raw.githubusercontent.com/cophilot/msh/refs/heads/main/extensions.list"
+    extension_list=$(curl -s $extension_list_url)
+
+    while IFS= read -r line; do
+        url="https://github.com/$line-mshx.git"
+        if ! git ls-remote "$url" &> /dev/null; then
+            continue
+        fi
+        # get the github description
+        description=$(curl -s "https://api.github.com/repos/$line-mshx" | jq -r '.description')
+        if [ "$description" == "null" ]; then
+            description=""
+        else
+            description="- $description"
+        fi
+        echo "  $line $description($url)"
+    done <<< "$extension_list"
+}
+
+command="$1"
+
+if [ -z "$command" ]; then
+    echo "No command specified. Type 'mshx help' for help."
+    exit 1
+fi
+
+if [ "$command" == "help" ] || [ "$command" == "h" ] || [ "$command" == "-help" ] || [ "$command" == "--help" ] || [ "$command" == "-h" ] || [ "$command" == "--h" ]; then
+    help_command
+    exit 0
+fi
+
+if [ "$command" == "install" ] || [ "$command" == "i" ]; then
+    install_command $@
+    exit 0
+fi
+
+if [ "$command" == "list" ] || [ "$command" == "ls" ]; then
+    list_command
+    exit 0
+fi
+
+echo "Command not found. Type 'mshx help' for help."
