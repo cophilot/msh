@@ -2,7 +2,6 @@
 
 ###START###
 
-# Log a message
 function log() {
 	if [ "$(is_flag_specified '--quiet' '--q')" == "true" ]; then
 		return
