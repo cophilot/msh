@@ -2,12 +2,17 @@
 
 ###START###
 
+# Log a message
 function log() {
 	if [ "$(is_flag_specified '--quiet' '--q')" == "true" ]; then
 		return
 	fi
 	echo "$1"
 }
+
+
+
+
 
 # Log an error message
 function log_e {
