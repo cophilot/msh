@@ -1,0 +1,10 @@
+#!/bin/bash
+
+pysc=".scripts/py/function-naming-check.py"
+
+if command -v python3 &> /dev/null;
+then
+    python3 $pysc "src"
+else
+    python $pysc "src"
+fi
