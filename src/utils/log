@@ -10,10 +10,6 @@ function log() {
 	echo "$1"
 }
 
-
-
-
-
 # Log an error message
 function log_e {
 	# print error message in red
