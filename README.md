@@ -12,6 +12,9 @@
    <a href="https://github.com/cophilot/msh/releases">
        <img src="https://img.shields.io/github/v/release/cophilot/msh?display_name=tag" alt="current realease" />
    </a>
+   <a href="https://github.com/cophilot/msh/actions/workflows/ci.yml">
+       <img src="https://github.com/cophilot/msh/actions/workflows/ci.yml/badge.svg" alt="CI" />
+   </a>
    <a href="https://github.com/cophilot/msh/blob/master/LICENSE">
        <img src="https://img.shields.io/github/license/cophilot/msh" alt="license" />
    </a>
