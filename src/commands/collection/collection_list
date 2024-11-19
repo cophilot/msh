@@ -2,6 +2,7 @@
 
 ###START###
 
+# List all collections
 function collection_list_command {
 
 	all_collection=$(get_all_collections)

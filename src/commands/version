@@ -26,14 +26,17 @@ function version_help {
 	log ""
 }
 
+# Short form of the version command
 function v_command {
 	version_command $*
 }
 
+# Covering dashes in the command name
 function _version_command {
 	version_command $*
 }
 
+# Covering dashes in the command short form
 function _v_command {
 	version_command $*
 }

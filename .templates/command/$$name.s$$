@@ -3,7 +3,7 @@
 ###START###
 
 function $$name.lower$$_command {
-    logE "Not implemented: $$name.lower$$"
+    log_e "Not implemented: $$name.lower$$"
     myexit 1
 }
 

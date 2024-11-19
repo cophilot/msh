@@ -2,6 +2,7 @@
 
 ###START###
 
+# List all available commands
 function list_command {
 	require_dir $HOME_DIR
 

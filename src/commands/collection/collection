@@ -2,16 +2,17 @@
 
 ###START###
 
+# The collection sub-category of commands
 function collection_command {
 	comm=${VALUES[0]}
 	if [ -z "$comm" ]; then
-		logE "Please provide a sub-command"
+		log_e "Please provide a sub-command"
 		myexit 1
 	fi
 	comm_fn="collection_${comm}_command"
 	dynamic_run_and_exit $comm_fn $args
 
-	logE "Command not found: collection $comm"
+	log_e "Command not found: collection $comm"
 	myexit 1
 }
 

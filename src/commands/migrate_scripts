@@ -2,6 +2,7 @@
 
 ###START###
 
+# Migrate all existing scripts to msh
 function migrate_scripts_command {
 	require_dir $HOME_DIR
 

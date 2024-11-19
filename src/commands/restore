@@ -2,10 +2,11 @@
 
 ###START###
 
+# Restore a script from the trash
 function restore_command {
 	script_name=${VALUES[0]}
 	if [ -z "$script_name" ]; then
-		logE "Please provide the name for the script to restore"
+		log_e "Please provide the name for the script to restore"
 		myexit 1
 	fi
 
@@ -13,14 +14,14 @@ function restore_command {
 	if [ -z "$collection_name" ]; then
 		collection_name=$(get_default_collection)
 	elif [ ! -d "$HOME_DIR/$collection_name" ]; then
-		logE "Collection '$collection_name' does not exist"
+		log_e "Collection '$collection_name' does not exist"
 		myexit 1
 	fi
 
 	mkdir -p "$HOME_DIR/.trash"
 
 	if [ ! -f "$HOME_DIR/.trash/$script_name" ]; then
-		logE "Script '$script_name' does not exist in the trash"
+		log_e "Script '$script_name' does not exist in the trash"
 		myexit 1
 	fi
 

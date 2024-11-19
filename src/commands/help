@@ -42,14 +42,17 @@ function help_help {
 	log ""
 }
 
+# Short form of the help command
 function h_command {
 	help_command $*
 }
 
+# Covering dashes in the command name
 function _help_command {
 	help_command $*
 }
 
+# Covering dashes in the command short form
 function _h_command {
 	help_command $*
 }

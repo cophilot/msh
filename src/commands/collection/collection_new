@@ -2,33 +2,34 @@
 
 ###START###
 
+# Create a new collection
 function collection_new_command {
 	coll_name=${VALUES[1]}
 
 	if [ -z "$coll_name" ]; then
-		logE "Please provide the name for the new collection"
+		log_e "Please provide the name for the new collection"
 		myexit 1
 	fi
 
 	if [ "$coll_name" == "bin" ]; then
-		logE "Collection name 'bin' is reserved"
+		log_e "Collection name 'bin' is reserved"
 		myexit 1
 	fi
 
 	if [ "$coll_name" == "scripts" ]; then
-		logE "Collection name 'scripts' is reserved"
+		log_e "Collection name 'scripts' is reserved"
 		myexit 1
 	fi
 
 	if [[ $coll_name == .* ]]; then
-		logE "Collection name cannot start with a dot"
+		log_e "Collection name cannot start with a dot"
 		myexit 1
 	fi
 
 	all_collection=$(get_all_collections)
 	for collection in ${all_collection[@]}; do
 		if [ "$collection" == "$coll_name" ]; then
-			logE "Collection '$coll_name' already exists"
+			log_e "Collection '$coll_name' already exists"
 			myexit 1
 		fi
 	done

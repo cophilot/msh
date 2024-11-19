@@ -2,6 +2,7 @@
 
 ###START###
 
+# Log a message
 function log() {
 	if [ "$(is_flag_specified '--quiet' '--q')" == "true" ]; then
 		return
@@ -9,7 +10,8 @@ function log() {
 	echo "$1"
 }
 
-function logE {
+# Log an error message
+function log_e {
 	# print error message in red
 	echo -e "\033[0;31mError:\033[0m $1"
 }

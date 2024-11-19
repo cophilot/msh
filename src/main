@@ -47,5 +47,5 @@ sub_command=$(echo $sub_command | sed 's/-/_/g')
 dynamic_run_and_exit $sub_command $args
 dynamic_run_and_exit "${sub_command}_command" $args
 
-logE "Command not found: $raw_sub_command"
+log_e "Command not found: $raw_sub_command"
 myexit 1

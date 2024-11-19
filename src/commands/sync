@@ -2,6 +2,7 @@
 
 ###START###
 
+# Synchronize all or one collections
 function sync_command {
 	require_git
 	require_dir $HOME_DIR
@@ -19,13 +20,14 @@ function sync_command {
 		myexit 0
 	fi
 	if [ ! -d "$HOME_DIR/$collection_name" ]; then
-		logE "Collection '$collection_name' does not exist"
+		log_e "Collection '$collection_name' does not exist"
 		myexit 1
 	fi
 
 	sync_collection $collection_name
 }
 
+# Synchronize a collection
 function sync_collection {
 	collection_name=$1
 	# check if the collection is a git repository

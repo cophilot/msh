@@ -2,11 +2,12 @@
 
 ###START###
 
+# Create a new script
 function new_command {
 	require_dir $HOME_DIR
 	script_name=${VALUES[0]}
 	if [ -z "$script_name" ]; then
-		logE "Please provide the name for the new script"
+		log_e "Please provide the name for the new script"
 		myexit 1
 	fi
 
@@ -14,7 +15,7 @@ function new_command {
 	if [ -z "$collection_name" ]; then
 		collection_name=$(get_default_collection)
 	elif [ ! -d "$HOME_DIR/$collection_name" ]; then
-		logE "Collection '$collection_name' does not exist"
+		log_e "Collection '$collection_name' does not exist"
 		myexit 1
 	fi
 

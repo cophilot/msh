@@ -14,7 +14,7 @@ function create_new_script() {
 
 	script_file="$sc_dir/$sc_name"
 	if [ -f "$script_file" ]; then
-		logE "The script '$sc_name' already exists"
+		log_e "The script '$sc_name' already exists"
 		myexit 1
 	fi
 
@@ -38,6 +38,7 @@ function create_new_script() {
 	chmod +x $script_file
 }
 
+# Get all scripts available via msh
 function get_all_scripts() {
 	colls=$(get_all_collections "true")
 
@@ -87,7 +88,7 @@ function resolve_script_name {
 	script_name=$1
 
 	if [ -z "$script_name" ]; then
-		logE "INTERNAL: script-name is not defined in 'resolve_script_name'"
+		log_e "INTERNAL: script-name is not defined in 'resolve_script_name'"
 		myexit 1
 	fi
 

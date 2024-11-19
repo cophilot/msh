@@ -2,8 +2,9 @@
 
 ###START###
 
+# Create a new alias for a command
 function alias_command {
-	logE "Not implemented yet"
+	log_e "Not implemented yet"
 	myexit 1
 
 	require_dir $HOME_DIR
@@ -23,7 +24,7 @@ function alias_command {
 	if [ -z "$collection_name" ]; then
 		collection_name=$(get_default_collection)
 	elif [ ! -d "$HOME_DIR/$collection_name" ]; then
-		logE "Collection '$collection_name' does not exist"
+		log_e "Collection '$collection_name' does not exist"
 		myexit 1
 	fi
 

@@ -2,6 +2,7 @@
 
 ###START###
 
+# Clone a collection from a git repository
 function collection_clone_command {
 	require_git
 
@@ -9,7 +10,7 @@ function collection_clone_command {
 	col_name=${VALUES[2]}
 
 	if [ -z "$col_url" ]; then
-		logE "Error No URL provided"
+		log_e "Error No URL provided"
 		myexit 1
 	fi
 
