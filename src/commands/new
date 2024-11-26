@@ -23,9 +23,15 @@ function new_command {
 
 	sc_dir="$HOME_DIR/$collection_name"
 
-	create_new_script $sc_dir $script_name
+	add_manual="false"
+	if [ "$(is_flag_specified '-man' '-m')" == "true" ]; then
+		add_manual="true"
+	fi
+
+	create_new_script $sc_dir $script_name "" "" "" $add_manual
 
 	log "Script '$script_name' created ($sc_dir/$script_name)"
+
 	if [ "$(is_flag_specified '-edit' '-e')" == "true" ]; then
 		edcom=$(get_editor_command)
 		$edcom $sc_dir/$script_name
@@ -39,6 +45,7 @@ function new_help {
 	log "      collection-name - The name of the collection to add the script to. The default collection can be set in the config"
 	log "      Flags:"
 	log "          -edit|-e - Open the script in the editor after creation"
+	log "          -man|-m - Add a manual to the script"
 	log ""
 }
 
