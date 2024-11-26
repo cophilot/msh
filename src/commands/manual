@@ -1,0 +1,38 @@
+#!/bin/bash
+
+###START###
+
+# Print the manual for a script
+function manual_command {
+	require_dir $HOME_DIR
+	script_name=${VALUES[0]}
+
+	if [ -z "$script_name" ]; then
+		log_e "Please provide the name of the script to get the manual for"
+		myexit 1
+	fi
+
+	file_location=$(resolve_script_name "$script_name")
+
+	if [ -z "$file_location" ]; then
+		log_e "Script '$script_name' not found"
+		myexit 1
+	fi
+    content=$(cat $file_location)
+
+    echo "$content" | grep -E "###.*" | sed -e 's/###//g'
+}
+
+# Print help for the manual command
+function manual_help {
+	log "  manual|m <script> - Get the manual for the script"
+	log "      script - The name of the script to get the manual for"
+	log ""
+}
+
+# Short form of the manual command
+function m_command {
+	manual_command $*
+}
+
+###END###

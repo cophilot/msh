@@ -8,6 +8,7 @@
 # $3 (optional) - The description of the script
 # $4 (optional) - The content of the script
 # $5 (optional) - The content of the script
+# $6 (optional) - If set to true, add a manual to the script
 function create_new_script() {
 	sc_dir=$1
 	sc_name=$2
@@ -28,6 +29,11 @@ function create_new_script() {
 	description="#??$description"
 	echo "$description" >>$script_file
 	echo "#&&TAGS" >>$script_file
+
+	if [ "$6" == "true" ]; then
+		echo "###This is the manual for the $sc_name command..." >>$script_file
+	fi
+
 	echo "" >>$script_file
 	if [ -n "$4" ]; then
 		echo "$4" >>$script_file

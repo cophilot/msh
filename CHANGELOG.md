@@ -2,6 +2,12 @@
 
 ---
 
+## [v1.0.0](https://github.com/cophilot/msh/tree/1.0.0) (2024-??-??)
+
+-   Added `manual` command
+
+---
+
 ## [v0.2.0](https://github.com/cophilot/msh/tree/0.2.0) (2024-11-03) [*BETA*]
 
 -   Bug fixes
