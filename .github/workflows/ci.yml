@@ -39,6 +39,9 @@ jobs:
 
             - name: Build
               run: python compile.py -o out/msh
+            
+            - name: Run
+              run: ./out/msh version && ./out/msh help
 
             - name: Merge to master branch
               if: github.ref == 'refs/heads/dev'
