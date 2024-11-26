@@ -22,7 +22,7 @@ jobs:
               run: sudo apt-get install shc
 
             - name: Compile
-              run: python compile.py -o out/msh
+              run: .scripts/build
 
             - name: Get Changelog Entry
               id: changelog_reader

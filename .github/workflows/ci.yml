@@ -38,10 +38,10 @@ jobs:
               run: .scripts/lint
 
             - name: Build
-              run: python compile.py -o out/msh
-            
+              run: .scripts/build
+
             - name: Run
-              run: ./out/msh version && ./out/msh help
+              run: ./out/msh help && ./out/msh version
 
             - name: Merge to master branch
               if: github.ref == 'refs/heads/dev'
