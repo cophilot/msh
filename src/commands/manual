@@ -18,9 +18,9 @@ function manual_command {
 		log_e "Script '$script_name' not found"
 		myexit 1
 	fi
-    content=$(cat $file_location)
+	content=$(cat $file_location)
 
-    echo "$content" | grep -E "###.*" | sed -e 's/###//g'
+	echo "$content" | grep -E "###.*" | sed -e 's/###//g'
 }
 
 # Print help for the manual command
