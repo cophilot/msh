@@ -58,7 +58,22 @@ function myexit() {
 	if [ "$1" -ne 0 ]; then
 		echo "Run '$0 help' for more information"
 	fi
+	check_for_update
 	exit $1
+}
+
+function check_for_update(){
+	curr_url="https://raw.githubusercontent.com/cophilot/msh/refs/heads/main/.phil-project"
+	curr_version=$(curl -s $curr_url | grep "version=" | cut -d "=" -f 2)
+	if [ -z "$curr_version" ]; then
+		return
+	fi
+
+	if [ "$curr_version" != "$version" ]; then
+		log ""
+		log "New version available: $version -> $curr_version"
+		log "Run 'msh-update' to update"
+	fi
 }
 
 ###END###
