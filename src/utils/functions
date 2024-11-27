@@ -62,7 +62,7 @@ function myexit() {
 	exit $1
 }
 
-function check_for_update(){
+function check_for_update() {
 	curr_url="https://raw.githubusercontent.com/cophilot/msh/refs/heads/main/.phil-project"
 	curr_version=$(curl -s $curr_url | grep "version=" | cut -d "=" -f 2)
 	if [ -z "$curr_version" ]; then
