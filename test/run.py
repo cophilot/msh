@@ -1,4 +1,15 @@
 import sys
+import traceback
+
+from cases.help import HelpTestCase
+from cases.version import VersionTestCase
+
+
+def get_all_test_cases():
+    return [
+        HelpTestCase(),
+        VersionTestCase(),
+    ]
 
 
 def print_banner():
@@ -11,6 +22,51 @@ def print_banner():
     print("")
 
 
-if __name__ == "__main__":
+def main():
     print_banner()
+
+    cases = get_all_test_cases()
+    exp = []
+    summary = []
+
+    for case in cases:
+        try:
+            print(f"Running {case.name} test...")
+            case.run()
+            msg = f"{case.name} passed✅"
+            print(msg)
+            summary.append(msg)
+        except AssertionError as e:
+            exp.append({"case": case, "e": e})
+            msg = f"{case.name} failed❌"
+            print(msg)
+            summary.append(msg)
+
+    print_errors_and_exit(exp, summary)
+
+
+def print_errors_and_exit(exp, summary):
+    print()
+
+    if len(exp) == 0:
+        print("All tests passed✅✅✅")
+        sys.exit(0)
+
+    print(f"{len(exp)} tests failed❌❌❌")
+    for ex in exp:
+        e = ex["e"]
+        print()
+        print(f"  {e.__class__.__name__} in {ex["case"].name} test:")
+        traceback.print_tb(e.__traceback__)
+        print(f"  {e}")
+
+    print()
+    print("Summary:")
+    for msg in summary:
+        print(msg)
+
     sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
