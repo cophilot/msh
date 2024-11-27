@@ -1,3 +1,9 @@
 #!/bin/bash
 
-python compile.py -o out/msh
+out_dir="$1"
+
+if [ -z "$out_dir" ]; then
+    out_dir="out/msh"
+fi
+
+python compile.py -o $out_dir

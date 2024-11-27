@@ -33,6 +33,8 @@ function help_command {
 	version_help
 	log " Global flags (apply to all commands):"
 	log "  --quiet|--q - Do not print any output"
+	log ""
+	log "To get more information please visit: https://myshell.philipp-bonin.com/"
 }
 
 # Print help for the help command

@@ -75,7 +75,7 @@ function get_all_scripts() {
 # $1 - The script to run
 function running_script {
 	script_name=$1
-
+	log "---"
 	read -p "Do you want to run the script? (Y/n): " answer
 
 	if [ "$answer" == "n" ] || [ "$answer" == "N" ]; then
@@ -83,7 +83,7 @@ function running_script {
 	fi
 
 	read -p "Arguments: " args
-
+	log "---"
 	$script_name $args
 }
 
