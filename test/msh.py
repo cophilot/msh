@@ -1,11 +1,15 @@
 import os
 
 from my_assertion import assert_true, assert_false
+from fs.dir import Dir
+from log import Log
 
 
 class MSH:
 
     EXECUTABLE = "./out/msht"
+    HOME = None
+
     _BUILT = False
 
     @staticmethod
@@ -17,6 +21,11 @@ class MSH:
                 "Executable not found after build: " + MSH.EXECUTABLE
             )
         MSH._BUILT = True
+
+    @staticmethod
+    def setup():
+        MSH.HOME = Dir(".myshell-testing")
+        MSH.HOME.add_dir("scripts").make()
 
     @staticmethod
     def run_suc(command: str):
@@ -41,12 +50,18 @@ class MSH:
 
         if command.startswith("msh"):
             command = command[4:]
+
         command = f"{MSH.EXECUTABLE} {command.strip()}"
-        print(f">> {command}")
+        print(f"$ {command}")
         result = os.popen(command)
-        output = result.read()
+        output = Log(result.read())
+        print(output)
+
         exit_code = result.close()
-        suc = True
-        if exit_code is not None:
-            suc = False
+        suc = exit_code is None
+
         return suc, output
+
+    @staticmethod
+    def cleanup():
+        MSH.HOME.delete()

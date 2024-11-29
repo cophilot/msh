@@ -37,6 +37,9 @@ jobs:
             - name: Lint
               run: .scripts/lint
 
+            - name: Test
+              run: .scripts/test
+
             - name: Build
               run: .scripts/build
 

@@ -7,4 +7,7 @@ class HelpTestCase(TestCase):
         super().__init__("help")
 
     def run(self):
+
+        #  help|h - Get help for myshell
+
         MSH.run_suc("help")

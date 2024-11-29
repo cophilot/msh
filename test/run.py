@@ -3,13 +3,13 @@ import traceback
 
 from cases.help import HelpTestCase
 from cases.version import VersionTestCase
+from cases.new import NewTestCase
+from cases.collection_new import CollectionNewTestCase
+from msh import MSH
 
 
 def get_all_test_cases():
-    return [
-        HelpTestCase(),
-        VersionTestCase(),
-    ]
+    return [HelpTestCase(), VersionTestCase(), CollectionNewTestCase(), NewTestCase()]
 
 
 def print_banner():
@@ -31,17 +31,18 @@ def main():
 
     for case in cases:
         try:
+            MSH.setup()
             print(f"Running {case.name} test...")
             case.run()
             msg = f"{case.name} passed✅"
             print(msg)
             summary.append(msg)
+            MSH.cleanup()
         except AssertionError as e:
             exp.append({"case": case, "e": e})
             msg = f"{case.name} failed❌"
             print(msg)
             summary.append(msg)
-
     print_errors_and_exit(exp, summary)
 
 
@@ -50,6 +51,7 @@ def print_errors_and_exit(exp, summary):
 
     if len(exp) == 0:
         print("All tests passed✅✅✅")
+        print_summary(summary)
         sys.exit(0)
 
     print(f"{len(exp)} tests failed❌❌❌")
@@ -60,12 +62,15 @@ def print_errors_and_exit(exp, summary):
         traceback.print_tb(e.__traceback__)
         print(f"  {e}")
 
+    print_summary(summary)
+    sys.exit(1)
+
+
+def print_summary(summary):
     print()
     print("Summary:")
     for msg in summary:
         print(msg)
-
-    sys.exit(1)
 
 
 if __name__ == "__main__":
