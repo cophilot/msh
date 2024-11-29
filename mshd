@@ -18,4 +18,4 @@ if [ ! -f out/msh ]; then
 fi
 
 # Run program
-./out/msh $* -dev-mode
+./out/msh $*

@@ -5,12 +5,12 @@ from my_assertion import assert_true, assert_false
 
 class MSH:
 
-    EXECUTABLE = "./out/msh"
+    EXECUTABLE = "./out/msht"
     _BUILT = False
 
     @staticmethod
     def build():
-        os.system("./.scripts/build")
+        os.system("./.scripts/build ./out/msht -testing-mode")
         # check if the executable exists
         if not os.path.exists(MSH.EXECUTABLE):
             raise FileNotFoundError(
@@ -22,14 +22,16 @@ class MSH:
     def run_suc(command: str):
         suc, output = MSH.run(command)
         if not assert_true(suc, raise_assertion_error=False):
-            raise AssertionError(f"Command failed: {command}")
+            raise AssertionError(f"Command '{command}' failed: \n{output}")
         return output
 
     @staticmethod
     def run_fail(command: str):
         suc, output = MSH.run(command)
         if not assert_false(suc, raise_assertion_error=False):
-            raise AssertionError(f"Command succeeded (expected failure): {command}")
+            raise AssertionError(
+                f"Command '{command}' succeeded (expected failure): \n{output}"
+            )
         return output
 
     @staticmethod

@@ -6,4 +6,6 @@ if [ -z "$out_dir" ]; then
     out_dir="out/msh"
 fi
 
-python compile.py -o $out_dir
+rest="${@:2}"
+
+python compile.py -o $out_dir $rest

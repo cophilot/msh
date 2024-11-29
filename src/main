@@ -15,6 +15,7 @@ sub_command=$1
 args=${@:2}
 
 handle_dev_mode ###DEV-MODE###
+handle_testing_mode ###TESTING-MODE###
 
 CONF_FILE="$HOME_DIR/.conf"
 MSHRC_FILE="$HOME_DIR/.mshrc"

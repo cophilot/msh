@@ -18,6 +18,7 @@ UTILS_DIR = "src/utils"
 COMMANDS_DIR = "src/commands"
 ENV_FILE = ".phil-project"
 COMPILE_DEV_MODE = False
+COMPILE_TESTING_MODE = False
 
 
 def main():
@@ -34,10 +35,17 @@ def main():
     main_content = inject_file(main_content, ENV_FILE, "###ENV###")
     main_content = inject_dir(main_content, COMMANDS_DIR, "###COMMANDS###")
     main_content = inject_dir(main_content, UTILS_DIR, "###UTILS###")
+
     if not COMPILE_DEV_MODE:
-        main_content = remove_dev_mode_code(main_content)
+        main_content = remove_lines_with_tag(main_content, "###DEV-MODE###")
     else:
         log("*Compiling in development mode*")
+
+    if not COMPILE_TESTING_MODE:
+        main_content = remove_lines_with_tag(main_content, "###TESTING-MODE###")
+    else:
+        log("*Compiling in testing mode*")
+
     # create the out directory if it does not exist
     base_dir = os.path.dirname(OUT_FILE)
     if not os.path.exists(base_dir):
@@ -93,14 +101,14 @@ def inject_dir(
     return main_content.replace(placeholder, result)
 
 
-def remove_dev_mode_code(content: str) -> str:
+def remove_lines_with_tag(content: str, tag: str) -> str:
     """
-    remove the dev mode code from the content
+    Remove all lines with the tag
     """
     new_content = ""
 
     for line in content.split("\n"):
-        if "###DEV-MODE###" in line:
+        if tag in line:
             continue
 
         new_content += line + "\n"
@@ -218,6 +226,9 @@ def set_args():
         if arg == "-dev-mode":
             global COMPILE_DEV_MODE
             COMPILE_DEV_MODE = True
+        if arg == "-testing-mode":
+            global COMPILE_TESTING_MODE
+            COMPILE_TESTING_MODE = True
 
 
 def print_help():

@@ -2,4 +2,5 @@
 ideas.md
 out/**
 .myshell/**
+.myshell-testing/**
 **/__pycache__/**
