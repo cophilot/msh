@@ -4,12 +4,23 @@ import traceback
 from cases.help import HelpTestCase
 from cases.version import VersionTestCase
 from cases.new import NewTestCase
+from cases.move import MoveTestCase
+from cases.remove import RemoveTestCase
 from cases.collection_new import CollectionNewTestCase
+from cases.collection_list import CollectionListTestCase
 from msh import MSH
 
 
 def get_all_test_cases():
-    return [HelpTestCase(), VersionTestCase(), CollectionNewTestCase(), NewTestCase()]
+    return [
+        HelpTestCase(),
+        VersionTestCase(),
+        CollectionNewTestCase(),
+        CollectionListTestCase(),
+        NewTestCase(),
+        MoveTestCase(),
+        RemoveTestCase(),
+    ]
 
 
 def print_banner():

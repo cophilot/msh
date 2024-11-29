@@ -26,3 +26,10 @@ class FSElement:
         exists = os.path.exists(self.get_path())
         if not exists:
             raise AssertionError(f"Path {self.get_path()} does not exist")
+
+    def check_not_exists(self):
+        exists = os.path.exists(self.get_path())
+        if exists:
+            raise AssertionError(
+                f"Path {self.get_path()} exists (expected not to exist)"
+            )
