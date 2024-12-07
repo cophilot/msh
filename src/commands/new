@@ -36,6 +36,10 @@ function new_command {
 		edcom=$(get_editor_command)
 		$edcom $sc_dir/$script_name
 	fi
+	if [ "$(is_flag_specified '-quick-edit' '-qe')" == "true" ]; then
+		edcom=$(get_quick_editor_command)
+		$edcom $sc_dir/$script_name
+	fi
 }
 
 # Print help for the new command
@@ -46,6 +50,7 @@ function new_help {
 	log "      Flags:"
 	log "          -edit|-e - Open the script in the editor after creation"
 	log "          -man|-m - Add a manual to the script"
+	log "          -quick-edit|-qe - Open the script in the editor after creation, using the quick editor command"
 	log ""
 }
 

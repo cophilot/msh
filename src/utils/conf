@@ -47,6 +47,12 @@ function get_editor_command() {
 	echo "$editor_command"
 }
 
+# Get the quick editor command from the conf file
+function get_quick_editor_command() {
+	local editor_command=$(get_conf "quick_editor_command" "vim")
+	echo "$editor_command"
+}
+
 # Get the print command from the conf file
 function get_print_command() {
 	local print_command=$(get_conf "print_command" "cat")

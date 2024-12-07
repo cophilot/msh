@@ -1,3 +1,4 @@
 editor_command=vim
+quick_editor_command=vim
 print_command=cat
 default_collection=scripts

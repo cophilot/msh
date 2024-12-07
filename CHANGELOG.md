@@ -2,9 +2,11 @@
 
 ---
 
-## [v1.0.0](https://github.com/cophilot/msh/tree/1.0.0) (2024-??-??)
+## [v1.0.0](https://github.com/cophilot/msh/tree/1.0.0) (2025-??-??)
 
 -   Added `manual` command
+-   Added `quick` flag for the `edit` command
+-   Added `quick-edit` flag for the `new` command
 
 ---
 

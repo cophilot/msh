@@ -5,8 +5,12 @@
 # Edit a script in the editor
 function edit_command {
 	require_dir $HOME_DIR
-	edcom=$(get_editor_command)
 	script_name=${VALUES[0]}
+
+	edcom=$(get_editor_command)
+	if [ "$(is_flag_specified '-quick' '-q')" == "true" ]; then
+		edcom=$(get_quick_editor_command)
+	fi
 
 	if [ -z "$script_name" ]; then
 		$edcom $HOME_DIR
@@ -25,8 +29,10 @@ function edit_command {
 
 # Print help for the edit command
 function edit_help {
-	log "  edit|e [script-name] - Open a specified or all scripts in the editor"
+	log "  edit|e [script-name] [flags] - Open a specified or all scripts in the editor"
 	log "      script-name - If provided, the script with the specified name will be opened in the editor"
+	log "      Flags:"
+	log "          -quick|-q - Use the quick editor command"
 	log ""
 }
 
