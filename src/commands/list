@@ -35,35 +35,34 @@ function list_command {
 	fi
 
 	for script in $all_scripts; do
-		script=(${script//\// })
-		co=${script[1]}
-		script=${script[0]}
+		# Split script path
+		IFS='/' read -r script co <<<"$script"
 		sc_path="$HOME_DIR/$co/$script"
 
-		description=$(cat "$sc_path" | grep -m 1 -o "#??.*")
-		tags=$(cat "$sc_path" | grep -m 1 -o "#&&.*")
+		# Read the file content once
+		file_content=$(<"$sc_path")
 
-		lower_filter_tag=$(echo $filter_tag | tr '[:upper:]' '[:lower:]')
-		lower_tags=$(echo $tags | tr '[:upper:]' '[:lower:]')
-		if [ -n "$filter_tag" ] && [[ ! $lower_tags =~ $lower_filter_tag ]]; then
-			continue
+		# Extract description and tags using parameter substitution
+		description=$(grep -m 1 -o "#??.*" <<<"$file_content" | cut -c4-)
+		tags=$(grep -m 1 -o "#&&.*" <<<"$file_content" | cut -c4-)
+
+		# Process filter tag if necessary
+		if [ -n "$filter_tag" ]; then
+			lower_filter_tag=${filter_tag,,} # Convert to lowercase
+			lower_tags=${tags,,}             # Convert tags to lowercase
+			[[ ! $lower_tags =~ $lower_filter_tag ]] && continue
 		fi
 
-		tags="[${tags:3}]"
+		# Format tags
+		tags="[${tags:-}]"
 
-		if [ -n "$description" ]; then
-			description="${description:3}"
-		fi
-
-		if [ "$tags" == "[]" ]; then
-			tags=""
-
-		fi
-
+		# Simplify conditions
 		if [ "$(is_flag_specified '-simple' '-s')" == "true" ]; then
 			log "  $script - $description $tags"
 			continue
 		fi
+
+		# Output formatted details
 		if [ "$(is_flag_specified '-collection' '-c')" == "true" ]; then
 			printf "  %-25s %-15s %s\n" "$script" "$co" "$description $tags"
 		else
