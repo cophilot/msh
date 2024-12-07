@@ -6,8 +6,11 @@ from cases.version import VersionTestCase
 from cases.new import NewTestCase
 from cases.move import MoveTestCase
 from cases.remove import RemoveTestCase
+from cases.restore import RestoreTestCase
+from cases.sync import SyncTestCase
 from cases.collection_new import CollectionNewTestCase
 from cases.collection_list import CollectionListTestCase
+from cases.collection_clone import CollectionCloneTestCase
 from msh import MSH
 
 
@@ -17,9 +20,11 @@ def get_all_test_cases():
         VersionTestCase(),
         CollectionNewTestCase(),
         CollectionListTestCase(),
+        CollectionCloneTestCase(),
         NewTestCase(),
         MoveTestCase(),
         RemoveTestCase(),
+        RestoreTestCase(),
     ]
 
 
