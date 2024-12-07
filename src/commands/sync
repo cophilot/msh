@@ -68,8 +68,8 @@ function sync_help {
 	log "  sync|s [collection-name] [flags] - Synchronize all or one collections"
 	log "      collection-name - The name of the collection to synchronize"
 	log "      Flags:"
-	log "          -u|-up - Push changes to the remote repository"
-	log "          -d|-detached - Synchronize the collection in detached mode"
+	log "          -up|-u - Push changes to the remote repository"
+	log "          -detached|-d - Synchronize the collection in detached mode"
 	log ""
 }
 

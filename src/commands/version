@@ -22,7 +22,7 @@ function version_command {
 function version_help {
 	log "  version|v [flags] - Print the version of myshell"
 	log "       Flags:"
-	log "           -s|-simple - Print the version in a simple format"
+	log "           -simple|-s - Print the version in a simple format"
 	log ""
 }
 

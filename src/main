@@ -21,7 +21,7 @@ MSHRC_FILE="$HOME_DIR/.mshrc"
 SCRIPTS_DIR="$HOME_DIR/scripts"
 
 BASHRC_FILE="~/.bashrc"
-if [ -f ~/.zshrc ]; then
+if [ -f ~/.zshrc ] && [ "$SHELL" == "/bin/zsh" ]; then
 	BASHRC_FILE="~/.zshrc"
 fi
 

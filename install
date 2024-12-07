@@ -64,7 +64,7 @@ curl -s https://raw.githubusercontent.com/cophilot/msh/main/LICENSE > LICENSE
 
 # Edit .bashrc/.zshrc
 rc_file="$HOME/.bashrc"
-if [ -f $HOME/.zshrc ]; then
+if [ -f ~/.zshrc ] && [ "$SHELL" == "/bin/zsh" ]; then
     rc_file="$HOME/.zshrc"
 fi
 
