@@ -20,7 +20,6 @@ FILTER = ""
 
 
 def get_all_test_cases():
-    print("here2")
     return [
         HelpTestCase(),
         VersionTestCase(),
@@ -49,17 +48,15 @@ def print_banner():
 
 
 def filter_cases(cases):
-    print("abc")
     return cases
 
 
 def main():
-    print_banner()
-    print("here1")
+
     cases = filter_cases(get_all_test_cases())
     exp = []
     summary = []
-    print("here")
+
     for case in cases:
         try:
             MSH.setup()
