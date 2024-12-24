@@ -1,57 +1,57 @@
 name: CI Pipeline
 
 on:
-  push:
-    branches: ['dev']
-  pull_request:
-    branches: ['*']
-  workflow_call:
-    inputs:
-      branch:
-        required: true
-        type: string
+    push:
+        branches: ['dev']
+    pull_request:
+        branches: ['*']
+    workflow_call:
+        inputs:
+            branch:
+                required: true
+                type: string
 
 jobs:
-  check:
-    runs-on: ubuntu-latest
+    check:
+        runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event_name == 'pull_request' ? github.head_ref : inputs.branch || 'dev' }}
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  ref: ${{ github.event_name == 'pull_request' && github.head_ref || inputs.branch || 'dev' }}
 
-      - name: Install Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.12'
+            - name: Install Python
+              uses: actions/setup-python@v2
+              with:
+                  python-version: '3.12'
 
-      - name: Install shc with apt-get
-        run: sudo apt-get install shc
+            - name: Install shc with apt-get
+              run: sudo apt-get install shc
 
-      - name: Install shfmt
-        run: sudo apt-get install shfmt
+            - name: Install shfmt
+              run: sudo apt-get install shfmt
 
-      - name: Check format
-        run: .scripts/format-check
+            - name: Check format
+              run: .scripts/format-check
 
-      - name: Lint
-        run: .scripts/lint
+            - name: Lint
+              run: .scripts/lint
 
-      - name: Test
-        run: .scripts/test
+            - name: Test
+              run: .scripts/test
 
-      - name: Build
-        run: .scripts/build
+            - name: Build
+              run: .scripts/build
 
-      - name: Run
-        run: ./out/msh help && ./out/msh version
+            - name: Run
+              run: ./out/msh help && ./out/msh version
 
-      - name: Merge to master branch
-        if: github.ref == 'refs/heads/dev'
-        uses: peter-evans/create-pull-request@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
-          base: dev
-          title: Automated New Stable Version
-          body: This pull request was automatically created by the workflow and contains the latest stable version of the repository.
+            - name: Merge to master branch
+              if: github.ref == 'refs/heads/dev'
+              uses: peter-evans/create-pull-request@v3
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  branch: main
+                  base: dev
+                  title: Automated New Stable Version
+                  body: This pull request was automatically created by the workflow and contains the latest stable version of the repository.
