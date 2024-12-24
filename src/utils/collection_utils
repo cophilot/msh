@@ -26,11 +26,14 @@ function add_collection_to_mshrc {
 	collection_name=$1
 	mshrc_file="$MSHRC_FILE"
 
-	command='export \$PATH="\$PATH:\$MSH_HOME/$collection_name"'
+	bin=""
+	if [ -d "$HOME_DIR/$collection_name/bin" ]; then
+		bin="/bin"
+	fi
 
 	echo "" >>$mshrc_file
 	echo "# Add $collection_name to the PATH" >>$mshrc_file
-	echo "export PATH=\"\$PATH:\$MSH_HOME/$collection_name\"" >>$mshrc_file
+	echo "export PATH=\"\$PATH:\$MSH_HOME/$collection_name$bin\"" >>$mshrc_file
 }
 
 ###END###

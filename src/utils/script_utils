@@ -56,9 +56,17 @@ function get_all_scripts() {
 		if [ "$co" == "bin" ]; then
 			continue
 		fi
-		coll_scripts=$(ls $HOME_DIR/$co)
+
+		coll_path="$HOME_DIR/$co"
+
+		if [ -d "$coll_path/bin" ]; then
+			coll_path="$coll_path/bin"
+		fi
+
+		coll_scripts=$(ls $coll_path)
+
 		for script in $coll_scripts; do
-			if [ -d "$HOME_DIR/$co/$script" ]; then
+			if [ -d "$coll_path/$script" ]; then
 				continue
 			fi
 			if [[ $script == .* ]] || [[ $script == README* ]]; then
@@ -105,8 +113,17 @@ function resolve_script_name {
 		co=${script[1]}
 		script=${script[0]}
 
-		if [ "$script" == "$script_name" ]; then
+		if [ "$script" != "$script_name" ]; then
+			continue
+		fi
+
+		if [ -f "$HOME_DIR/$co/$script" ]; then
 			echo "$HOME_DIR/$co/$script"
+			return
+		fi
+
+		if [ -f "$HOME_DIR/$co/bin/$script" ]; then
+			echo "$HOME_DIR/$co/bin/$script"
 			return
 		fi
 	done

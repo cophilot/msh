@@ -23,6 +23,10 @@ function new_command {
 
 	sc_dir="$HOME_DIR/$collection_name"
 
+	if [ -d "$sc_dir/bin" ]; then
+		sc_dir="$sc_dir/bin"
+	fi
+
 	add_manual="false"
 	if [ "$(is_flag_specified '-man' '-m')" == "true" ]; then
 		add_manual="true"

@@ -37,7 +37,13 @@ function list_command {
 	for script in $all_scripts; do
 		# Split script path
 		IFS='/' read -r script co <<<"$script"
-		sc_path="$HOME_DIR/$co/$script"
+
+		co_path="$HOME_DIR/$co"
+		if [ -d "$co_path/bin" ]; then
+			co_path="$co_path/bin"
+		fi
+
+		sc_path="$co_path/$script"
 
 		# Read the file content once
 		file_content=$(<"$sc_path")
