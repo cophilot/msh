@@ -52,6 +52,7 @@ def filter_cases(cases):
 
 
 def main():
+    print_banner()
 
     cases = filter_cases(get_all_test_cases())
     exp = []
