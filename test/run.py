@@ -59,7 +59,7 @@ def main():
     cases = filter_cases(get_all_test_cases())
     exp = []
     summary = []
-
+    print("here")
     for case in cases:
         try:
             MSH.setup()
