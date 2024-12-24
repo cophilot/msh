@@ -48,9 +48,7 @@ def print_banner():
 
 
 def filter_cases(cases):
-    if len(FILTER) == 0:
-        return cases
-    return list(filter(lambda c: c.name in FILTER, cases))
+    return cases
 
 
 def main():
