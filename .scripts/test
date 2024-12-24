@@ -1,3 +1,10 @@
 #!/bin/bash
 
-python test/run.py
+pysc="test/run.py"
+
+if command -v python3 &> /dev/null;
+then
+    python3 $pysc
+else
+    python $pysc
+fi
