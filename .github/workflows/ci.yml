@@ -46,7 +46,7 @@ jobs:
             - name: Run
               run: ./out/msh help && ./out/msh version
 
-            - name: Merge to master branch
+            - name: Merge to main branch
               if: github.ref == 'refs/heads/dev'
               uses: peter-evans/create-pull-request@v3
               with:

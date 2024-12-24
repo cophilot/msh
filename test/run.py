@@ -48,7 +48,9 @@ def print_banner():
 
 
 def filter_cases(cases):
-    return cases
+    if FILTER == "":
+        return cases
+    return [case for case in cases if FILTER in case.name]
 
 
 def main():
