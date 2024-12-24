@@ -15,8 +15,14 @@ function dynamic_run_and_exit() {
 # Handle the development mode ###DEV-MODE###
 function handle_dev_mode() { ###DEV-MODE###
 	HOME_DIR="$(pwd)/.myshell"  ###DEV-MODE###
-	mkdir -p .myshell           ###DEV-MODE###
+	mkdir -p .myshell/scripts   ###DEV-MODE###
 }                            ###DEV-MODE###
+
+# Handle the testing mode ###TESTING-MODE###
+function handle_testing_mode() {    ###TESTING-MODE###
+	HOME_DIR="$(pwd)/.myshell-testing" ###TESTING-MODE###
+	mkdir -p .myshell-testing/scripts  ###TESTING-MODE###
+}                                   ###TESTING-MODE###
 
 # Check if a command exists. If it does, exit the application
 function check_if_command_exists() {
