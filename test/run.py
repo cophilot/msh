@@ -49,6 +49,7 @@ def print_banner():
 
 
 def filter_cases(cases):
+    print("abc")
     return cases
 
 
