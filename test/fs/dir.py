@@ -20,7 +20,7 @@ class Dir(FSElement):
         return self.add_child(dir)
 
     def add_file(self, name, content=""):
-        f = File(name, content)
+        f = File(name, content=content)
         return self.add_child(f)
 
     def add_child(self, child):
@@ -39,3 +39,6 @@ class Dir(FSElement):
 
     def get_path(self):
         return super().get_path()
+
+    def get_abs_path(self):
+        return os.path.abspath(self.get_path())

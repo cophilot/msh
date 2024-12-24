@@ -7,11 +7,16 @@ from cases.new import NewTestCase
 from cases.move import MoveTestCase
 from cases.remove import RemoveTestCase
 from cases.restore import RestoreTestCase
-from cases.sync import SyncTestCase
+from cases.list import ListTestCase
+from cases.print import PrintTestCase
+from cases.edit import EditTestCase
+from cases.manual import ManualTestCase
 from cases.collection_new import CollectionNewTestCase
 from cases.collection_list import CollectionListTestCase
 from cases.collection_clone import CollectionCloneTestCase
 from msh import MSH
+
+FILTER = ""
 
 
 def get_all_test_cases():
@@ -22,6 +27,10 @@ def get_all_test_cases():
         CollectionListTestCase(),
         CollectionCloneTestCase(),
         NewTestCase(),
+        ListTestCase(),
+        ManualTestCase(),
+        EditTestCase(),
+        PrintTestCase(),
         MoveTestCase(),
         RemoveTestCase(),
         RestoreTestCase(),
@@ -38,10 +47,16 @@ def print_banner():
     print("")
 
 
+def filter_cases(cases):
+    if len(FILTER) == 0:
+        return cases
+    return list(filter(lambda c: c.name in FILTER, cases))
+
+
 def main():
     print_banner()
 
-    cases = get_all_test_cases()
+    cases = filter_cases(get_all_test_cases())
     exp = []
     summary = []
 
@@ -53,12 +68,13 @@ def main():
             msg = f"{case.name} passed✅"
             print(msg)
             summary.append(msg)
-            MSH.cleanup()
         except AssertionError as e:
             exp.append({"case": case, "e": e})
             msg = f"{case.name} failed❌"
             print(msg)
             summary.append(msg)
+        finally:
+            MSH.cleanup()
     print_errors_and_exit(exp, summary)
 
 

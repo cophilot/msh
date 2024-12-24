@@ -9,6 +9,7 @@ class MSH:
 
     EXECUTABLE = "./out/msht"
     HOME = None
+    CONFIG = "editor_command=echo"
 
     _BUILT = False
 
@@ -26,6 +27,8 @@ class MSH:
     def setup():
         MSH.HOME = Dir(".myshell-testing")
         MSH.HOME.add_dir("scripts").make()
+
+        MSH.HOME.add_file(".conf", content=MSH.CONFIG).make()
 
     @staticmethod
     def run_suc(command: str):
