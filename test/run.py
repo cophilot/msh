@@ -20,6 +20,7 @@ FILTER = ""
 
 
 def get_all_test_cases():
+    print("here2")
     return [
         HelpTestCase(),
         VersionTestCase(),
