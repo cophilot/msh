@@ -68,8 +68,12 @@ function myexit() {
 	exit $1
 }
 
-# Chek if an update is available and notify the user
+# Check if an update is available and notify the user
 function check_for_update() {
+	if [ "$CHECK_UPDATE" == "false" ]; then
+		return
+	fi
+
 	curr_url="https://raw.githubusercontent.com/cophilot/msh/refs/heads/main/.phil-project"
 	curr_version=$(curl -s $curr_url | grep "version=" | cut -d "=" -f 2)
 	if [ -z "$curr_version" ]; then
