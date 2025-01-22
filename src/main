@@ -20,7 +20,7 @@ sub_command=$1
 
 args=${@:2}
 
-handle_dev_mode     ###DEV-MODE###
+handle_dev_mode ###DEV-MODE###
 
 CHECK_UPDATE=true
 CHECK_UPDATE=false ###TESTING-MODE###
