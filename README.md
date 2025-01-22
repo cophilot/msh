@@ -3,7 +3,7 @@
   <img src="assets/logo.png" alt="mshLogo" width="30%"/>
   <h1>myshell</h1>
   <p>
-    A CLI tool to manage custom scripts. 
+    A CLI tool to manage and distribute custom scripts and use them in your daily work.
   </p>
 </div>
 
@@ -25,6 +25,24 @@
        <img src="https://img.shields.io/github/last-commit/cophilot/msh" alt="last commit" />
    </a>
 </div>
+
+---
+
+**For a full guide please visit the [msh-docs](https://myshell.philipp-bonin.com/).**
+
+---
+
+-   [Concept](#concept)
+-   [Installation](#installation)
+-   [Update](#update)
+-   [Uninstall](#uninstall)
+-   [Release Notes](#release-notes)
+
+---
+
+## Concept
+
+myshell is a CLI tool to manage and distribute custom scripts and use them in your daily work as native commands. It stores all scripts inside `~/.myshell` folder and adds this to the path. This way, you can use your scripts as native commands in your terminal. myhsell also enables easy git integration to share your scripts with others and sync them across multiple devices.
 
 ---
 
@@ -60,7 +78,7 @@ If the script is not found, you can manually run the script from `$MSH_HOME/bin/
 
 ---
 
-## Extensions
+<!-- ## Extensions
 
 You can load predefined collections of scripts into your msh installation. This extension provide useful scripts for your daily work.
 
@@ -68,16 +86,15 @@ The following extensions are available:
 
 -   [msh-inception](https://github.com/cophilot/mshx-inception): This is a msh extension that adds additional scripts for using msh.
 
----
+--- -->
 
 ## [Release Notes](https://github.com/cophilot/msh/blob/master/CHANGELOG.md)
 
-### [v0.2.0](https://github.com/cophilot/msh/tree/0.2.0)
+### [v1.0.0](https://github.com/cophilot/msh/tree/1.0.0)
 
--   Bug fixes
--   Added `remove` command
--   Added `restore` command
--   Added `move` command
+-   Added `manual` command
+-   Added `quick` flag for the `edit` command
+-   Added `quick-edit` flag for the `new` command
 
 ---
 
