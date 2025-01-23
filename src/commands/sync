@@ -30,6 +30,13 @@ function sync_command {
 # Synchronize a collection
 function sync_collection {
 	collection_name=$1
+
+	# return if collection name ends with .git
+
+	if [[ ${collection_name: -5} == "-mshx" ]]; then
+		return
+	fi
+
 	# check if the collection is a git repository
 	if [ ! -d "$HOME_DIR/$collection_name/.git" ]; then
 		return
