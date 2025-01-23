@@ -2,6 +2,12 @@
 
 ---
 
+## [v1.0.1](https://github.com/cophilot/msh/tree/1.0.1) (2025-01-??)
+
+-   Ignoring msh extensions on sync
+
+---
+
 ## [v1.0.0](https://github.com/cophilot/msh/tree/1.0.0) (2025-01-22)
 
 -   Added `manual` command
