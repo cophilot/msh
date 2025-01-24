@@ -78,15 +78,17 @@ If the script is not found, you can manually run the script from `$MSH_HOME/bin/
 
 ---
 
-<!-- ## Extensions
+## Development
 
-You can load predefined collections of scripts into your msh installation. This extension provide useful scripts for your daily work.
+If you want to contribute to this project, you can find the development guide in the [msh-docs](https://myshell.philipp-bonin.com/development).
 
-The following extensions are available:
+---
 
--   [msh-inception](https://github.com/cophilot/mshx-inception): This is a msh extension that adds additional scripts for using msh.
+## Extensions
 
---- -->
+You can load predefined collections of scripts into your msh installation. This extension provide useful scripts for your daily work. To see all available extensions, visit the [msh-docs](https://myshell.philipp-bonin.com/extensions).
+
+---
 
 ## [Release Notes](https://github.com/cophilot/msh/blob/master/CHANGELOG.md)
 

@@ -2,15 +2,15 @@
 
 ---
 
-## [v1.0.1](https://github.com/cophilot/msh/tree/1.0.1) (2025-01-??)
+## [v1.0.1](https://github.com/cophilot/msh/milestone/3) (2025-01-??) _IN DEVELOPMENT_
 
--   Ignoring msh extensions on sync
+-   Ignoring msh extensions on sync [#22](https://github.com/cophilot/msh/issues/22)
 
 ---
 
-## [v1.0.0](https://github.com/cophilot/msh/tree/1.0.0) (2025-01-22)
+## [v1.0.0](https://github.com/cophilot/msh/milestone/1) (2025-01-22)
 
--   Added `manual` command
+-   Added `manual` command [#14](https://github.com/cophilot/msh/issues/14)
 -   Added `quick` flag for the `edit` command
 -   Added `quick-edit` flag for the `new` command
 
