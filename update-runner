@@ -1,0 +1,66 @@
+#!/bin/bash
+
+update_local_file() {
+    local url="$1"
+    local local_file="$2"
+
+    content=$(curl -s $url)
+
+    new_lines=""
+
+    while IFS= read -r line; do
+
+        key=$(echo $line | cut -d'=' -f1)
+
+        if ! grep -q "$key" $local_file; then
+            new_lines="$new_lines$line\n"
+            echo "line: $line"
+        fi
+
+    done <<< "$content"
+
+    echo -e "$new_lines" >> $local_file
+}
+
+
+# Get meta data from the latest release
+echo "Looking for the latest release..."
+json=$(curl -s https://api.github.com/repos/cophilot/msh/releases/latest)
+# get the tag name of the latest release
+version=$(echo $json | grep -Po '"tag_name": "\K.*?(?=")')
+echo "Found version: $version"
+
+# Add myshell script
+echo "Adding msh..."
+url=https://github.com/cophilot/msh/releases/download/$version/msh
+curl -sL $url > bin/msh
+chmod +x bin/msh
+
+# Add scripts
+echo "Adding scripts..."
+curl -s https://raw.githubusercontent.com/cophilot/msh/main/uninstall > bin/msh-uninstall
+chmod +x bin/msh-uninstall
+curl -s https://raw.githubusercontent.com/cophilot/msh/main/update > bin/msh-update
+chmod +x bin/msh-update
+curl -s https://raw.githubusercontent.com/cophilot/msh/main/mshx > bin/mshx
+chmod +x bin/mshx
+
+if [ ! -f .conf ]; then
+    curl -s https://raw.githubusercontent.com/cophilot/msh/main/.conf.template > .conf
+else
+    update_local_file "https://raw.githubusercontent.com/cophilot/msh/main/.conf.template" ".conf"
+fi
+
+if [ ! -f .mshrc ]; then
+    curl -s https://raw.githubusercontent.com/cophilot/msh/main/.mshrc.template > .mshrc
+    chmod +x .mshrc
+else
+    # Remove all duplicates lines
+    file_to_remove_duplicates=".mshrc"
+    awk '!seen[$0]++' "$file_to_remove_duplicates" > temp_file && mv temp_file "$file_to_remove_duplicates"
+fi
+
+curl -s https://raw.githubusercontent.com/cophilot/msh/main/LICENSE > LICENSE
+
+
+echo "myshell has been updated to version $version"
