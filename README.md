@@ -94,11 +94,10 @@ You can load predefined collections of scripts into your msh installation. This 
 
 ## [Release Notes](https://github.com/cophilot/msh/blob/master/CHANGELOG.md)
 
-## [v1.0.0](https://github.com/cophilot/msh/milestone/1) (2025-01-22)
+## [v1.0.1](https://github.com/cophilot/msh/milestone/3) (2025-01-30)
 
--   Added `manual` command [#14](https://github.com/cophilot/msh/issues/14)
--   Added `quick` flag for the `edit` command
--   Added `quick-edit` flag for the `new` command
+-   Ignoring msh extensions on sync [#22](https://github.com/cophilot/msh/issues/22)
+-   Added custom updating mechanism [#21](https://github.com/cophilot/msh/issues/21)
 
 ---
 

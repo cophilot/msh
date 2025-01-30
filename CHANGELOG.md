@@ -2,9 +2,10 @@
 
 ---
 
-## [v1.0.1](https://github.com/cophilot/msh/milestone/3) (2025-01-??) _IN DEVELOPMENT_
+## [v1.0.1](https://github.com/cophilot/msh/milestone/3) (2025-01-30)
 
 -   Ignoring msh extensions on sync [#22](https://github.com/cophilot/msh/issues/22)
+-   Added custom updating mechanism [#21](https://github.com/cophilot/msh/issues/21)
 
 ---
 
