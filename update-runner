@@ -14,7 +14,6 @@ update_local_file() {
 
         if ! grep -q "$key" $local_file; then
             new_lines="$new_lines$line\n"
-            echo "line: $line"
         fi
 
     done <<< "$content"
