@@ -31,16 +31,12 @@ function sync_command {
 function sync_collection {
 	collection_name=$1
 
-	if [[ ${collection_name: -5} == "-mshx" ]]; then
-		return
-	fi
-
 	# check if the collection is a git repository
 	if [ ! -d "$HOME_DIR/$collection_name/.git" ]; then
 		return
 	fi
 
-	if [ "$(is_flag_specified '-up' '-u')" == "true" ]; then
+	if [ "$(is_flag_specified '-up' '-u')" == "true" ] && [[ ! ${collection_name: -5} == "-mshx" ]]; then
 		log "Pushing changes to the remote repository..."
 		if [ "$(is_flag_specified '--quiet' '--q')" == "true" ]; then
 			git -C $HOME_DIR/$collection_name add . >/dev/null 2>&1
