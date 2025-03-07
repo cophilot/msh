@@ -2,6 +2,13 @@
 
 ---
 
+## [v1.0.2](https://github.com/cophilot/msh/milestone/4) (2025-03-07)
+
+-   Bug fix [#25](https://github.com/cophilot/msh/issues/25)
+-   `manual` command prints the description of the script as well [#24](https://github.com/cophilot/msh/issues/24)
+
+---
+
 ## [v1.0.1](https://github.com/cophilot/msh/milestone/3) (2025-01-30)
 
 -   Ignoring msh extensions on sync [#22](https://github.com/cophilot/msh/issues/22)

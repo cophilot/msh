@@ -6,6 +6,6 @@ description_translate=de
 
 # myshell environment variables
 ###START###
-version=1.0.1
+version=1.0.2
 HOME_DIR="$MSH_HOME"
 ###END###
