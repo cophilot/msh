@@ -20,14 +20,19 @@ function manual_command {
 	fi
 	content=$(cat $file_location)
 
-	m=$(echo "$content" | grep -E "###.*" | sed -e 's/###//g')
+	manual_text=$(echo "$content" | grep -E "###.*" | sed -e 's/###//g')
+	description=$(grep -m 1 -o "#??.*" <<<"$content" | cut -c4-)
 
-	if [ -z "$m" ]; then
+	if [ -z "$manual_text" ] && [ -z "$description" ]; then
 		log "No manual found for script '$script_name'"
 		myexit 0
 	fi
 
-	log "$m"
+	if [ -n "$description" ]; then
+		log "$description"
+	fi
+
+	log "$manual_text"
 }
 
 # Print help for the manual command
