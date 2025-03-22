@@ -5,13 +5,20 @@
 # List all collections
 function collection_list_command {
 
+	print_raw="$(is_flag_specified '-raw' '-r')"
 	all_collection=$(get_all_collections)
 	if [ ${#all_collection} -eq 0 ]; then
-		log "No collections found"
+		if [ "$print_raw" == "false" ]; then
+			log "No collections found"
+		fi
 		myexit 0
 	fi
 
-	log "Collections:"
+
+	if [ "$print_raw" == "false" ]; then
+		log "Collections:"
+	fi
+
 	for collection in ${all_collection[@]}; do
 		# check if collection is a git repository
 		url=""
@@ -19,14 +26,19 @@ function collection_list_command {
 			url=$(git -C $HOME_DIR/$collection remote get-url origin)
 			url="[$url]"
 		fi
-		log "  $collection $url"
+		if [ "$print_raw" == "false" ]; then
+			log "  $collection $url"
+		else
+			log "$collection"
+		fi
 	done
 }
 
 # Print help for the collectionlist command
 function collection_list_help {
 	log "  collection|c list|ls - List all collections"
-	log ""
+	log "      Flags:"
+	log "		-raw|-r - Print raw output"
 }
 
 # Short form of the collectionlist command

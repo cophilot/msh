@@ -2,6 +2,12 @@
 
 ---
 
+## [v1.0.3](https://github.com/cophilot/msh/milestone/5) (2025-??-??) _IN_DEVELOPMENT_
+
+-   Added `-raw` flag for the `collection list` command [#27](https://github.com/cophilot/msh/issues/27)
+
+---
+
 ## [v1.0.2](https://github.com/cophilot/msh/milestone/4) (2025-03-07)
 
 -   Bug fix [#25](https://github.com/cophilot/msh/issues/25)
