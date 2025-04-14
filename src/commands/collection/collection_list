@@ -14,7 +14,6 @@ function collection_list_command {
 		myexit 0
 	fi
 
-
 	if [ "$print_raw" == "false" ]; then
 		log "Collections:"
 	fi
