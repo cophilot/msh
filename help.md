@@ -1,5 +1,5 @@
 ```
-myshell v0.2.0
+myshell v1.0.3
 
                           __         ____
     ____ ___  __  _______/ /_  ___  / / /
@@ -19,12 +19,15 @@ Commands:
       collection-name - The name of the collection to create. Default is the name of the repository
 
   collection|c list|ls - List all collections
-
+      Flags:
+		-raw|-r - Print raw output
   collection|c new|n <collection-name> - Create a new collection
       collection-name - The name of the collection to create
 
-  edit|e [script-name] - Open a specified or all scripts in the editor
+  edit|e [script-name] [flags] - Open a specified or all scripts in the editor
       script-name - If provided, the script with the specified name will be opened in the editor
+      Flags:
+          -quick|-q - Use the quick editor command
 
   help|h - Get help for myshell
 
@@ -34,6 +37,9 @@ Commands:
           -collection|-c - Show the collection of the scripts
           -group|-g - Group the scripts by collection
           -simple|-s - Print the list in a simple format
+
+  manual|m <script> - Get the manual for the script
+      script - The name of the script to get the manual for
 
   migrate-scripts - Migrate all existing scripts to msh
 
@@ -46,6 +52,9 @@ Commands:
       collection-name - The name of the collection to add the script to. The default collection can be set in the config
       Flags:
           -edit|-e - Open the script in the editor after creation
+          -man|-m - Add a manual to the script
+          -local|-l - Create the script in the current directory
+          -quick-edit|-qe - Open the script in the editor after creation, using the quick editor command
 
   print|p <script-name> [flags] - Print the contents of a script
       script-name - The name of the script to print
@@ -64,13 +73,15 @@ Commands:
   sync|s [collection-name] [flags] - Synchronize all or one collections
       collection-name - The name of the collection to synchronize
       Flags:
-          -u|-up - Push changes to the remote repository
-          -d|-detached - Synchronize the collection in detached mode
+          -up|-u - Push changes to the remote repository
+          -detached|-d - Synchronize the collection in detached mode
 
   version|v [flags] - Print the version of myshell
        Flags:
-           -s|-simple - Print the version in a simple format
+           -simple|-s - Print the version in a simple format
 
  Global flags (apply to all commands):
   --quiet|--q - Do not print any output
+
+To get more information please visit: https://myshell.philipp-bonin.com/
 ```
