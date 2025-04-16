@@ -2,9 +2,10 @@
 
 ---
 
-## [v1.0.3](https://github.com/cophilot/msh/milestone/5) (2025-??-??) _IN_DEVELOPMENT_
+## [v1.0.3](https://github.com/cophilot/msh/milestone/9) (2025-04-16)
 
 -   Added `-raw` flag for the `collection list` command [#27](https://github.com/cophilot/msh/issues/27)
+-   Added `-local` flag for the `new` command [#28](https://github.com/cophilot/msh/issues/28)
 
 ---
 
