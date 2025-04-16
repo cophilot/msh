@@ -27,6 +27,10 @@ function new_command {
 		sc_dir="$sc_dir/bin"
 	fi
 
+	if [ "$(is_flag_specified '-local' '-l')" == "true" ]; then
+		sc_dir="."
+	fi
+
 	add_manual="false"
 	if [ "$(is_flag_specified '-man' '-m')" == "true" ]; then
 		add_manual="true"
@@ -54,6 +58,7 @@ function new_help {
 	log "      Flags:"
 	log "          -edit|-e - Open the script in the editor after creation"
 	log "          -man|-m - Add a manual to the script"
+	log "          -local|-l - Create the script in the current directory"
 	log "          -quick-edit|-qe - Open the script in the editor after creation, using the quick editor command"
 	log ""
 }

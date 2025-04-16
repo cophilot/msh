@@ -1,6 +1,7 @@
 from msh import MSH
 from test_case import TestCase
 from my_assertion import assert_true
+import os
 
 
 class NewTestCase(TestCase):
@@ -15,6 +16,7 @@ class NewTestCase(TestCase):
         #   Flags:
         #       -edit|-e - Open the script in the editor after creation
         #       -man|-m - Add a manual to the script
+        #       -local|-l - Create the script in the current directory
 
         MSH.run_fail("new")
 
@@ -39,3 +41,19 @@ class NewTestCase(TestCase):
 
         o = MSH.run_suc("new test-script-edit my-collection -edit")
         o.has_line(f"{MSH.HOME.get_abs_path()}/my-collection/test-script-edit")
+
+        MSH.run_suc("new i__msh-testing-local-test-script -local")
+        assert_true(os.path.exists("i__msh-testing-local-test-script"))
+        try:
+            with open("i__msh-testing-local-test-script", "r") as f:
+                content = f.read()
+                assert_true("#!/bin/bash" in content)
+                assert_true(
+                    "#??This is the i__msh-testing-local-test-script script" in content
+                )
+                assert_true("#&&TAGS" in content)
+            MSH.run_fail("new i__msh-testing-local-test-script -l")
+        except AssertionError as e:
+            os.remove("i__msh-testing-local-test-script")
+            raise e
+        os.remove("i__msh-testing-local-test-script")
