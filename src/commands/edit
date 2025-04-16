@@ -6,6 +6,7 @@
 function edit_command {
 	require_dir $HOME_DIR
 	script_name=${VALUES[0]}
+	echo "HALLLOOOO"
 
 	edcom=$(get_editor_command)
 	if [ "$(is_flag_specified '-quick' '-q')" == "true" ]; then
@@ -17,7 +18,10 @@ function edit_command {
 		myexit 0
 	fi
 
-	file_location=$(resolve_script_name "$script_name")
+	echo "Script name: $script_name"
+	file_location=$(resolve_script_name_with_py "$script_name")
+
+	echo "File location: $file_location"
 
 	if [ -z "$file_location" ]; then
 		log_e "Script '$script_name' not found"

@@ -36,7 +36,7 @@ function alias_command {
 	cmd2="$cmd_name \$*"
 	cmd1="echo \"$cmd2\""
 
-	create_new_script $sc_dir $script_name "$description" "$cmd1" "$cmd2"
+	create_new_script $sc_dir $script_name "$description" "false" "$cmd1" "$cmd2"
 
 	log "Alias script '$script_name' created ($sc_dir/$script_name)"
 }

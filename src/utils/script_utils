@@ -6,9 +6,11 @@
 # $1 - The directory to create the script in
 # $2 - The name of the script
 # $3 (optional) - The description of the script
-# $4 (optional) - The content of the script
+# $4 (optional) - If set to true, add a manual to the script
 # $5 (optional) - The content of the script
-# $6 (optional) - If set to true, add a manual to the script
+# $6 (optional) - The content of the script
+# $7 (optional) - The content of the script
+# $8 (optional) - The content of the script
 function create_new_script() {
 	sc_dir=$1
 	sc_name=$2
@@ -30,16 +32,75 @@ function create_new_script() {
 	echo "$description" >>$script_file
 	echo "#&&TAGS" >>$script_file
 
-	if [ "$6" == "true" ]; then
+	if [ "$4" == "true" ]; then
 		echo "###This is the manual for the $sc_name command..." >>$script_file
 	fi
 
 	echo "" >>$script_file
-	if [ -n "$4" ]; then
-		echo "$4" >>$script_file
-	fi
 	if [ -n "$5" ]; then
 		echo "$5" >>$script_file
+	fi
+	if [ -n "$6" ]; then
+		echo "$6" >>$script_file
+	fi
+	if [ -n "$7" ]; then
+		echo "$7" >>$script_file
+	fi
+	if [ -n "$8" ]; then
+		echo "$8" >>$script_file
+	fi
+	chmod +x $script_file
+}
+
+# Create a new python script
+# $1 - The directory to create the python script in
+# $2 - The name of the python script
+# $3 (optional) - The description of the script
+# $4 (optional) - If set to true, add a manual to the script
+# $5 (optional) - The content of the script
+# $6 (optional) - The content of the script
+# $7 (optional) - The content of the script
+# $8 (optional) - The content of the script
+function create_new_python_script() {
+	sc_dir=$1
+	sc_name=$2
+
+	py_dir="$sc_dir/__py"
+
+	mkdir -p $py_dir
+
+	script_file="$py_dir/$sc_name.py"
+	if [ -f "$script_file" ]; then
+		log_e "The python script '$sc_name.py' already exists"
+		myexit 1
+	fi
+
+	touch $script_file
+
+	description="This is the $sc_name script"
+	if [ -n "$3" ]; then
+		description=$3
+	fi
+	description="##??$description"
+	echo "$description" >$script_file
+	echo "##&&TAGS" >>$script_file
+
+	if [ "$4" == "true" ]; then
+		echo "###This is the manual for the $sc_name command..." >>$script_file
+	fi
+
+	echo "" >>$script_file
+	if [ -n "$5" ]; then
+		echo "$5" >>$script_file
+	fi
+	if [ -n "$6" ]; then
+		echo "$6" >>$script_file
+	fi
+	if [ -n "$7" ]; then
+		echo "$7" >>$script_file
+	fi
+	if [ -n "$8" ]; then
+		echo "$8" >>$script_file
 	fi
 	chmod +x $script_file
 }
@@ -93,6 +154,27 @@ function running_script {
 	read -p "Arguments: " args
 	log "---"
 	$script_name $args
+}
+
+# Resolve the absolute path of a script by its name with a
+# $1 - The name of the script
+function resolve_script_name_with_py {
+	file_path=$(resolve_script_name $1)
+
+	content=$(cat $file_path)
+	if [[ $content == *"@@@MSH-PYTHON@@@"* ]]; then
+
+		base_name=$(basename $file_path)
+		py_base_name="__py/$base_name.py"
+
+		py_file_path=${file_path//$base_name/$py_base_name}
+		if [ -f $py_file_path ]; then
+			echo $py_file_path
+			return
+		fi
+	fi
+
+	echo $file_path
 }
 
 # Resolve the absolute path of a script by its name

@@ -32,7 +32,16 @@ function new_command {
 		add_manual="true"
 	fi
 
-	create_new_script $sc_dir $script_name "" "" "" $add_manual
+	if [ "$(is_flag_specified '-python' '-py')" == "true" ]; then
+		create_new_python_script $sc_dir $script_name "" $add_manual
+
+		content_line_1="#@@@MSH-PYTHON@@@"
+		content_line_2="if command -v python3 &> /dev/null; then python3 $py_script_name \$*"
+		content_line_3="else python $py_script_name \$*"
+		content_line_4="fi"
+	fi
+
+	create_new_script $sc_dir $script_name "" $add_manual "$content_line_1" "$content_line_2" "$content_line_3" "$content_line_4"
 
 	log "Script '$script_name' created ($sc_dir/$script_name)"
 
@@ -55,6 +64,7 @@ function new_help {
 	log "          -edit|-e - Open the script in the editor after creation"
 	log "          -man|-m - Add a manual to the script"
 	log "          -quick-edit|-qe - Open the script in the editor after creation, using the quick editor command"
+	log "          -python|-py - Add a python script"
 	log ""
 }
 

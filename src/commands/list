@@ -48,6 +48,14 @@ function list_command {
 		# Read the file content once
 		file_content=$(<"$sc_path")
 
+		if [[ $file_content == *"@@@MSH-PYTHON@@@"* ]]; then
+			sc_path="$co_path/__py/$script.py"
+
+			if [ -f "$sc_path" ]; then
+				file_content=$(<"$sc_path")
+			fi
+		fi
+
 		# Extract description and tags using parameter substitution
 		description=$(grep -m 1 -o "#??.*" <<<"$file_content" | cut -c4-)
 		tags=$(grep -m 1 -o "#&&.*" <<<"$file_content" | cut -c4-)
