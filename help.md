@@ -1,5 +1,8 @@
 ```
-myshell v1.0.3
+myshell v1.0.4
+
+New version available: 1.0.4 -> 1.0.3
+Run 'msh-update' to update
 
                           __         ____
     ____ ___  __  _______/ /_  ___  / / /
@@ -37,6 +40,8 @@ Commands:
           -collection|-c - Show the collection of the scripts
           -group|-g - Group the scripts by collection
           -simple|-s - Print the list in a simple format
+          -time|-t - Print the time tag of the script
+          -path|-p - Print the path of the script instead of the description
 
   manual|m <script> - Get the manual for the script
       script - The name of the script to get the manual for
@@ -84,4 +89,7 @@ Commands:
   --quiet|--q - Do not print any output
 
 To get more information please visit: https://myshell.philipp-bonin.com/
+
+New version available: 1.0.4 -> 1.0.3
+Run 'msh-update' to update
 ```
