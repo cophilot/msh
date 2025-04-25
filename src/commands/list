@@ -42,7 +42,11 @@ function list_command {
 		fi
 
 		header+=" %s\n"
-		header_args+=("DESCRIPTION")
+		if [ "$(is_flag_specified '-path' '-p')" == "true" ]; then
+			header_args+=("PATH")
+		else
+			header_args+=("DESCRIPTION")
+		fi
 
 		printf "$header" "${header_args[@]}"
 	fi
@@ -86,6 +90,11 @@ function list_command {
 			if [ "$(is_flag_specified '-time' '-t')" == "true" ]; then
 				sc_simple+=" ($time_tag)"
 			fi
+
+			if [ "$(is_flag_specified '-path' '-p')" == "true" ]; then
+				sc_simple+=" $sc_path"
+			fi
+
 			log "$sc_simple"
 			continue
 		fi
@@ -104,7 +113,11 @@ function list_command {
 		fi
 
 		script_spec+=" %s\n"
-		script_values+=("$description $tags")
+		if [ "$(is_flag_specified '-path' '-p')" == "true" ]; then
+			script_values+=("$sc_path")
+		else
+			script_values+=("$description $tags")
+		fi
 
 		printf "$script_spec" "${script_values[@]}"
 	done
@@ -120,6 +133,7 @@ function list_help {
 	log "          -group|-g - Group the scripts by collection"
 	log "          -simple|-s - Print the list in a simple format"
 	log "          -time|-t - Print the time tag of the script"
+	log "          -path|-p - Print the path of the script instead of the description"
 	log ""
 }
 

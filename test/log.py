@@ -37,7 +37,12 @@ class Log:
         if revert:
             found = not found
 
-        assert_true(found)
+        if not found:
+            raise AssertionError(
+                f"Line '{line}' not found in log:\n{self}\n"
+                f"Log length: {self.length()}"
+            )
+
         return self
 
     def __str__(self):

@@ -17,6 +17,7 @@ class ListTestCase(TestCase):
         #       -group|-g - Group the scripts by collection
         #       -simple|-s - Print the list in a simple format
         #       -time|-t - Print the time tag of the script
+        #       -path|-p - Print the path of the script instead of the description
 
         MSH.run_suc("collection new my-collection")
         MSH.run_suc("collection new my-collection2")
@@ -57,12 +58,24 @@ class ListTestCase(TestCase):
             ignore_whitespaces=True,
         )
 
-        MSH.run_suc("list -t -c").has_lines(
+        base_path = MSH.HOME.get_abs_path()
+
+        MSH.run_suc("list -path").has_lines(
             [
-                "SCRIPT COLLECTION TIME-TAG DESCRIPTION",
-                f"test-script scripts {curr_date} This is the test-script script [TAGS]",
-                f"test-script2 my-collection {curr_date} This is the test-script2 script [TAGS]",
-                f"test-script3 my-collection2 {curr_date} This is the test-script3 script [TAGS]",
+                "SCRIPT PATH",
+                f"test-script {base_path}/scripts/test-script",
+                f"test-script2 {base_path}/my-collection/test-script2",
+                f"test-script3 {base_path}/my-collection2/test-script3",
+            ],
+            ignore_whitespaces=True,
+        )
+
+        MSH.run_suc("list -t -c -p").has_lines(
+            [
+                "SCRIPT COLLECTION TIME-TAG PATH",
+                f"test-script scripts {curr_date} {base_path}/scripts/test-script",
+                f"test-script2 my-collection {curr_date} {base_path}/my-collection/test-script2",
+                f"test-script3 my-collection2 {curr_date} {base_path}/my-collection2/test-script3",
             ],
             ignore_whitespaces=True,
         )
