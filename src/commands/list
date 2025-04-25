@@ -27,11 +27,24 @@ function list_command {
 	log "Available scripts:"
 
 	if [ "$(is_flag_specified '-simple' '-s')" == "false" ]; then
+		
+		header="  %-25s"
+		header_args=("SCRIPT")
+
 		if [ "$(is_flag_specified '-collection' '-c')" == "true" ]; then
-			printf "  %-25s %-15s %s\n" "SCRIPT" "COLLECTION" "DESCRIPTION"
-		else
-			printf "  %-25s %s\n" "SCRIPT" "DESCRIPTION"
+			header+=" %-15s"
+			header_args+=("COLLECTION")
 		fi
+
+		if [ "$(is_flag_specified '-time' '-t')" == "true" ]; then
+			header+=" %-12s"
+			header_args+=("TIME-TAG")
+		fi
+
+		header+=" %s\n"
+		header_args+=("DESCRIPTION")
+
+		printf "$header" "${header_args[@]}"
 	fi
 
 	for script in $all_scripts; do
@@ -51,6 +64,7 @@ function list_command {
 		# Extract description and tags using parameter substitution
 		description=$(grep -m 1 -o "#??.*" <<<"$file_content" | cut -c4-)
 		tags=$(grep -m 1 -o "#&&.*" <<<"$file_content" | cut -c4-)
+		time_tag=$(stat -c %y "$sc_path" 2>/dev/null | cut -d' ' -f1)
 
 		# Process filter tag if necessary
 		if [ -n "$filter_tag" ]; then
@@ -64,16 +78,35 @@ function list_command {
 
 		# Simplify conditions
 		if [ "$(is_flag_specified '-simple' '-s')" == "true" ]; then
-			log "  $script - $description $tags"
+			sc_simple="  $script -"
+			if [ "$(is_flag_specified '-collection' '-c')" == "true" ]; then
+				sc_simple+=" $co -"
+			fi
+			sc_simple+=" $description $tags"
+			if [ "$(is_flag_specified '-time' '-t')" == "true" ]; then
+				sc_simple+=" ($time_tag)"
+			fi
+			log "$sc_simple"
 			continue
 		fi
 
-		# Output formatted details
+		script_spec="  %-25s"
+		script_values=("$script")
+
 		if [ "$(is_flag_specified '-collection' '-c')" == "true" ]; then
-			printf "  %-25s %-15s %s\n" "$script" "$co" "$description $tags"
-		else
-			printf "  %-25s %s\n" "$script" "$description $tags"
+			script_spec+=" %-15s"
+			script_values+=("$co")
 		fi
+
+		if [ "$(is_flag_specified '-time' '-t')" == "true" ]; then
+			script_spec+=" %-12s"
+			script_values+=("$time_tag")
+		fi
+
+		script_spec+=" %s\n"
+		script_values+=("$description $tags")
+
+		printf "$script_spec" "${script_values[@]}"
 	done
 
 }
@@ -86,6 +119,7 @@ function list_help {
 	log "          -collection|-c - Show the collection of the scripts"
 	log "          -group|-g - Group the scripts by collection"
 	log "          -simple|-s - Print the list in a simple format"
+	log "          -time|-t - Print the time tag of the script"
 	log ""
 }
 

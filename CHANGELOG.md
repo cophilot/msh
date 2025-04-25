@@ -2,6 +2,12 @@
 
 ---
 
+## [v1.0.4](https://github.com/cophilot/msh/milestone/10) (2025-04-??) _IN DEVELOPMENT_
+
+-   Added `-time` flag for the `list` command [#29](https://github.com/cophilot/msh/issues/29)
+
+---
+
 ## [v1.0.3](https://github.com/cophilot/msh/milestone/9) (2025-04-16)
 
 -   Added `-raw` flag for the `collection list` command [#27](https://github.com/cophilot/msh/issues/27)
