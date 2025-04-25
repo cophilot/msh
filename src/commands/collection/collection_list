@@ -35,9 +35,10 @@ function collection_list_command {
 
 # Print help for the collectionlist command
 function collection_list_help {
-	log "  collection|c list|ls - List all collections"
+	log "  collection|c list|ls [flags] - List all collections"
 	log "      Flags:"
 	log "		-raw|-r - Print raw output"
+	log ""
 }
 
 # Short form of the collectionlist command
