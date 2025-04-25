@@ -27,7 +27,7 @@ function list_command {
 	log "Available scripts:"
 
 	if [ "$(is_flag_specified '-simple' '-s')" == "false" ]; then
-		
+
 		header="  %-25s"
 		header_args=("SCRIPT")
 
