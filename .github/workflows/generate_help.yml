@@ -20,6 +20,11 @@ jobs:
             - name: Generate help file
               run: ./out/msh help > help.md
 
+            - name: Replace update lines
+              run: |
+                  sed -i "s/Run 'msh-update' to update//g" help.md
+                  sed -i '/^New version available:/d' help.md
+
             - name: Add code block
               run: |
                   echo '```' > help.tmp
