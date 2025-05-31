@@ -139,4 +139,43 @@ function resolve_script_name {
 	echo ""
 }
 
+# Get the description of a script
+# $1 - The path of the script
+function get_script_description {
+	script_path=$1
+
+	if [ -z "$script_path" ]; then
+		log_e "INTERNAL: script-path is not defined in 'get_script_description'"
+		myexit 1
+	fi
+
+	file_content=$(<"$script_path")
+
+	description=$(grep -m 1 -o "#??.*" <<<"$file_content" | cut -c4-)
+	if [ -z "$description" ]; then
+		description="No description"
+	fi
+	echo "$description"
+}
+
+# Get the tags of a script
+# $1 - The path of the script
+function get_script_tags {
+	script_path=$1
+
+	if [ -z "$script_path" ]; then
+		log_e "INTERNAL: script-path is not defined in 'get_script_tags'"
+		myexit 1
+	fi
+
+	file_content=$(<"$script_path")
+
+	tags=$(grep -m 1 -o "#&&.*" <<<"$file_content" | cut -c4-)
+
+	if [ -z "$tags" ]; then
+		tags=""
+	fi
+	echo "[$tags]"
+}
+
 ###END###

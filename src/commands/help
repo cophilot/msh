@@ -7,6 +7,7 @@ function help_command {
 	print_help_header
 	log "Commands:"
 	collection_help
+	details_help
 	edit_help
 	help_help
 	list_help

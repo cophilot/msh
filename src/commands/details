@@ -1,0 +1,52 @@
+#!/bin/bash
+
+###START###
+
+# Get details about a script
+function details_command {
+	require_dir $HOME_DIR
+	script_name=${VALUES[0]}
+
+	if [ -z "$script_name" ]; then
+		log_e "Please provide the name of the script to get details for"
+		myexit 1
+	fi
+
+	file_location=$(resolve_script_name "$script_name")
+
+	if [ -z "$file_location" ]; then
+		log_e "Script '$script_name' not found"
+		myexit 1
+	fi
+
+	print_meta="%-15s%s\n"
+
+	printf "$print_meta" "Name:" "$script_name"
+	printf "$print_meta" "Path:" "$file_location"
+	printf "$print_meta" "Description:" "$(get_script_description "$file_location")"
+	printf "$print_meta" "Tags:" "$(get_script_tags "$file_location")"
+
+	created=$(stat -c %W "$file_location" 2>/dev/null)
+	if [ ! "$created" -eq 0 ]; then
+		printf "$print_meta" "Created:" "$(date -d @$created +'%Y-%m-%d %H:%M:%S')"
+	fi
+
+	last_modified=$(stat -c %y "$file_location" 2>/dev/null)
+	if [ -n "$last_modified" ]; then
+		printf "$print_meta" "Last Modified:" "$(date -d "$last_modified" +'%Y-%m-%d %H:%M:%S')"
+	fi
+}
+
+# Print help for the details command
+function details_help {
+	log "  details|d <script> - Get more information about a script"
+	log "      script - The name of the script to get details for"
+	log ""
+}
+
+# Short form of the details command
+function d_command {
+	details_command $*
+}
+
+###END###

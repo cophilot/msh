@@ -14,6 +14,9 @@ from cases.manual import ManualTestCase
 from cases.collection_new import CollectionNewTestCase
 from cases.collection_list import CollectionListTestCase
 from cases.collection_clone import CollectionCloneTestCase
+from cases.details import DetailsTestCase
+# ~~import-test-cases~~
+
 from msh import MSH
 
 FILTER = ""
@@ -34,6 +37,8 @@ def get_all_test_cases():
         MoveTestCase(),
         RemoveTestCase(),
         RestoreTestCase(),
+        DetailsTestCase(),
+        # ~~add-test-cases~~
     ]
 
 

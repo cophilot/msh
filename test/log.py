@@ -12,12 +12,12 @@ class Log:
     def length(self):
         return len(self.lines)
 
-    def has_lines(self, lines: list, ignore_whitespaces=False) -> "Log":
+    def has_lines(self, lines: list, ignore_whitespaces=False, can_be_substring=False) -> "Log":
         for line in lines:
-            self.has_line(line, ignore_whitespaces)
+            self.has_line(line, ignore_whitespaces=ignore_whitespaces, can_be_substring=can_be_substring)
         return self
 
-    def has_line(self, line: str, ignore_whitespaces=False, revert=False) -> "Log":
+    def has_line(self, line: str, ignore_whitespaces=False, revert=False, can_be_substring=False) -> "Log":
 
         def compare(l1, l2):
             l1 = l1.strip()
@@ -25,6 +25,8 @@ class Log:
             if ignore_whitespaces:
                 l1 = l1.replace(" ", "")
                 l2 = l2.replace(" ", "")
+            if can_be_substring:
+                return l1 in l2 or l2 in l1
             return l1 == l2
 
         found = False

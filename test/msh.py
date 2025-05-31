@@ -8,7 +8,7 @@ from log import Log
 class MSH:
 
     EXECUTABLE = "./out/msht"
-    HOME = None
+    HOME: Dir = None
     CONFIG = "editor_command=echo"
 
     _BUILT = False

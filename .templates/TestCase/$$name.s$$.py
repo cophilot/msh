@@ -8,3 +8,4 @@ class $$name.p$$TestCase(TestCase):
 
     def run(self):
         MSH.run_suc("$$name.l$$")
+        assert_true(False)

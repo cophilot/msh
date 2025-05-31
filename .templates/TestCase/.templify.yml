@@ -20,3 +20,12 @@
 
 description: A new test case for the commands
 path: test/cases
+snippets:
+  - id: import-test-cases
+    file: test/run.py
+    content: from cases.$$name.s$$ import $$name.p$$TestCase
+    before: true
+  - id: add-test-cases
+    file: test/run.py
+    content: "        $$name.p$$TestCase(),"
+    before: true
