@@ -2,6 +2,12 @@
 
 ---
 
+## [v1.1.0](https://github.com/cophilot/msh/milestone/2) (2025-??-??) _IN DEVELOPMENT_
+
+- Added the `details` command to view script details [#31](https://github.com/cophilot/msh/issues/31)
+
+---
+
 ## [v1.0.4](https://github.com/cophilot/msh/milestone/10) (2025-04-25)
 
 -   Added `-time` flag for the `list` command [#29](https://github.com/cophilot/msh/issues/29)
