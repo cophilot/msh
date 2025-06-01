@@ -22,16 +22,25 @@ function collection_clone_command {
 	cd $HOME_DIR
 	git clone $col_url $col_name 2>/dev/null
 	add_collection_to_mshrc $col_name
-	log ""
-	log "Collection '$col_name' cloned ($HOME_DIR/$col_name)"
-	log "Run 'source $BASHRC_FILE' to activate the new collection"
+
+	col_path="$HOME_DIR/$col_name"
+
+	if [ "$(is_flag_specified '-print-path' '-P')" == "false" ]; then
+		log ""
+		log "Collection '$col_name' cloned ($col_path)"
+		log "Run 'source $BASHRC_FILE' to activate the new collection"
+	else
+		log "$col_path"
+	fi
 }
 
 # Print help for the collectionclone command
 function collection_clone_help {
-	log "  collection|c clone|c <url> [collection-name] - Clone a collection from a git repository"
+	log "  collection|c clone|c <url> [collection-name] [flags] - Clone a collection from a git repository"
 	log "      url - The URL of the git repository to clone"
 	log "      collection-name - The name of the collection to create. Default is the name of the repository"
+	log "      Flags:"
+	log "		-print-path|-P - Print the path of the cloned collection"
 	log ""
 }
 

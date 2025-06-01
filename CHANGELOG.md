@@ -4,7 +4,8 @@
 
 ## [v1.1.0](https://github.com/cophilot/msh/milestone/2) (2025-??-??) _IN DEVELOPMENT_
 
-- Added the `details` command to view script details [#31](https://github.com/cophilot/msh/issues/31)
+-   Added the `details` command to view script details [#31](https://github.com/cophilot/msh/issues/31)
+-   Added `-print-path` flag for the `collection clone` command [#32](https://github.com/cophilot/msh/issues/32)
 
 ---
 
