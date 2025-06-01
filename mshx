@@ -1,5 +1,9 @@
 #!/bin/bash
 
+MSH_COMMAND="msh"
+MSHX_COMMAND="mshx"
+MSH_HOME_DIR="$MSH_HOME"
+
 function help_command(){
     echo "                          __         ____"
     echo "    ____ ___  __  _______/ /_  ___  / / /"
@@ -22,6 +26,14 @@ function help_command(){
     echo "  list|ls - List all available extensions"
 }
 
+function get_extension_url(){
+    extension="$1"
+    if [[ ! "$extension" == *"https://"* ]] && [[ ! "$extension" == *"http://"* ]]; then
+        extension="https://github.com/$extension-mshx.git"
+    fi
+    echo "$extension"
+}
+
 function install_command(){
 
     extension="$2"
@@ -38,9 +50,7 @@ function install_command(){
     fi
     echo "Installing extension $extension..."
 
-    if [[ ! "$extension" == *"https://"* ]] && [[ ! "$extension" == *"http://"* ]]; then
-        extension="https://github.com/$extension-mshx.git"
-    fi
+    extension=$(get_extension_url "$extension")
 
     # check if the repository exists
     if ! git ls-remote "$extension" &> /dev/null; then
@@ -48,7 +58,28 @@ function install_command(){
         exit 1
     fi
 
-    msh collection clone "$extension" --q
+    coll_path=$($MSH_COMMAND collection clone "$extension" -print-path)
+    deps_file="$coll_path/dependencies.list"
+
+    if [ -f "$deps_file" ]; then
+        echo "Installing dependencies for $extension..."
+
+        all_coll="$($MSH_COMMAND collection list)"
+        for dep in $(cat "$deps_file"); do
+            echo ""
+            echo "Installing dependency $dep..."
+            dep_url=$(get_extension_url "$dep")
+
+            if [[ "$all_coll" == *"$dep_url"* ]]; then
+                echo "Dependency $dep already installed."
+                continue
+            fi
+
+            install_command "$dep_url" "$dep_url"
+        done
+        echo ""
+    fi            
+
     echo "Extension $extension installed successfully."
 }
 
@@ -73,6 +104,15 @@ function list_command(){
         echo "  $line $description($url)"
     done <<< "$extension_list"
 }
+
+
+
+if [ "${@: -1}" == "-dev" ]; then
+    MSH_COMMAND="./out/msh"
+    MSHX_COMMAND="./mshx"
+    MSH_HOME_DIR=".myshell"
+    echo "Running in development mode..."
+fi
 
 command="$1"
 
