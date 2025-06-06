@@ -21,10 +21,17 @@ function details_command {
 
 	print_meta="%-15s%s\n"
 
+	collection_path=$(get_coll_path_for_script "$file_location")
+
 	printf "$print_meta" "Name:" "$script_name"
 	printf "$print_meta" "Path:" "$file_location"
 	printf "$print_meta" "Description:" "$(get_script_description "$file_location")"
 	printf "$print_meta" "Tags:" "$(get_script_tags "$file_location")"
+
+	git_status=$(get_script_git_status "$file_location" "$collection_path")
+	if [ ! -z "$git_status" ]; then
+		printf "$print_meta" "Git Status:" "$git_status"
+	fi
 
 	created=$(stat -c %W "$file_location" 2>/dev/null)
 	if [ ! "$created" -eq 0 ]; then

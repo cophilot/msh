@@ -178,4 +178,43 @@ function get_script_tags {
 	echo "[$tags]"
 }
 
+# Get the collection path for a script
+# This function assumes that the script is in a collection directory
+# and returns the path to that collection.
+# $1 - The path of the script
+function get_coll_path_for_script {
+	script_path=$1
+	if [ -z "$script_path" ]; then
+		log_e "INTERNAL: script-path is not defined in 'get_coll_path_for_script'"
+		myexit 1
+	fi
+	coll_path=$(dirname "$script_path")
+	# Go up one directory if it is in a bin directory and the parent directory is a collection
+	if [[ $coll_path == $HOME_DIR/*/bin ]]; then
+		coll_path=$(dirname "$coll_path")
+	fi
+	echo "$coll_path"
+
+}
+
+# Get the git status of a script
+# $1 - The path of the script
+# $2 - The collection path of the script
+function get_script_git_status {
+	file_location=$1
+	collection_path=$2
+	if [ ! -d "$collection_path/.git" ]; then
+		echo ""
+		return
+	fi
+	git_status=$(git -C "$collection_path" status --porcelain "$file_location" 2>/dev/null)
+	if [ -z "$git_status" ]; then
+		echo "No changes"
+	fi
+
+	# make the status more readable
+	git_status=$(echo "$git_status" | sed -e 's/^ M/Modified/' -e 's/^??/Untracked/' -e 's/^A /Added/' -e 's/^D /Deleted/' -e 's/^R /Renamed/')
+	echo "$git_status"
+}
+
 ###END###

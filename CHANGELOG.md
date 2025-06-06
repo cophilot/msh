@@ -2,6 +2,12 @@
 
 ---
 
+## [v1.1.1](https://github.com/cophilot/msh/milestone/7) (2025-??-??) _IN DEVELOPMENT_
+
+- Added git status when running the `details` command [#33](https://github.com/cophilot/msh/issues/33)
+
+---
+
 ## [v1.1.0](https://github.com/cophilot/msh/milestone/2) (2025-06-01)
 
 -   Added the `details` command to view script details [#31](https://github.com/cophilot/msh/issues/31)
