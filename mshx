@@ -39,7 +39,7 @@ function install_command(){
     extension="$2"
 
     if [ -z "$extension" ]; then
-        echo "No extension specified. Type 'mshx help' for help."
+        echo "No extension specified. Type 'mshx help' or 'mshx manual' for help."
         exit 1
     fi
 
@@ -136,4 +136,34 @@ if [ "$command" == "list" ] || [ "$command" == "ls" ]; then
     exit 0
 fi
 
-echo "Command not found. Type 'mshx help' for help."
+# Addition of manual flag
+if [ "$command" == "manual" ]; then
+    echo "Manual"
+    echo "---------"
+    help_command
+
+
+    # For not allowing script to stop, using while loop
+    while true; do
+        echo ""
+        echo "What do you want to do now"
+        echo "1) Run install"
+        echo "2) Show list"
+        echo "3) Show help again"
+        echo "4) exit"
+        read -p "> " input
+
+        case $input in
+            1) read -p "Enter Extension name (format: username/repo): " ext_name
+               install_command install "$ext_name"
+               break 
+            ;;
+            2) list_command; break;;
+            3) help_command; break;;
+            4) exit 0;;
+            *) echo "Invalid option. Please try again.";;
+        esac
+    done
+fi
+
+echo "Command not found. Type 'mshx help' or 'mshx manual' for help."
