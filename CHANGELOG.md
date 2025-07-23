@@ -2,9 +2,10 @@
 
 ---
 
-## [v1.1.1](https://github.com/cophilot/msh/milestone/7) (2025-??-??) _IN DEVELOPMENT_
+## [v1.1.1](https://github.com/cophilot/msh/milestone/7) _IN DEVELOPMENT_
 
-- Added git status when running the `details` command [#33](https://github.com/cophilot/msh/issues/33)
+-   Added git status when running the `details` command [#33](https://github.com/cophilot/msh/issues/33)
+-   Added `-interactive` flag for the `new` command [#35](https://github.com/cophilot/msh/issues/35)
 
 ---
 

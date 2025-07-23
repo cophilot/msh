@@ -5,16 +5,39 @@
 # Create a new script
 function new_command {
 	require_dir $HOME_DIR
+
 	script_name=${VALUES[0]}
-	if [ -z "$script_name" ]; then
+
+	interactive_mode="false"
+	if [ "$(is_flag_specified '-interactive' '-it')" == "true" ]; then
+		interactive_mode="true"
+	fi
+
+	if [ -z "$script_name" ] && [ "$interactive_mode" == "false" ]; then
 		log_e "Please provide the name for the new script"
 		myexit 1
 	fi
 
+	if [ -z "$script_name" ] && [ "$interactive_mode" == "true" ]; then
+		read -p "Enter the name for the new script: " script_name
+		if [ -z "$script_name" ]; then
+			log_e "Script name is required"
+			myexit 1
+		fi
+	fi
+
 	collection_name=${VALUES[1]}
+	default_collection=$(get_default_collection)
+
+	if [ -z "$collection_name" ] && [ "$interactive_mode" == "true" ]; then
+		read -p "Enter the name for the collection ($default_collection): " collection_name
+	fi
+
 	if [ -z "$collection_name" ]; then
-		collection_name=$(get_default_collection)
-	elif [ ! -d "$HOME_DIR/$collection_name" ]; then
+		collection_name=$default_collection
+	fi
+
+	if [ ! -d "$HOME_DIR/$collection_name" ]; then
 		log_e "Collection '$collection_name' does not exist"
 		myexit 1
 	fi
@@ -29,11 +52,21 @@ function new_command {
 
 	if [ "$(is_flag_specified '-local' '-l')" == "true" ]; then
 		sc_dir="."
+	elif [ "$interactive_mode" == "true" ]; then
+		read -p "Create local (y/N): " create_local
+		if [ "$create_local" == "y" ] || [ "$create_local" == "Y" ] || [ "$create_local" == "yes" ] || [ "$create_local" == "YES" ]; then
+			sc_dir="."
+		fi
 	fi
 
 	add_manual="false"
 	if [ "$(is_flag_specified '-man' '-m')" == "true" ]; then
 		add_manual="true"
+	elif [ "$interactive_mode" == "true" ]; then
+		read -p "Add manual (y/N): " add_manual
+		if [ "$add_manual" == "y" ] || [ "$add_manual" == "Y" ] || [ "$add_manual" == "yes" ] || [ "$add_manual" == "YES" ]; then
+			add_manual="true"
+		fi
 	fi
 
 	create_new_script $sc_dir $script_name "" "" "" $add_manual
@@ -57,6 +90,7 @@ function new_help {
 	log "      collection-name - The name of the collection to add the script to. The default collection can be set in the config"
 	log "      Flags:"
 	log "          -edit|-e - Open the script in the editor after creation"
+	log "          -interactive|-it - Run the command in interactive mode, prompting for missing values (the name is not required in this mode)"
 	log "          -man|-m - Add a manual to the script"
 	log "          -local|-l - Create the script in the current directory"
 	log "          -quick-edit|-qe - Open the script in the editor after creation, using the quick editor command"
