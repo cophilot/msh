@@ -142,6 +142,14 @@ if [ "$command" == "manual" ]; then
     echo "---------"
     help_command
 
+    # if -p flag is passed with manual
+    if [[ "$2" == "-p" ]]; then
+        echo ""
+        echo "-------- Script Content --------"
+        cat "$0"
+        echo -e "\n"
+        echo "-------------------------------"
+    fi
 
     # For not allowing script to stop, using while loop
     while true; do
