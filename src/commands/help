@@ -7,6 +7,7 @@ function help_command {
 	print_help_header
 	log "Commands:"
 	collection_help
+	copy_help
 	details_help
 	edit_help
 	help_help
@@ -20,6 +21,7 @@ function help_command {
 	restore_help
 	sync_help
 	version_help
+	# ~~new-help-command~~
 	print_help_footer
 }
 

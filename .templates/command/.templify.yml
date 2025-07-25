@@ -23,3 +23,8 @@ path: src/commands$$subfolder$$
 vars:
     - subfolder(/)
     - shortform
+snippets:
+    - id: new-help-command # This is being used to identifiy the exact location of the snippet. The content will be placed to the '~~ID~~' placeholder in the file.
+      file: src/commands/help # The file where the snippet should be inserted
+      content: '	$$name.lower$$_help' # The content of the snippet (can be used with placeholders)
+      before: true

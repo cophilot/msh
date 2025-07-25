@@ -1,0 +1,53 @@
+#!/bin/bash
+
+###START###
+
+function copy_command {
+	require_dir $HOME_DIR
+	og_script_name=${VALUES[0]}
+
+	if [ -z "$og_script_name" ]; then
+		log_e "Please provide the name of the script to copy"
+		myexit 1
+	fi
+
+	new_script_name=${VALUES[1]}
+
+	if [ -z "$new_script_name" ]; then
+		log_e "Please provide the name of the new script file"
+		myexit 1
+	fi
+
+	file_location=$(resolve_script_name "$og_script_name")
+
+	if [ -z "$file_location" ]; then
+		log_e "Script '$og_script_name' not found"
+		myexit 1
+	fi
+
+	base_path=$(dirname "$file_location")
+	dest_file_location="$base_path/$new_script_name"
+
+	if [ -f "$dest_file_location" ]; then
+		log_e "Script '$new_script_name' already exists."
+		myexit 1
+	fi
+
+	cp "$file_location" "$dest_file_location"
+	log "Script '$og_script_name' copied to '$dest_file_location'"
+}
+
+# Print help for the copy command
+function copy_help {
+	log "  copy|cp <original-script> <new-script> - Copy a script to a new file"
+	log "      original-script - The script to copy"
+	log "      new-script - The name of the new script file"
+	log ""
+}
+
+# Short form of the copy command
+function cp_command {
+	copy_command $*
+}
+
+###END###

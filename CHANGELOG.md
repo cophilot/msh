@@ -2,6 +2,12 @@
 
 ---
 
+## [v1.2.0](https://github.com/cophilot/msh/milestone/8) _IN DEVELOPMENT_
+
+-   Added `copy` command to copy scripts [#39](https://github.com/cophilot/msh/issues/39)
+
+---
+
 ## [v1.1.1](https://github.com/cophilot/msh/milestone/7) (2025-07-23)
 
 -   Added git status when running the `details` command [#33](https://github.com/cophilot/msh/issues/33)

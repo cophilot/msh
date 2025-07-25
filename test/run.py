@@ -15,6 +15,8 @@ from cases.collection_new import CollectionNewTestCase
 from cases.collection_list import CollectionListTestCase
 from cases.collection_clone import CollectionCloneTestCase
 from cases.details import DetailsTestCase
+from cases.copy import CopyTestCase
+
 # ~~import-test-cases~~
 
 from msh import MSH
@@ -39,6 +41,7 @@ def get_all_test_cases():
         RemoveTestCase(),
         RestoreTestCase(),
         DetailsTestCase(),
+        CopyTestCase(),
         # ~~add-test-cases~~
     ]
 
