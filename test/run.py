@@ -18,6 +18,7 @@ from cases.details import DetailsTestCase
 # ~~import-test-cases~~
 
 from msh import MSH
+from msh_debug import MSHTestingDebugger
 
 FILTER = ""
 
@@ -59,7 +60,11 @@ def filter_cases(cases):
 
 
 def main():
+    global FILTER
+
     print_banner()
+
+    parse_args()
 
     cases = filter_cases(get_all_test_cases())
     exp = []
@@ -108,6 +113,19 @@ def print_summary(summary):
     print("Summary:")
     for msg in summary:
         print(msg)
+
+
+def parse_args():
+    global FILTER
+
+    args = sys.argv[1:]
+    for arg in args:
+        if arg.lower() == "-dev":
+            print("*** Running in development mode ***")
+            MSHTestingDebugger.IS_ENABLED = True
+        elif arg.startswith("-filter=") or arg.startswith("-f="):
+            FILTER = arg.split("=")[1]
+            print(f"Filtering test cases by: {FILTER}")
 
 
 if __name__ == "__main__":

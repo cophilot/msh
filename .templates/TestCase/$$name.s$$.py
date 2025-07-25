@@ -1,4 +1,5 @@
 from msh import MSH
+from msh_debug import MSHTestingDebugger
 from test_case import TestCase
 from my_assertion import assert_true, assert_false, assert_equal
 

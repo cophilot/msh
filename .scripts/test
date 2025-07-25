@@ -4,7 +4,7 @@ pysc="test/run.py"
 
 if command -v python3 &> /dev/null;
 then
-    python3 $pysc
+    python3 $pysc -dev $@
 else
-    python $pysc
+    python $pysc -dev $@
 fi

@@ -38,7 +38,7 @@ jobs:
               run: .scripts/lint
 
             - name: Test
-              run: .scripts/test
+              run: python3 test/run.py
 
             - name: Build
               run: .scripts/build
