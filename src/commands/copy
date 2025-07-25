@@ -2,6 +2,7 @@
 
 ###START###
 
+# Copy a script to a new file
 function copy_command {
 	require_dir $HOME_DIR
 	og_script_name=${VALUES[0]}
