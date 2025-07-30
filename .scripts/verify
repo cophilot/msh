@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+
+.scripts/format-check
+.scripts/lint
+.scripts/test
+.scripts/build
+
+echo "All scripts executed successfully."
