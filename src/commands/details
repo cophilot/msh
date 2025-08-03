@@ -24,6 +24,7 @@ function details_command {
 	collection_path=$(get_coll_path_for_script "$file_location")
 
 	printf "$print_meta" "Name:" "$script_name"
+	printf "$print_meta" "Collection:" "$(basename "$collection_path")"
 	printf "$print_meta" "Path:" "$file_location"
 	printf "$print_meta" "Description:" "$(get_script_description "$file_location")"
 	printf "$print_meta" "Tags:" "$(get_script_tags "$file_location")"
