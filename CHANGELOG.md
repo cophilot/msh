@@ -2,7 +2,7 @@
 
 ---
 
-## [v1.2.0](https://github.com/cophilot/msh/milestone/8) _IN DEVELOPMENT_
+## [v1.2.0](https://github.com/cophilot/msh/milestone/8) (2025-10-08)
 
 -   Added `copy` command to copy scripts [#39](https://github.com/cophilot/msh/issues/39)
 -   Print script collection within `details` command [#40](https://github.com/cophilot/msh/issues/40)

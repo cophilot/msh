@@ -94,10 +94,12 @@ You can load predefined collections of scripts into your msh installation. This 
 
 ## [Release Notes](https://github.com/cophilot/msh/blob/master/CHANGELOG.md)
 
-### [v1.1.1](https://github.com/cophilot/msh/milestone/7)
+### [v1.2.0](https://github.com/cophilot/msh/milestone/8)
 
--   Added git status when running the `details` command [#33](https://github.com/cophilot/msh/issues/33)
--   Added `-interactive` flag for the `new` command [#35](https://github.com/cophilot/msh/issues/35)
+-   Added `copy` command to copy scripts [#39](https://github.com/cophilot/msh/issues/39)
+-   Print script collection within `details` command [#40](https://github.com/cophilot/msh/issues/40)
+-   Get help for specific command [#17](https://github.com/cophilot/msh/issues/17)
+-   Added `-run` flag for the `manual` command [#36](https://github.com/cophilot/msh/issues/36)
 
 ---
 
