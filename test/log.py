@@ -12,10 +12,13 @@ class Log:
     def length(self):
         return len(self.lines)
 
-    def has_lines(self, lines: list, ignore_whitespaces=False, can_be_substring=False) -> "Log":
+    def has_lines(self, lines: list, ignore_whitespaces=False, revert=False, can_be_substring=False) -> "Log":
         for line in lines:
-            self.has_line(line, ignore_whitespaces=ignore_whitespaces, can_be_substring=can_be_substring)
+            self.has_line(line, ignore_whitespaces=ignore_whitespaces, revert=revert, can_be_substring=can_be_substring)
         return self
+
+    def not_has_line(self, line: str, ignore_whitespaces=False, can_be_substring=False) -> "Log":
+        return self.has_line(line, ignore_whitespaces=ignore_whitespaces, revert=True, can_be_substring=can_be_substring)
 
     def has_line(self, line: str, ignore_whitespaces=False, revert=False, can_be_substring=False) -> "Log":
 
@@ -41,8 +44,7 @@ class Log:
 
         if not found:
             raise AssertionError(
-                f"Line '{line}' not found in log:\n{self}\n"
-                f"Log length: {self.length()}"
+                f"Line '{line}' {'' if revert else 'not '}found in log"
             )
 
         return self

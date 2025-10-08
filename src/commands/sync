@@ -74,6 +74,11 @@ function sync_help {
 	log ""
 }
 
+# Short form of the sync help command
+function s_help {
+	sync_help $*
+}
+
 # Short form of the sync command
 function s_command {
 	sync_command $*

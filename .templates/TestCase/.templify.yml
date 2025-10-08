@@ -20,6 +20,8 @@
 
 description: A new test case for the commands
 path: test/cases
+vars:
+    - shortform
 snippets:
   - id: import-test-cases
     file: test/run.py
@@ -28,4 +30,8 @@ snippets:
   - id: add-test-cases
     file: test/run.py
     content: "        $$name.p$$TestCase(),"
+    before: true
+  - id: add-command-string
+    file: test/msh.py
+    content: ''            MSHCommand("$$name.lower$$", "$$shortform.lower$$"),'
     before: true

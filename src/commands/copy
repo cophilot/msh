@@ -46,6 +46,11 @@ function copy_help {
 	log ""
 }
 
+# Short form of the copy help command
+function cp_help {
+	copy_help $*
+}
+
 # Short form of the copy command
 function cp_command {
 	copy_command $*

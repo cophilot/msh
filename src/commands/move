@@ -50,6 +50,11 @@ function move_help {
 	log ""
 }
 
+# Short form of the move help command
+function mv_help {
+	move_help $*
+}
+
 # Short form of the move command
 function mv_command {
 	move_command $*

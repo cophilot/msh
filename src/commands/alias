@@ -49,6 +49,11 @@ function alias_help {
 	log ""
 }
 
+# Short form of the alias help command
+function a_help {
+	alias_help $*
+}
+
 # Short form of the alias command
 function a_command {
 	alias_command $*

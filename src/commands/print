@@ -44,6 +44,11 @@ function print_help {
 	log ""
 }
 
+# Short form of the print help command
+function p_help {
+	print_help $*
+}
+
 # Short form of the print command
 function p_command {
 	print_command $*

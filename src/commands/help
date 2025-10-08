@@ -4,6 +4,23 @@
 
 # Get help for myshell
 function help_command {
+
+	com=${VALUES[0]}
+
+	if [ ! -z "$com" ]; then
+		com_fn="${com}_help"
+		com_fn=$(echo $com_fn | sed 's/-/_/g')
+		if ! declare -f $com_fn >/dev/null; then
+			log_e "Command not found: $com"
+			myexit 1
+		fi
+
+		print_help_header
+		$com_fn
+		print_help_footer $com
+		myexit 0
+	fi
+
 	print_help_header
 	log "Commands:"
 	collection_help

@@ -36,7 +36,12 @@ function edit_help {
 	log ""
 }
 
-# Short form of the code command
+# Short form of the edit help command
+function e_help {
+	edit_help $*
+}
+
+# Short form of the edit command
 function e_command {
 	edit_command $*
 }

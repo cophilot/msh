@@ -97,6 +97,11 @@ function new_help {
 	log ""
 }
 
+# Short form of the new help command
+function n_help {
+	new_help $*
+}
+
 # Short form of the new command
 function n_command {
 	new_command $*

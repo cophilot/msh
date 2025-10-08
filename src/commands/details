@@ -52,6 +52,11 @@ function details_help {
 	log ""
 }
 
+# Short form of the details help command
+function d_help {
+	details_help $*
+}
+
 # Short form of the details command
 function d_command {
 	details_command $*

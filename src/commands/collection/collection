@@ -23,6 +23,11 @@ function collection_help {
 	collection_new_help
 }
 
+# Short form of the collection help command
+function c_help {
+	collection_help $*
+}
+
 # Short form of the collection command
 function c_command {
 	collection_command $*

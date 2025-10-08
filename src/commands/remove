@@ -40,6 +40,11 @@ function remove_help {
 	log ""
 }
 
+# Short form of the remove help command
+function rm_help {
+	remove_help $*
+}
+
 # Short form of the remove command
 function rm_command {
 	remove_command $*

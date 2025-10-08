@@ -6,6 +6,7 @@
 
 -   Added `copy` command to copy scripts [#39](https://github.com/cophilot/msh/issues/39)
 -   Print script collection within `details` command [#40](https://github.com/cophilot/msh/issues/40)
+-   Get help for specific command [#17](https://github.com/cophilot/msh/issues/17)
 
 ---
 

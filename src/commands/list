@@ -137,6 +137,11 @@ function list_help {
 	log ""
 }
 
+# Short form of the list help command
+function ls_help {
+	list_help $*
+}
+
 # Short form of the list command
 function ls_command {
 	list_command $*

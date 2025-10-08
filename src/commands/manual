@@ -42,6 +42,11 @@ function manual_help {
 	log ""
 }
 
+# Short form of the manual help command
+function m_help {
+	manual_help $*
+}
+
 # Short form of the manual command
 function m_command {
 	manual_command $*

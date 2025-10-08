@@ -26,6 +26,11 @@ function version_help {
 	log ""
 }
 
+# Short form of the version help command
+function v_help {
+	version_help $*
+}
+
 # Short form of the version command
 function v_command {
 	version_command $*
