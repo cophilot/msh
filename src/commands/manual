@@ -33,12 +33,15 @@ function manual_command {
 	fi
 
 	log "$manual_text"
+	run_after_print $file_location
 }
 
 # Print help for the manual command
 function manual_help {
-	log "  manual|m <script> - Get the manual for the script"
+	log "  manual|m <script> [flags] - Get the manual for the script"
 	log "      script - The name of the script to get the manual for"
+	log "      Flags:"
+	log "          -run|-r - Show the collection of the scripts"
 	log ""
 }
 
