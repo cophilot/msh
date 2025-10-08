@@ -33,5 +33,5 @@ snippets:
     before: true
   - id: add-command-string
     file: test/msh.py
-    content: ''            MSHCommand("$$name.lower$$", "$$shortform.lower$$"),'
+    content: '            MSHCommand("$$name.lower$$", "$$shortform.lower$$"),'
     before: true
