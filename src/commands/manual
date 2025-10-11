@@ -32,8 +32,15 @@ function manual_command {
 		log "$description"
 	fi
 
+	if [ "$(is_flag_specified '-print' '-p')" == "true" ]; then
+		print_script_content $file_location
+		log ""
+		log "---"
+	fi
+
 	log "$manual_text"
-	run_after_print $file_location
+
+	run_if_flag_is_specified $file_location
 }
 
 # Print help for the manual command
@@ -41,6 +48,7 @@ function manual_help {
 	log "  manual|m <script> [flags] - Get the manual for the script"
 	log "      script - The name of the script to get the manual for"
 	log "      Flags:"
+	log "          -print|-p - Show the collection of the scripts"
 	log "          -run|-r - Show the collection of the scripts"
 	log ""
 }

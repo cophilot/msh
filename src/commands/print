@@ -23,16 +23,9 @@ function print_command {
 	log "File: $file_location"
 	log "---"
 
-	$p_comm $file_location
-	run_after_print $file_location
-}
+	print_script_content $file_location
 
-# Run the script after printing if flag is specified
-function run_after_print {
-	if [ "$(is_flag_specified '-run' '-r')" == "false" ]; then
-		return
-	fi
-	running_script $1
+	run_if_flag_is_specified $file_location
 }
 
 # Print help for the print command

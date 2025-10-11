@@ -79,10 +79,20 @@ function get_all_scripts() {
 	echo ${all_scripts[@]}
 }
 
+# Run the script if the -run or -r flag is specified
+# $1 - The script to run
+function run_if_flag_is_specified {
+	if [ "$(is_flag_specified '-run' '-r')" == "false" ]; then
+		return
+	fi
+	running_script $1
+}
+
 # Run a script
 # $1 - The script to run
 function running_script {
 	script_name=$1
+	log ""
 	log "---"
 	read -p "Do you want to run the script? (Y/n): " answer
 
@@ -93,6 +103,13 @@ function running_script {
 	read -p "Arguments: " args
 	log "---"
 	$script_name $args
+}
+
+# Print the content of a script
+# $1 - The script to print
+function print_script_content {
+	p_comm=$(get_print_command)
+	$p_comm $1
 }
 
 # Resolve the absolute path of a script by its name

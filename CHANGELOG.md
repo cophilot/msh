@@ -2,6 +2,12 @@
 
 ---
 
+## [v1.2.1](https://github.com/cophilot/msh/milestone/14) _IN DEVELOPMENT_
+
+-   Added `-print` flag for the `manual` command [#36](https://github.com/cophilot/msh/issues/37)
+
+---
+
 ## [v1.2.0](https://github.com/cophilot/msh/milestone/8) (2025-10-08)
 
 -   Added `copy` command to copy scripts [#39](https://github.com/cophilot/msh/issues/39)

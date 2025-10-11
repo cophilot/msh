@@ -11,6 +11,9 @@ class ManualTestCase(TestCase):
 
         # manual|m <script> - Get the manual for the script
         #   script - The name of the script to get the manual for
+        #      Flags:
+        #          -print|-p - Show the collection of the scripts
+        #          -run|-r - Show the collection of the scripts
 
         MSH.run_fail("manual")
 
@@ -18,3 +21,12 @@ class ManualTestCase(TestCase):
         MSH.run_suc("manual test-script").has_line(
             "This is the manual for the test-script command..."
         )
+        MSH.run_suc("manual test-script -print").has_lines(
+            [
+                "#!/bin/bash",
+                "#??This is the test-script script",
+                "#&&TAGS",
+                "###This is the manual for the test-script command..."
+            ]
+        )
+
