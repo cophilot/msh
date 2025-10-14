@@ -2,7 +2,7 @@
 
 ---
 
-## [v1.2.1](https://github.com/cophilot/msh/milestone/14) _IN DEVELOPMENT_
+## [v1.2.1](https://github.com/cophilot/msh/milestone/14) (2025-10-14)
 
 -   Added `-print` flag for the `manual` command [#37](https://github.com/cophilot/msh/issues/37)
 -   Added `-bin` flag for the `collection new` command [#42](https://github.com/cophilot/msh/issues/42)
