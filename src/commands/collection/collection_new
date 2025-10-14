@@ -34,8 +34,13 @@ function collection_new_command {
 		fi
 	done
 
-	mkdir -p $HOME_DIR/$coll_name
-	add_collection_to_mshrc $coll_name
+	executable_folder="$coll_name"
+	if [ "$(is_flag_specified '-bin' '-b')" == "true" ]; then
+		executable_folder="$coll_name/bin"
+	fi
+	mkdir -p $HOME_DIR/$executable_folder
+
+	add_collection_to_mshrc $executable_folder
 	log "Collection '$coll_name' created ($HOME_DIR/$coll_name)"
 	log "Run 'source $BASHRC_FILE' to activate the new collection"
 }
@@ -44,6 +49,8 @@ function collection_new_command {
 function collection_new_help {
 	log "  collection|c new|n <collection-name> - Create a new collection"
 	log "      collection-name - The name of the collection to create"
+	log "      Flags:"
+	log "          -bin|-b - Create a bin directory within the collection"
 	log ""
 }
 

@@ -20,5 +20,8 @@ class CollectionNewTestCase(TestCase):
         MSH.run_suc("collection new my-collection2")
         MSH.HOME.add_dir("my-collection2").check()
 
+        MSH.run_suc("collection new my-collection3 -bin")
+        MSH.HOME.add_dir("my-collection3").check().add_dir("bin").check()
+
         MSH.run_fail("collection new my-collection")
         MSH.run_fail("collection new my-collection2")
