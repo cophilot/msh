@@ -73,9 +73,8 @@ function print_help_footer() {
 
 # Print help for the help command
 function help_help {
-	#log "  help|h [command] - Get help for myshell"
-	#log "      command - The command to get help for"
-	log "  help|h - Get help for myshell"
+	log "  help|h [command] - Get help for myshell"
+	log "      command - The command to get help for"
 	log ""
 }
 
