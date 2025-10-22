@@ -19,9 +19,9 @@ echo "Installing..."
 
 echo "Creating directories..."
 cd $HOME
-mkdir .myshell -p
+mkdir -p .myshell
 cd .myshell
-mkdir bin -p
+mkdir -p bin
 
 # Get meta data from the latest release
 echo "Looking for the latest release..."
@@ -46,7 +46,7 @@ curl -s https://raw.githubusercontent.com/cophilot/msh/main/mshx > bin/mshx
 chmod +x bin/mshx
 
 # Add scripts directory
-mkdir scripts -p
+mkdir -p scripts
 
 # Add configuration files
 echo "Adding configuration files..."
