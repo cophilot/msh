@@ -4,7 +4,8 @@
 
 # Migrate all existing scripts to msh
 function migrate_scripts_command {
-	require_dir $HOME_DIR
+	require_msh_home_dir
+
 
 	all_scripts=$(get_all_scripts)
 

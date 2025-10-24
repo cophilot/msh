@@ -7,7 +7,7 @@ function alias_command {
 	log_e "Not implemented yet"
 	myexit 1
 
-	require_dir $HOME_DIR
+	require_msh_home_dir
 	script_name=${VALUES[0]}
 	cmd_name=${VALUES[1]}
 

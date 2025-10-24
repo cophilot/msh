@@ -4,7 +4,8 @@
 
 # Edit a script in the editor
 function edit_command {
-	require_dir $HOME_DIR
+	require_msh_home_dir
+
 	script_name=${VALUES[0]}
 
 	edcom=$(get_editor_command)

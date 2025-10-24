@@ -32,6 +32,22 @@ function check_if_command_exists() {
 	fi
 }
 
+# Check if the MSH_HOME directory is set and exists. If not exit
+function require_msh_home_dir() {
+	require_dir "$HOME_DIR" "HOME_DIR"
+	require_dir "$HOME_DIR"
+}
+
+# Check if the given variable is not empty. If it is empty, exit
+# $1 - The variable to check
+# $2 - The name of the variable (for logging purposes)
+function require_var() {
+	if [ -z "$1" ]; then
+		log_e "Please set the variable '$2'"
+		myexit 1
+	fi
+}
+
 # Check if a directory exists if not exit
 # $1 - The directory to check
 function require_dir() {

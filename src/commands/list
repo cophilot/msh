@@ -4,7 +4,8 @@
 
 # List all available commands
 function list_command {
-	require_dir $HOME_DIR
+	require_msh_home_dir
+
 
 	filter_tag=${VALUES[0]}
 

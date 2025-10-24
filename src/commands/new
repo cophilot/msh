@@ -4,7 +4,8 @@
 
 # Create a new script
 function new_command {
-	require_dir $HOME_DIR
+	require_msh_home_dir
+
 
 	script_name=${VALUES[0]}
 
