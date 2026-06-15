@@ -6,7 +6,6 @@
 function new_command {
 	require_msh_home_dir
 
-
 	script_name=${VALUES[0]}
 
 	interactive_mode="false"
@@ -70,7 +69,12 @@ function new_command {
 		fi
 	fi
 
-	create_new_script $sc_dir $script_name "" "" "" $add_manual
+	content=""
+	if [ "$(is_flag_specified '-say-hello' '-sh')" == "true" ]; then
+		content="echo 'Hello from $script_name!'"
+	fi
+
+	create_new_script $sc_dir $script_name "" "$content" "" $add_manual
 
 	log "Script '$script_name' created ($sc_dir/$script_name)"
 
@@ -95,6 +99,7 @@ function new_help {
 	log "          -man|-m - Add a manual to the script"
 	log "          -local|-l - Create the script in the current directory"
 	log "          -quick-edit|-qe - Open the script in the editor after creation, using the quick editor command"
+	log "          -say-hello|-sh - Adds a line to the script that prints 'Hello from <script-name>!' when executed"
 	log ""
 }
 

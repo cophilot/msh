@@ -17,6 +17,7 @@ class NewTestCase(TestCase):
         #       -edit|-e - Open the script in the editor after creation
         #       -man|-m - Add a manual to the script
         #       -local|-l - Create the script in the current directory
+        #       -say-hello|-sh - Adds a line to the script that prints 'Hello from <script-name>!' when executed
 
         MSH.run_fail("new")
 
@@ -41,6 +42,11 @@ class NewTestCase(TestCase):
 
         o = MSH.run_suc("new test-script-edit my-collection -edit")
         o.has_line(f"{MSH.HOME.get_abs_path()}/my-collection/test-script-edit")
+
+        MSH.run_suc("new test-script-say-hello my-collection -say-hello")
+        MSH.HOME.add_dir("my-collection").add_file(
+            "test-script-say-hello"
+        ).check().has_line("echo 'Hello from test-script-say-hello!'")
 
         MSH.run_suc("new i__msh-testing-local-test-script -local")
         assert_true(os.path.exists("i__msh-testing-local-test-script"))

@@ -9,9 +9,9 @@
 # $4 (optional) - The content of the script
 # $5 (optional) - The content of the script
 # $6 (optional) - If set to true, add a manual to the script
-function create_new_script() {
-	sc_dir=$1
-	sc_name=$2
+create_new_script() {
+	sc_dir="$1"
+	sc_name="$2"
 
 	script_file="$sc_dir/$sc_name"
 	if [ -f "$script_file" ]; then
@@ -24,7 +24,7 @@ function create_new_script() {
 
 	description="This is the $sc_name script"
 	if [ -n "$3" ]; then
-		description=$3
+		description="$3"
 	fi
 	description="#??$description"
 	echo "$description" >>$script_file
@@ -38,7 +38,7 @@ function create_new_script() {
 	if [ -n "$4" ]; then
 		echo "$4" >>$script_file
 	fi
-	if [ -n "$5" ]; then
+	if [ -n "$5" ] && [ "$5" != "false" ]; then
 		echo "$5" >>$script_file
 	fi
 	chmod +x $script_file
