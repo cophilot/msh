@@ -7,7 +7,6 @@ function sync_command {
 	require_git
 	require_msh_home_dir
 
-
 	collection_name=${VALUES[0]}
 	if [ -z "$collection_name" ]; then
 		all_collection=$(get_all_collections)

@@ -6,7 +6,6 @@
 function list_command {
 	require_msh_home_dir
 
-
 	filter_tag=${VALUES[0]}
 
 	all_scripts=$(get_all_scripts)
