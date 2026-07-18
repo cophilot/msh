@@ -1,6 +1,6 @@
 """
-compile all src files into a single script by getting the text from the files in src end 
-extrating between '###START###' and '###END###' and 
+compile all src files into a single script by getting the text from the files in src end
+extrating between '###START###' and '###END###' and
 writing them into the msh file ate the '###FUNCTIONS###' tag
 
 Copy the content from the .phil-project into msh to store environment variables
@@ -146,8 +146,14 @@ def write_out_file(content: str, path: str):
     """
     write the content of the msh file into the out file
     """
+    new_content = ""
+    for line in content.split("\n"):
+        if line.strip() == "":
+            continue
+        new_content += line + "\n"
+
     with open(path, "w", encoding="utf-8") as file:
-        file.write(content)
+        file.write(new_content)
 
 
 def read_file_with_bounds(file_path: str, start: str, end: str):
