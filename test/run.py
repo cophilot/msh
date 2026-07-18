@@ -16,6 +16,7 @@ from cases.collection_list import CollectionListTestCase
 from cases.collection_clone import CollectionCloneTestCase
 from cases.details import DetailsTestCase
 from cases.copy import CopyTestCase
+from cases.run import RunTestCase
 
 # ~~import-test-cases~~
 
@@ -42,6 +43,7 @@ def get_all_test_cases():
         RestoreTestCase(),
         DetailsTestCase(),
         CopyTestCase(),
+        RunTestCase(),
         # ~~add-test-cases~~
     ]
 
@@ -103,7 +105,7 @@ def print_errors_and_exit(exp, summary):
     for ex in exp:
         e = ex["e"]
         print()
-        print(f"  {e.__class__.__name__} in {ex["case"].name} test:")
+        print(f"  {e.__class__.__name__} in {ex['case'].name} test:")
         traceback.print_tb(e.__traceback__)
         print(f"  {e}")
 

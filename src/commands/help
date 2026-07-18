@@ -36,6 +36,7 @@ function help_command {
 	print_help
 	remove_help
 	restore_help
+	run_help
 	sync_help
 	version_help
 	# ~~new-help-command~~

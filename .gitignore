@@ -5,3 +5,4 @@ out/**
 .myshell-testing/**
 **/__pycache__/**
 i__**
+.vscode

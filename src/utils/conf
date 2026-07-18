@@ -47,6 +47,12 @@ function get_editor_command() {
 	echo "$editor_command"
 }
 
+# Get the maximum log file length from the conf file
+function get_max_log_file_length() {
+	local max_log_file_length=$(get_conf "max_log_file_length" 100000)
+	echo "$max_log_file_length"
+}
+
 # Get the quick editor command from the conf file
 function get_quick_editor_command() {
 	local editor_command=$(get_conf "quick_editor_command" "vim")

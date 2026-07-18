@@ -87,6 +87,7 @@ class MSH:
             MSHCommand("restore"),
             MSHCommand("sync", "s"),
             MSHCommand("version", "v"),
+            MSHCommand("run", "r"),
             # ~~add-command-string~~
         ]
 

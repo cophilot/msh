@@ -1,0 +1,77 @@
+#!/bin/bash
+
+###START###
+
+# Run a script
+function run_command {
+	require_msh_home_dir
+
+	script_name=${VALUES[0]}
+
+	if [ -z "$script_name" ]; then
+		log_e "Please provide the name of the script to run"
+		myexit 1
+	fi
+
+	file_location=$(resolve_script_name "$script_name")
+
+	if [ -z "$file_location" ]; then
+		log_e "Script '$script_name' not found"
+		myexit 1
+	fi
+
+	args=""
+	if [ "$(is_flag_specified '-args' '-a')" == "true" ]; then
+		read -p "Arguments: " args
+	fi
+
+	x_flag=""
+	if [ "$(is_flag_specified '-extend' '-x')" == "true" ]; then
+		x_flag="-x"
+	fi
+
+	command="$file_location $args"
+	cmd_log_file="$HOME_DIR/.cmd_history.log"
+	run_log_file="$HOME_DIR/.run_history.log"
+
+	if [ "$(is_flag_specified '-clear-log' '-cl')" == "true" ]; then
+		>"$cmd_log_file"
+		>"$run_log_file"
+	fi
+
+	echo "$command" >>"$cmd_log_file"
+	adapt_log_file_length "$cmd_log_file"
+
+	echo "%[$(date)]> $command" >>"$run_log_file"
+
+	time_start=$(date +%s)
+	bash $x_flag $command | tee -a "$run_log_file"
+	duration=$(($(date +%s) - time_start))
+	echo "%[[${duration}s]]" >>"$run_log_file"
+
+	adapt_log_file_length "$run_log_file"
+
+}
+
+# Print help for the run command
+function run_help {
+	log "  run|r <script> [flags] - Run a script"
+	log "      script - The name of the script to run"
+	log "      Flags:"
+	log "          -args|-a - Provide arguments for the script"
+	log "          -extend|-x - Print the scripts commands while running"
+	log "          -clear-log|-cl - Clear the command and run logs before running the script"
+	log ""
+}
+
+# Short form of the run help command
+function r_help {
+	run_help $*
+}
+
+# Short form of the run command
+function r_command {
+	run_command $*
+}
+
+###END###
