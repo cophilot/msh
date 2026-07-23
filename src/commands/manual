@@ -54,6 +54,15 @@ function manual_help {
 	log ""
 }
 
+# Autocomplete helper for the manual command. This gets called by the autocomplete function in src/commands/autocomplete.sh
+function manual_autocomplete_helper {
+	echo "
+-print
+-run
+<SCRIPTS>
+"
+}
+
 # Short form of the manual help command
 function m_help {
 	manual_help $*

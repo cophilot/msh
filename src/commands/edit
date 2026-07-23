@@ -37,6 +37,14 @@ function edit_help {
 	log ""
 }
 
+# Autocomplete helper for the edit command. This gets called by the autocomplete function in src/commands/autocomplete.sh
+function edit_autocomplete_helper {
+	echo "
+-quick
+<SCRIPTS>
+"
+}
+
 # Short form of the edit help command
 function e_help {
 	edit_help $*

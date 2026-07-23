@@ -103,6 +103,20 @@ function new_help {
 	log ""
 }
 
+# Autocomplete helper for the new command. This gets called by the autocomplete function in src/commands/autocomplete.sh
+function new_autocomplete_helper {
+	echo "
+-docs
+-edit
+-interactive
+-man
+-local
+-quick-edit
+-say-hello
+<SCRIPTS>
+"
+}
+
 # Short form of the new help command
 function n_help {
 	new_help $*

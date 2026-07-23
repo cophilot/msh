@@ -45,6 +45,7 @@ create_new_script() {
 }
 
 # Get all scripts available via msh
+# $1 - If set to false then do not include collection names in the output
 function get_all_scripts() {
 	colls=$(get_all_collections "true")
 
@@ -72,7 +73,11 @@ function get_all_scripts() {
 			if [[ $script == .* ]] || [[ $script == README* ]]; then
 				continue
 			fi
-			all_scripts+=("$script/$co")
+			if [ "$1" == "false" ]; then
+				all_scripts+=("$script")
+			else
+				all_scripts+=("$script/$co")
+			fi
 		done
 	done
 
@@ -178,6 +183,7 @@ function get_script_description {
 
 # Get the tags of a script
 # $1 - The path of the script
+# $2 - If set to false then do not include the square brackets in the output
 function get_script_tags {
 	script_path=$1
 
@@ -192,6 +198,11 @@ function get_script_tags {
 
 	if [ -z "$tags" ]; then
 		tags=""
+	fi
+
+	if [ "$2" == "false" ]; then
+		echo "$tags"
+		return
 	fi
 	echo "[$tags]"
 }

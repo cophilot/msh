@@ -10,6 +10,10 @@
 # Licensed under the MIT License
 # By Philipp B. (philipp-bonin.com)
 
+# ************************** ###DEV-MODE###
+# *** DEV-MODE Compiled! *** ###DEV-MODE###
+# ************************** ###DEV-MODE###
+
 ###ENV###
 
 ###UTILS###
@@ -35,6 +39,30 @@ BASHRC_FILE="~/.bashrc"
 if [ -f ~/.zshrc ] && [ "$SHELL" == "/bin/zsh" ]; then
 	BASHRC_FILE="~/.zshrc"
 fi
+
+ALL_MSH_COMMANDS=(
+	"alias"
+	"autocomplete"
+	"collection"
+	"copy"
+	"details"
+	"docs"
+	"edit"
+	"generate_docs"
+	"help"
+	"list"
+	"manual"
+	"migrate_scripts"
+	"move"
+	"new"
+	"print"
+	"remove"
+	"restore"
+	"run"
+	"sync"
+	"version"
+	# ~~new-command-name~~
+)
 
 if [ -z $sub_command ]; then
 	echo "Usage: msh <command>"

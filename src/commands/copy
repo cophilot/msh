@@ -47,6 +47,13 @@ function copy_help {
 	log ""
 }
 
+# Autocomplete helper for the copy command. This gets called by the autocomplete function in src/commands/autocomplete.sh
+function copy_autocomplete_helper {
+	echo "
+<SCRIPTS>
+"
+}
+
 # Short form of the copy help command
 function cp_help {
 	copy_help $*

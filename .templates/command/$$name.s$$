@@ -14,10 +14,18 @@ function $$name.lower$$_help {
     log ""
 }
 
+# Autocomplete helper for the $$name.lower$$ command. This gets called by the autocomplete function in src/commands/autocomplete.sh
+function $$name.lower$$_autocomplete_helper {
+    echo "
+
+"
+}
+
 # Short form of the $$name.lower$$ help command
 function $$shortform.lower$$_help {
     $$name.lower$$_help $*
 }
+
 
 # Short form of the $$name.lower$$ command
 function $$shortform.lower$$_command {

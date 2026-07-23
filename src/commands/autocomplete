@@ -1,0 +1,149 @@
+#!/bin/bash
+
+###START###
+
+_MSH_AUTOCOMPLETE_FILE="/etc/bash_completion.d/_msh_autocomplete.sh"
+_MSH_AUTOCOMPLETE_FILE_CONTENT="
+_myshell_completion() {
+    local cur
+
+    cur="\$\{COMP_WORDS[COMP_CWORD]\}"
+    suggestions=\"\$(msh autocomplete get \${COMP_WORDS[@]:1})\"
+
+    COMPREPLY=(\$(compgen -W \"\$suggestions\" -- \"\$cur\"))
+}
+
+complete -F _myshell_completion msh
+"
+
+_MSH_AUTOCOMPLETE_FILE=".myshell-testing/_msh_dev_autocomplete.sh"       ###TESTING-MODE###
+_MSH_AUTOCOMPLETE_FILE="/etc/bash_completion.d/_msh_dev_autocomplete.sh" ###DEV-MODE###
+_MSH_AUTOCOMPLETE_FILE_CONTENT=" ###DEV-MODE###
+_myshell_dev_completion() { ###DEV-MODE###
+    local cur ###DEV-MODE###
+###DEV-MODE###
+    cur="\$\{COMP_WORDS[COMP_CWORD]\}" ###DEV-MODE###
+    suggestions=\"\$(mshd autocomplete get \${COMP_WORDS[@]:1})\" ###DEV-MODE###
+###DEV-MODE###
+    COMPREPLY=(\$(compgen -W \"\$suggestions\" -- \"\$cur\")) ###DEV-MODE###
+} ###DEV-MODE###
+###DEV-MODE###
+complete -F _myshell_dev_completion mshd ###DEV-MODE###
+" ###DEV-MODE###
+
+# Adds functionality for autocomplete for the CLI. This is only supported on bash.
+function autocomplete_command {
+	if [ -z "$BASH_VERSION" ]; then
+		log_e "Autocomplete is only supported on bash!"
+		myexit 1
+	fi
+
+	com=${VALUES[0]}
+	if [ "$com" == "enable" ]; then
+		autocomplete_command_enable
+	elif [ "$com" == "disable" ]; then
+		autocomplete_command_disable
+	elif [ "$com" == "status" ]; then
+		autocomplete_command_status
+	elif [ "$com" == "get" ]; then
+		autocomplete_command_get
+	elif [ -z "$com" ]; then
+		log_e "Missing argument: <enable|disable|status|get>"
+		myexit 1
+	else
+		log_e "Invalid argument: $com"
+		myexit 1
+	fi
+
+}
+
+# Print the autocomplete for a given command
+function autocomplete_command_get {
+	rest_arguments="${VALUES[@]:1}"
+	sub_command=${VALUES[1]}
+
+	word_level=${#VALUES[@]}
+	word_level=$((word_level - 1))
+
+	# TOP Level command suggestions
+	if [ "$word_level" -lt 2 ]; then
+		all_commands=$(echo "${ALL_MSH_COMMANDS[@]}" | tr ' ' '\n')
+		all_commands=$(echo "$all_commands" | grep "^$rest_arguments")
+
+		all_commands_count=$(echo "$all_commands" | wc -l)
+		if [ "$all_commands" != "$sub_command" ]; then
+			echo "$all_commands"
+			exit 0
+		fi
+	fi
+
+	sub_command_helper="${sub_command}_autocomplete_helper"
+	if declare -f $sub_command_helper >/dev/null; then
+		results=$($sub_command_helper "${VALUES[@]:2}")
+
+		script_replace_tag="<SCRIPTS>"
+		if [[ "$results" == *"$script_replace_tag"* ]]; then
+			all_scripts=$(get_all_scripts "false")
+			all_scripts=$(echo ${all_scripts[@]} | tr ' ' '\n')
+			all_scripts=$(echo "$all_scripts" | sed 's/$/\\n/g' | tr -d '\n')
+			results=$(echo "$results" | sed "s|$script_replace_tag|$all_scripts|g")
+		fi
+
+		echo "$results"
+	fi
+}
+
+# Enable autocomplete for the CLI
+function autocomplete_command_enable {
+	if [ -f "$_MSH_AUTOCOMPLETE_FILE" ]; then
+		log "Autocomplete is already enabled."
+	else
+		log "Enabling autocomplete..."
+		echo "$_MSH_AUTOCOMPLETE_FILE_CONTENT" | sudo tee "$_MSH_AUTOCOMPLETE_FILE" >/dev/null ###NO-TESTING-MODE###
+		echo "$_MSH_AUTOCOMPLETE_FILE_CONTENT" | tee "$_MSH_AUTOCOMPLETE_FILE" >/dev/null      ###TESTING-MODE###
+		log "Autocomplete enabled."
+	fi
+}
+
+# Disable autocomplete for the CLI
+function autocomplete_command_disable {
+	if [ -f "$_MSH_AUTOCOMPLETE_FILE" ]; then
+		log "Disabling autocomplete..."
+		sudo rm -f "$_MSH_AUTOCOMPLETE_FILE" ###NO-TESTING-MODE###
+		rm -f "$_MSH_AUTOCOMPLETE_FILE"      ###TESTING-MODE###
+		log "Autocomplete disabled."
+	else
+		log "Autocomplete is already disabled."
+	fi
+}
+
+# Print if autocomplete is enabled or disabled for the CLI
+function autocomplete_command_status {
+	if [ -f "$_MSH_AUTOCOMPLETE_FILE" ]; then
+		log "Autocomplete is enabled."
+	else
+		log "Autocomplete is disabled."
+	fi
+}
+
+# Autocomplete helper for the autocomplete command. This gets called by the autocomplete function in src/commands/autocomplete.sh
+function autocomplete_autocomplete_helper {
+	echo "
+enable
+disable
+status
+get
+"
+}
+
+# Print help for the autocomplete command
+function autocomplete_help {
+	log "  autocomplete <enable|disable|status|get> - Enable or disable autocomplete for the CLI (only works for bash)"
+	log "      enable - Enable autocomplete for the CLI"
+	log "      disable - Disable autocomplete for the CLI"
+	log "      status - Show the current status of autocomplete"
+	log "      get - Get autocomplete suggestions for the CLI"
+	log ""
+}
+
+###END###

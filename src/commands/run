@@ -64,6 +64,16 @@ function run_help {
 	log ""
 }
 
+# Autocomplete helper for the run command. This gets called by the autocomplete function in src/commands/autocomplete.sh
+function run_autocomplete_helper {
+	echo "
+-args
+-extend
+-clear-log
+<SCRIPTS>
+"
+}
+
 # Short form of the run help command
 function r_help {
 	run_help $*

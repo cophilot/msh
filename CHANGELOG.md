@@ -6,6 +6,7 @@
 
 - Added `-say-hello` flag for the `new` command [#46](https://github.com/cophilot/msh/issues/46)
 - Added `run` command [#45](https://github.com/cophilot/msh/issues/45)
+- Added bash autocomplete for CLI [#48](https://github.com/cophilot/msh/issues/48)
 
 ---
 

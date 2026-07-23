@@ -51,6 +51,13 @@ function move_help {
 	log ""
 }
 
+# Autocomplete helper for the move command. This gets called by the autocomplete function in src/commands/autocomplete.sh
+function move_autocomplete_helper {
+	echo "
+<SCRIPTS>
+"
+}
+
 # Short form of the move help command
 function mv_help {
 	move_help $*

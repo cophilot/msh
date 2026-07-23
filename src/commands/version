@@ -26,6 +26,13 @@ function version_help {
 	log ""
 }
 
+# Autocomplete helper for the version command. This gets called by the autocomplete function in src/commands/autocomplete.sh
+function version_autocomplete_helper {
+	echo "
+-simple
+"
+}
+
 # Short form of the version help command
 function v_help {
 	version_help $*

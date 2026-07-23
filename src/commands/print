@@ -38,6 +38,14 @@ function print_help {
 	log ""
 }
 
+# Autocomplete helper for the print command. This gets called by the autocomplete function in src/commands/autocomplete.sh
+function print_autocomplete_helper {
+	echo "
+-run
+<SCRIPTS>
+"
+}
+
 # Short form of the print help command
 function p_help {
 	print_help $*

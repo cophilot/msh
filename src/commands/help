@@ -23,23 +23,13 @@ function help_command {
 
 	print_help_header
 	log "Commands:"
-	collection_help
-	copy_help
-	details_help
-	edit_help
-	help_help
-	list_help
-	manual_help
-	migrate_scripts_help
-	move_help
-	new_help
-	print_help
-	remove_help
-	restore_help
-	run_help
-	sync_help
-	version_help
-	# ~~new-help-command~~
+	for cmd in "${ALL_MSH_COMMANDS[@]}"; do
+		cmd_fn="${cmd}_help"
+		cmd_fn=$(echo $cmd_fn | sed 's/-/_/g')
+		if declare -f $cmd_fn >/dev/null; then
+			$cmd_fn
+		fi
+	done
 	print_help_footer
 }
 
@@ -77,6 +67,12 @@ function help_help {
 	log "  help|h [command] - Get help for myshell"
 	log "      command - The command to get help for"
 	log ""
+}
+
+# Autocomplete helper for the help command. This gets called by the autocomplete function in src/commands/autocomplete.sh
+function help_autocomplete_helper {
+	all_commands=$(echo "${ALL_MSH_COMMANDS[@]}" | tr ' ' '\n')
+	echo "$all_commands"
 }
 
 # Short form of the help command

@@ -51,6 +51,15 @@ function details_help {
 	log "  details|d <script> - Get more information about a script"
 	log "      script - The name of the script to get details for"
 	log ""
+
+}
+
+# Autocomplete helper for the details command. This gets called by the autocomplete function in src/commands/autocomplete.sh
+function details_autocomplete_helper {
+	echo "
+-json
+<SCRIPTS>
+"
 }
 
 # Short form of the details help command

@@ -74,6 +74,14 @@ function sync_help {
 	log ""
 }
 
+# Autocomplete helper for the sync command. This gets called by the autocomplete function in src/commands/autocomplete.sh
+function sync_autocomplete_helper {
+	echo "
+-up
+-detached
+"
+}
+
 # Short form of the sync help command
 function s_help {
 	sync_help $*

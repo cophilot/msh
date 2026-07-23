@@ -41,6 +41,14 @@ function remove_help {
 	log ""
 }
 
+# Autocomplete helper for the remove command. This gets called by the autocomplete function in src/commands/autocomplete.sh
+function remove_autocomplete_helper {
+	echo "
+-force
+<SCRIPTS>
+"
+}
+
 # Short form of the remove help command
 function rm_help {
 	remove_help $*

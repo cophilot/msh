@@ -17,6 +17,7 @@ from cases.collection_clone import CollectionCloneTestCase
 from cases.details import DetailsTestCase
 from cases.copy import CopyTestCase
 from cases.run import RunTestCase
+from cases.autocomplete import AutocompleteTestCase
 
 # ~~import-test-cases~~
 
@@ -44,6 +45,7 @@ def get_all_test_cases():
         DetailsTestCase(),
         CopyTestCase(),
         RunTestCase(),
+        AutocompleteTestCase(),
         # ~~add-test-cases~~
     ]
 

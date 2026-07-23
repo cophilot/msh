@@ -6,7 +6,6 @@ from log import Log
 
 
 class MSH:
-
     EXECUTABLE = "./out/msht"
     HOME: Dir = None
     CONFIG = "editor_command=echo"
@@ -88,8 +87,10 @@ class MSH:
             MSHCommand("sync", "s"),
             MSHCommand("version", "v"),
             MSHCommand("run", "r"),
+            MSHCommand("autocomplete"),
             # ~~add-command-string~~
         ]
+
 
 class MSHCommand:
     def __init__(self, name: str, short_form: str = None):

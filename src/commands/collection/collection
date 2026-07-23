@@ -23,6 +23,15 @@ function collection_help {
 	collection_new_help
 }
 
+# Autocomplete helper for the collection command. This gets called by the autocomplete function in src/commands/autocomplete.sh
+function collection_autocomplete_helper {
+	echo "
+clone
+list
+new
+"
+}
+
 # Short form of the collection help command
 function c_help {
 	collection_help $*

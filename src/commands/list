@@ -20,6 +20,11 @@ function list_command {
 		all_scripts=$(echo "$all_scripts" | sort)
 	fi
 
+	if [ "$(is_flag_specified '-name' '-n')" == "true" ]; then
+		echo "$all_scripts" | awk -F'/' '{print $1}' | sort -u
+		return
+	fi
+
 	if [ -n "$filter_tag" ]; then
 		log "Filtering by tag: $filter_tag"
 	fi
@@ -134,7 +139,20 @@ function list_help {
 	log "          -simple|-s - Print the list in a simple format"
 	log "          -time|-t - Print the time tag of the script"
 	log "          -path|-p - Print the path of the script instead of the description"
+	log "          -name|-n - Print only the name of the script"
 	log ""
+}
+
+# Autocomplete helper for the list command. This gets called by the autocomplete function in src/commands/autocomplete.sh
+function list_autocomplete_helper {
+	echo "
+-collection
+-group
+-simple
+-time
+-path
+-name
+"
 }
 
 # Short form of the list help command

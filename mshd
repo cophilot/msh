@@ -1,15 +1,21 @@
 #!/bin/bash
 
-echo "                          __         ____"
-echo "    ____ ___  __  _______/ /_  ___  / / /"
-echo "   / __  __ \/ / / / ___/ __ \/ _ \/ / / "
-echo "  / / / / / / /_/ (__  ) / / /  __/ / /  "
-echo " /_/ /_/ /_/\__, /____/_/ /_/\___/_/_/   "
-echo "           /____/ DEV MODE"
-echo ""
+SILENT_MODE=true
+
+compiler_flags="-quiet"
+if [ $SILENT_MODE == "false" ]; then
+    echo "                          __         ____"
+    echo "    ____ ___  __  _______/ /_  ___  / / /"
+    echo "   / __  __ \/ / / / ___/ __ \/ _ \/ / / "
+    echo "  / / / / / / /_/ (__  ) / / /  __/ / /  "
+    echo " /_/ /_/ /_/\__, /____/_/ /_/\___/_/_/   "
+    echo "           /____/ DEV MODE"
+    echo ""
+    compiler_flags=""
+fi
 
 # Compile program
-python compile.py -o out/msh -dev-mode
+python compile.py -o out/msh -dev-mode $compiler_flags
 
 # check if file exists
 if [ ! -f out/msh ]; then
