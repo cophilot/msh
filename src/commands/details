@@ -23,33 +23,59 @@ function details_command {
 	print_meta="%-15s%s\n"
 
 	collection_path=$(get_coll_path_for_script "$file_location")
-
-	printf "$print_meta" "Name:" "$script_name"
-	printf "$print_meta" "Collection:" "$(basename "$collection_path")"
-	printf "$print_meta" "Path:" "$file_location"
-	printf "$print_meta" "Description:" "$(get_script_description "$file_location")"
-	printf "$print_meta" "Tags:" "$(get_script_tags "$file_location")"
+	if [ "$(is_flag_specified '-json')" == "true" ]; then
+		echo "{"
+		echo "	\"name\": \"$script_name\""
+		echo "	,\"collection\": \"$(basename "$collection_path")\""
+		echo "	,\"path\": \"$file_location\""
+		echo "	,\"description\": \"$(get_script_description "$file_location")\""
+		echo "	,\"tags\": \"$(get_script_tags "$file_location" "false")\""
+	else
+		printf "$print_meta" "Name:" "$script_name"
+		printf "$print_meta" "Collection:" "$(basename "$collection_path")"
+		printf "$print_meta" "Path:" "$file_location"
+		printf "$print_meta" "Description:" "$(get_script_description "$file_location")"
+		printf "$print_meta" "Tags:" "$(get_script_tags "$file_location" "false")"
+	fi
 
 	git_status=$(get_script_git_status "$file_location" "$collection_path")
 	if [ ! -z "$git_status" ]; then
-		printf "$print_meta" "Git Status:" "$git_status"
+		if [ "$(is_flag_specified '-json')" == "true" ]; then
+			echo "	,\"git_status\": \"$git_status\""
+		else
+			printf "$print_meta" "Git Status:" "$git_status"
+		fi
 	fi
 
 	created=$(stat -c %W "$file_location" 2>/dev/null)
 	if [ ! "$created" -eq 0 ]; then
-		printf "$print_meta" "Created:" "$(date -d @$created +'%Y-%m-%d %H:%M:%S')"
+		if [ "$(is_flag_specified '-json')" == "true" ]; then
+			echo "	,\"created\": \"$(date -d @$created +'%Y-%m-%d %H:%M:%S')\""
+		else
+			printf "$print_meta" "Created:" "$(date -d @$created +'%Y-%m-%d %H:%M:%S')"
+		fi
 	fi
 
 	last_modified=$(stat -c %y "$file_location" 2>/dev/null)
 	if [ -n "$last_modified" ]; then
-		printf "$print_meta" "Last Modified:" "$(date -d "$last_modified" +'%Y-%m-%d %H:%M:%S')"
+		if [ "$(is_flag_specified '-json')" == "true" ]; then
+			echo "	,\"last_modified\": \"$(date -d "$last_modified" +'%Y-%m-%d %H:%M:%S')\""
+		else
+			printf "$print_meta" "Last Modified:" "$(date -d "$last_modified" +'%Y-%m-%d %H:%M:%S')"
+		fi
+	fi
+
+	if [ "$(is_flag_specified '-json')" == "true" ]; then
+		echo "}"
 	fi
 }
 
 # Print help for the details command
 function details_help {
-	log "  details|d <script> - Get more information about a script"
+	log "  details|d <script> [flags] - Get more information about a script"
 	log "      script - The name of the script to get details for"
+	log "      Flags:"
+	log "          -json - If specified, the output will be in JSON format"
 	log ""
 
 }
