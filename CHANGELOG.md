@@ -8,6 +8,7 @@
 - Added `run` command [#45](https://github.com/cophilot/msh/issues/45)
 - Added bash autocomplete for CLI [#48](https://github.com/cophilot/msh/issues/48)
 - Added `-json` flag for the `details` command [#50](https://github.com/cophilot/msh/issues/50)
+- Added `alias` command [#51](https://github.com/cophilot/msh/issues/51)
 
 ---
 
