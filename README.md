@@ -32,13 +32,13 @@
 
 ---
 
--   [Concept](#concept)
--   [Installation](#installation)
--   [Update](#update)
--   [Uninstall](#uninstall)
--   [Development](#development)
--   [Extensions](#extensions)
--   [Release Notes](#release-notes)
+- [Concept](#concept)
+- [Installation](#installation)
+- [Update](#update)
+- [Uninstall](#uninstall)
+- [Development](#development)
+- [Extensions](#extensions)
+- [Release Notes](#release-notes)
 
 ---
 
@@ -94,10 +94,14 @@ You can load predefined collections of scripts into your msh installation. This 
 
 ## [Release Notes](https://github.com/cophilot/msh/blob/master/CHANGELOG.md)
 
-### [v1.2.1](https://github.com/cophilot/msh/milestone/14)
+### [v1.3.0](https://github.com/cophilot/msh/milestone/13)
 
--   Added `-print` flag for the `manual` command [#37](https://github.com/cophilot/msh/issues/37)
--   Added `-bin` flag for the `collection new` command [#42](https://github.com/cophilot/msh/issues/42)
+- Added `-say-hello` flag for the `new` command [#46](https://github.com/cophilot/msh/issues/46)
+- Added `run` command [#45](https://github.com/cophilot/msh/issues/45)
+- Added bash autocomplete for CLI [#48](https://github.com/cophilot/msh/issues/48)
+- Added `-json` flag for the `details` command [#50](https://github.com/cophilot/msh/issues/50)
+- Added `alias` command [#51](https://github.com/cophilot/msh/issues/51)
+- Added `generate-docs` and `docs` commands [#49](https://github.com/cophilot/msh/issues/49)
 
 ---
 

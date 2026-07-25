@@ -2,7 +2,7 @@
 
 ---
 
-## [v1.3.0](https://github.com/cophilot/msh/milestone/13) (2026-??-??) _IN DEVELOPMENT_
+## [v1.3.0](https://github.com/cophilot/msh/milestone/13) (2026-07-25)
 
 - Added `-say-hello` flag for the `new` command [#46](https://github.com/cophilot/msh/issues/46)
 - Added `run` command [#45](https://github.com/cophilot/msh/issues/45)
