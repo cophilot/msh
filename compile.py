@@ -39,11 +39,13 @@ def main():
     if not COMPILE_DEV_MODE:
         main_content = remove_lines_with_tag(main_content, "###DEV-MODE###")
     else:
+        main_content = remove_lines_with_tag(main_content, "###NO-DEV-MODE###")
         log("*Compiling in development mode*")
 
     if not COMPILE_TESTING_MODE:
         main_content = remove_lines_with_tag(main_content, "###TESTING-MODE###")
     else:
+        main_content = remove_lines_with_tag(main_content, "###NO-TESTING-MODE###")
         log("*Compiling in testing mode*")
 
     # create the out directory if it does not exist

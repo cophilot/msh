@@ -1,0 +1,40 @@
+#!/bin/bash
+
+###START###
+
+# Start a simple docs server to view the generated documentation.
+function docs_command {
+	if ! command -v python3 &>/dev/null; then
+		log_e "python3 is not installed. Please install python3 to use the docs command!"
+		myexit 1
+	fi
+
+	port=${VALUES[0]}
+	if [ -z "${port}" ]; then
+		port=8428
+	fi
+
+	if ! [[ "${port}" =~ ^[0-9]+$ ]]; then
+		log_e "Invalid port: '${port}'. Port must be a number."
+		myexit 1
+	fi
+
+	generate_docs_command
+
+	cd $HOME_DIR
+	if [ ! -f "index.html" ]; then
+		ln -s docs.html index.html
+	fi
+
+	python3 -m http.server $port
+
+}
+
+# Print help for the docs command
+function docs_help {
+	log "  docs [port] - Starts the docs server on the specified port (default: 8428)."
+	log "      port - The port on which to start the docs server (default: 8428)."
+	log ""
+}
+
+###END###

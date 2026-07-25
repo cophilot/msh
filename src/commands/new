@@ -86,6 +86,10 @@ function new_command {
 		edcom=$(get_quick_editor_command)
 		$edcom $sc_dir/$script_name
 	fi
+
+	if [ "$(is_flag_specified '-docs' '-dc')" == "true" ]; then
+		generate_docs_command
+	fi
 }
 
 # Print help for the new command
@@ -94,6 +98,7 @@ function new_help {
 	log "      script-name - The name of the script to create"
 	log "      collection-name - The name of the collection to add the script to. The default collection can be set in the config"
 	log "      Flags:"
+	log "          -docs|-dc - Update the docs after creating the script"
 	log "          -edit|-e - Open the script in the editor after creation"
 	log "          -interactive|-it - Run the command in interactive mode, prompting for missing values (the name is not required in this mode)"
 	log "          -man|-m - Add a manual to the script"

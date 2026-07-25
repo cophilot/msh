@@ -1,0 +1,40 @@
+#!/bin/bash
+
+###START###
+
+_DOCS_TEMPLATE="https://raw.githubusercontent.com/cophilot/msh/refs/heads/main/data/docs-template.html"
+_DOCS_OUTPUT="docs.html"
+_DOCS_DATA_PLACEHOLDER="//%%%DATA%%%"
+
+# Generate a documentation html file for all scripts.
+function generate_docs_command {
+	require_msh_home_dir
+	all_scripts=$(get_all_scripts "false")
+	is_first="true"
+	content=""
+	for script in $all_scripts; do
+		VALUES=("$script")
+		FLAGS=("-json")
+		script_details=$(details_command)
+		if [ "$is_first" == "true" ]; then
+			content="$script_details"
+			is_first="false"
+		else
+			content="$content,$script_details"
+		fi
+	done
+
+	template_content=$(curl -s "$_DOCS_TEMPLATE")
+	final_content="${template_content/$_DOCS_DATA_PLACEHOLDER/$content}"
+	out_file="$HOME_DIR/$_DOCS_OUTPUT"
+	echo "$final_content" >"$out_file"
+	echo "Docs generated at $out_file"
+}
+
+# Print help for the generatedocs command
+function generate_docs_help {
+	log "  generate-docs - Generate a documentation html file."
+	log ""
+}
+
+###END###
